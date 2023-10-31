@@ -170,7 +170,7 @@ class TagController extends Controller
         $users = User::all();
 
         if(request('search')) { 
-            $pendingr= Tag::where('book_barcode', 'like', '%' . request('book_barcode') . '%')
+            $pendingt= Tag::where('book_barcode', 'like', '%' . request('book_barcode') . '%')
             ->orwhere('suggest_book_subject', 'like', '%' . request('suggest_book_subject') . '%')
             ->orwhere('department', 'like', '%' . request('search') . '%')->paginate(5)->withQueryString();
         }

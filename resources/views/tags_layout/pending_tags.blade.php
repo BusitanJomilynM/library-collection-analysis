@@ -16,80 +16,77 @@
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
-  <th>Department</th>
+    <th>Department</th>
     <th>Book Barcode</th>
     <th>Suggested Tags</th>
     <th>Actions</th>
   </tr>
 </thead>
 
-@forelse($pending as $pendingr)
+@forelse($pending as $pendingt)
 <tbody>
   <tr align="center">
-    <td>{{$pendingr->id}}</td>
-    <td>{{$pendingr->department}}</td>
-    <td>{{$pendingr->book_barcode}}</td>
-    <td>{{$pendingr->suggest_book_subject}}</td>
+    <td>{{$pendingt->id}}</td>
+    <td>{{$pendingt->department}}</td>
+    <td>{{$pendingt->book_barcode}}</td>
+    <td>{{$pendingt->suggest_book_subject}}</td>
     <td>@foreach($users as $user)
-      @if($user->id == $pendingr->user_id)
+      @if($user->id == $pendingt->user_id)
       {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
       @endif
       @endforeach
     </td>
     <td>
-      @if($pendingr->type == 'technician librarian')
+      @if($pendingt->type == 'technician librarian')
       Technician Librarian
-      @elseif($pendingr->type == 'staff librarian')
+      @elseif($pendingt->type == 'staff librarian')
       Staff Librarian
-      @elseif($pendingr->type == 'department representative')
+      @elseif($pendingt->type == 'department representative')
       Department Representative
       @endif
     </td>
-    <td>{{$pendingr->department}}</td>
+    <td>{{$pendingt->department}}</td>
     <td>
-    @if($pendingr->status == 0)
+    @if($pendingt->status == 0)
      Pending
     @endif
     </td>
     <td>
 
-    @if($pendingr->status == 0)
+    @if($pendingt->status == 0)
     <div style="width: 50%;">
-            <form action="{{ route('accept', $pendingr->id) }}" method="POST">
+            <form action="{{ route('accept', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button">Accept</button>
             </form>
 
-            <form action="{{ route('decline', $pendingr->id) }}" method="POST">
+            <form action="{{ route('decline', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-danger" role="button">Decline</button>
             </form>
-            <!-- <a class="btn btn-primary" href="{{ route('tags.edit', $pendingr->id) }}" role="button">Edit</a> -->
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('tags.destroy', $pendingr->id) }}">Delete</a>
+            <!-- <a class="btn btn-primary" href="{{ route('tags.edit', $pendingt->id) }}" role="button">Edit</a> -->
+            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
+            data-action="{{ route('tags.destroy', $pendingt->id) }}">Delete</a>
     </div>
         
-        
-       
-
+      
     @else
     <div style="width: 50%">
-            <form action="{{ route('accept', $pendingr->id) }}" method="POST">
+            <form action="{{ route('accept', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button" disabled>Accept</button>
             </form>
 
-            <form action="{{ route('decline', $pendingr->id) }}" method="POST">
+            <form action="{{ route('decline', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-danger" role="button" disabled>Decline</button>
             </form>
-            <!-- <a class="btn btn-primary" href="{{ route('tags.edit', $pendingr->id) }}" role="button" disabled>Edit</a> -->
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('tags.destroy', $pendingr->id) }}" disabled>Delete</a>
+            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
+            data-action="{{ route('tags.destroy', $pendingt->id) }}" disabled>Delete</a>
     </div>  
     @endif
   
@@ -97,7 +94,7 @@
   </tr>
   </tbody>
   <!-- Delete User Modal -->
-<div class="modal fade" id="deleteUserModal_{{$pendingr->id}}" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal fade" id="deleteUserModal_{{$pendingt->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -105,11 +102,11 @@
             <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to delete this request?</h5>
             
           </div>
-          <form action="{{ route('tags.destroy', $pendingr->id) }}" method="POST">
+          <form action="{{ route('tags.destroy', $pendingt->id) }}" method="POST">
             <div class="modal-body">
               @csrf
               @method('DELETE')
-              <h5 class="text-center">Delete request for {{$pendingr->book_title}}?
+              <h5 class="text-center">Delete request for {{$pendingt->book_title}}?
                
             </div>
             <div class="modal-footer">
