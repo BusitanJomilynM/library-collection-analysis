@@ -20,7 +20,7 @@
     <th>Author</th>
     <th>Copyright Year</th>
     <th>Sublocation</th>
-    <th>Tags</th>
+    <th>Subject</th>
     <th>Actions</th>
   </tr>
 </thead>
