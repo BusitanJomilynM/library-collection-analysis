@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('book_title');
             $table->string('book_callnumber');
-            $table->string('book_barcode')->unique();
+            $table->string('book_barcode')->nullable()->unique();
             $table->string('book_copynumber');
             $table->string('book_author');
             $table->integer('book_copyrightyear');
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('book_lccn');
             $table->string('book_isbn');
             $table->string('book_edition')->nullable();
+            $table->integer('status');
         });
     }
 

@@ -24,6 +24,9 @@ class Book extends Model
         'book_edition',
     ];
 
+    protected $attributes = [
+        'status' => '0'
+    ];
       
         
 
