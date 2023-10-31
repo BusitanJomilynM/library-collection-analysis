@@ -38,7 +38,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                 
                 
                         @if(Auth::user()->type == 'technician librarian' )
                         <li class="nav-item">

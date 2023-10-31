@@ -51,6 +51,9 @@ class TagController extends Controller
                     $users = User::all();
                 }
             }
+        }
+        else{
+            return redirect()->back();
         } 
         
         $users = User::all();
