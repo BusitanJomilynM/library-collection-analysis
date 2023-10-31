@@ -173,7 +173,7 @@ class RequisitionController extends Controller
         $users = User::all();
 
         if(request('search')) { 
-            $pendingr= Requisition::where('book_title', 'like', '%' . request('search') . '%')
+            $pending= Requisition::where('book_title', 'like', '%' . request('search') . '%')
             ->orwhere('material_type', 'like', '%' . request('search') . '%')
             ->orwhere('author', 'like', '%' . request('search') . '%')
             ->orwhere('isbn', 'like', '%' . request('search') . '%')
