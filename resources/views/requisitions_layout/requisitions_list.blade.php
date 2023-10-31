@@ -102,9 +102,6 @@
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
             data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a>
     </div>
-        
-        
-       
 
     @else
     <div style="width: 50%">
@@ -128,7 +125,7 @@
     </td>
   </tr>
   </tbody>
-  <!-- Delete User Modal -->
+  <!-- Modal -->
 <div class="modal fade" id="deleteUserModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -160,7 +157,8 @@
 @elseif($user->type == 'department representative')
 
 @forelse($requisitions as $requisition)
-@if($requisition->user_id == $user->id)
+  @foreach($users as $user)
+  @if($requisition->user_id == $user->id)
 
   <tr align="center">
     <td>{{$requisition->id}}</td>
@@ -174,9 +172,9 @@
     <td>{{$requisition->source}}</td>
     <td>
       @foreach($users as $user)
-      @if($user->id == $requisition->user_id)
-      {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
-      @endif
+        @if($user->id == $requisition->user_id)
+          {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
+        @endif
       @endforeach
     </td>
     <td> 
@@ -199,13 +197,15 @@
       Cancelled 
       @endif</td>
     <td>
-      
       <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button">Edit</a>
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
       data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a></td>
   </tr>
-@endif
-  <!-- Delete User Modal -->
+
+  @endif
+  @endforeach
+
+  <!-- Modal -->
   <div class="modal fade" id="deleteUserModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -231,6 +231,7 @@
     </div>
 @empty
   <li class="list-group-item list-group-item-danger">Entry not found</li>  
+
 @endforelse
 @endif
   

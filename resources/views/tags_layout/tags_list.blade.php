@@ -33,6 +33,7 @@
         <th>Actions</th>
   </tr>
 </thead>
+
 @if($user->type == 'technician librarian')
 @forelse($tags as $tag)
 <tbody>
@@ -141,12 +142,11 @@
 
 
 @elseif($user->type == 'department representative')
-
 @forelse($tags as $tag)
 @if($tag->user_id == $user->id)
 
   <tr align="center">
-  <td>{{$tag->department}}</td>
+    <td>{{$tag->department}}</td>
         <td>{{$tag->book_barcode}}</td>
         <td>{{$tag->suggest_book_subject}}</td>
     <td>

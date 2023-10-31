@@ -44,7 +44,6 @@ class RequisitionController extends Controller
             }
         }   
 
-        $user = Auth::user();
         if($user->type === 'department representative') {
             if(request('search')) { 
                 $requisitions = Requisition::where('book_title', 'like', '%' . request('search') . '%')
