@@ -98,7 +98,9 @@
     <th>Actions</th>
   </tr>
 </thead>
+
 @forelse($books as $book)
+@if($book->status == 0)
 <tbody>
   <tr align="center">
     <td>{{$book->book_title}}</td>
@@ -114,8 +116,10 @@
     
   </tr>
   </tbody>
+@endif
 @empty
 <li class="list-group-item list-group-item-danger">Entry not found</li> 
+
 @endforelse
 
 <!-- staff librarian -->
@@ -132,6 +136,8 @@
     <th>Actions</th>
   </tr>
 </thead>
+
+
 @forelse($books as $book)
 <tbody>
   <tr align="center">

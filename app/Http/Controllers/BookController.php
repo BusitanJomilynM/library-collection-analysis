@@ -208,8 +208,12 @@ class BookController extends Controller
     }
 
     public function archive(){
-        $user = User::all();
-        if($user->type === 'technician librarian' || 'staff librarian') {
+
+        $user = Auth::user();
+        if($user->type === 'technician librarian') {
+        $archives = Book::where('status', 'like', '1')->paginate(10);
+        }
+        elseif($user->type === 'stauff librarian') {
         $archives = Book::where('status', 'like', '1')->paginate(10);
         }
         else{
