@@ -3,6 +3,15 @@
 @section('content')
 <h2 style="text-align: center;">Books</h2>
 
+<div class="panel panel-default">
+@if (session('success'))
+<div class="alert alert-success alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{ session('success') }}
+</div>
+@endif
+</div>
+
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="search" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
@@ -11,7 +20,7 @@
 </div>
 
 
-<a class="btn btn-primary" href="{{ route('books.create') }}" >Add Book</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('books.index') }}">Return</a>
 
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
@@ -45,7 +54,6 @@
     </td>
   </tr>
 </tbody>
-
 
 
 @endforeach

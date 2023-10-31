@@ -204,7 +204,7 @@ class BookController extends Controller
     {
         $book->update($request->all()); 
 
-        return redirect()->route('archive')->with('success','Book archived');
+        return redirect()->route('archive')->with('success','Book restored');
     }
 
     public function archive(){
@@ -213,7 +213,7 @@ class BookController extends Controller
         if($user->type === 'technician librarian') {
         $archives = Book::where('status', 'like', '1')->paginate(10);
         }
-        elseif($user->type === 'stauff librarian') {
+        elseif($user->type === 'staff librarian') {
         $archives = Book::where('status', 'like', '1')->paginate(10);
         }
         else{

@@ -4,6 +4,15 @@
 
 <h2 style="text-align: center;">Books Requisition</h2>
 
+<div class="panel panel-default">
+@if (session('success'))
+<div class="alert alert-success alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{ session('success') }}
+</div>
+@endif
+</div>
+
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="search" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
