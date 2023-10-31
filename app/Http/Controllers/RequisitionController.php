@@ -67,9 +67,6 @@ class RequisitionController extends Controller
                 }
             }
         } 
-        else{
-            return redirect()->back();
-        }
         
         $users = User::all();
 

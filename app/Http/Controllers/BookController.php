@@ -40,10 +40,6 @@ class BookController extends Controller
     
         else{
         $books = Book::paginate(10);
-
-        $tags = Book::where('book_subject')->get();
-
-        // $tags=DB::table('tags')->get();
         }
     }
 
@@ -61,7 +57,6 @@ class BookController extends Controller
     
         else{
         $books = Book::paginate(10);
-        // $tags=DB::table('tags')->get();
         }
     }
 
@@ -79,12 +74,9 @@ class BookController extends Controller
     
         else{
         $books = Book::paginate(10);
-        // $tags=DB::table('tags')->get();
         }
     }
-    else{
-        return redirect()->back();
-    }
+    
 
         return view('books_layout.books_list', ['books'=>$books,'user'=>$user]);
     }

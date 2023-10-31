@@ -61,7 +61,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to delete this book?.</h5>
+            <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to archive this book?.</h5>
           </div>
           <form action="{{ route('archiveBook', $book->id) }}" method="POST">
             <div class="modal-body">
@@ -161,7 +161,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to delete this book?.</h5>
+            <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to archive this book?.</h5>
           </div>
           <form action="{{ route('archiveBook', $book->id) }}" method="POST">
             <div class="modal-body">
