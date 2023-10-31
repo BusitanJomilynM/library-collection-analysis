@@ -10,7 +10,12 @@
 </form>
 </div>
 
+
+
+
+
 @if($user->type == 'technician librarian')
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
 <a class="btn btn-primary" href="{{ route('books.create') }}" >Add Book</a>
 
 <table class="table table-bordered" style="width:100%">
@@ -24,7 +29,9 @@
     <th>Actions</th>
   </tr>
 </thead>
+
 @forelse($books as $book)
+@if($book->status == 0)
 <tbody>
   <tr align="center">
     <td>{{$book->book_title}}</td>
@@ -37,8 +44,13 @@
 
     </td>
     <td><a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Edit</a>
-        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$book->id}}"
-              data-action="{{ route('books.destroy', $book->id) }}">Delete</a>
+        <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$book->id}}"
+              data-action="{{ route('books.destroy', $book->id) }}">Delete</a> -->
+              <form action="{{ route('archiveBook', $book->id) }}" method="POST">
+                {{ csrf_field() }}
+                {{ method_field('GET') }}
+                <button type="submit" class="btn btn-danger" role="button">Archive</button>
+            </form>
     </td>
   </tr>
   </tbody>
@@ -66,15 +78,19 @@
         </div>
       </div>
     </div>
+@endif 
+
 @empty
-<li class="list-group-item list-group-item-danger">Entry not found</li>   
+<li class="list-group-item list-group-item-danger">Entry not found</li>  
+
 @endforelse
 
+<!-- Department Representative -->
 @elseif($user->type == 'department representative')
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
-  <th>Book Title</th>
+    <th>Book Title</th>
     <th>Author</th>
     <th>Copyright Year</th>
     <th>Sublocation</th>
@@ -85,8 +101,7 @@
 @forelse($books as $book)
 <tbody>
   <tr align="center">
-  <td>{{$book->book_title}}</td>
-    <td>{{$book->book_barcode}}</td>
+    <td>{{$book->book_title}}</td>
     <td>{{$book->book_author}}</td>
     <td>{{$book->book_copyrightyear}}</td>
     <td>{{$book->book_sublocation}}</td>
@@ -103,7 +118,9 @@
 <li class="list-group-item list-group-item-danger">Entry not found</li> 
 @endforelse
 
+<!-- staff librarian -->
 @elseif($user->type == 'staff librarian')
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
@@ -119,7 +136,6 @@
 <tbody>
   <tr align="center">
     <td>{{$book->book_title}}</td>
-    <td>{{$book->book_barcode}}</td>
     <td>{{$book->book_author}}</td>
     <td>{{$book->book_copyrightyear}}</td>
     <td>{{$book->book_sublocation}}</td>
@@ -127,6 +143,11 @@
             $a = explode(" ", $t );
             echo implode(", ", $a ); ?>
     </td>
+    <td><form action="{{ route('archiveBook', $book->id) }}" method="POST">
+                {{ csrf_field() }}
+                {{ method_field('GET') }}
+                <button type="submit" class="btn btn-danger" role="button">Archive</button>
+            </form></td>
     </td>
   </tr>
   </tbody>

@@ -41,6 +41,13 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     Route::get('tags', [TagController::class, 'index'])->name('tags.index');
 });
 
+Route::group(['auth', ['user-access:technician librarian|staff librarian']], function () {
+    Route::get('book/arcchive/{book}', [BookController::class, 'archiveBook'])->name('archiveBook');
+    Route::get('book/restore/{book}', [BookController::class, 'restoreBook'])->name('restoreBook');
+    Route::get('book/restoreUpdate/{book}', [BookController::class, 'restoreUpdate'])->name('restoreUpdate');
+    Route::get('/archives', [BookController::class, 'archive'])->name('archive');
+});
+
 Route::middleware(['auth', 'user-access:technician librarian'])->group(function () {
     Route::get('/technician/home', [HomeController::class, 'technicianHome'])->name('technician.home');
     Route::get('books/edit/{book}', [BookController::class, 'edit'])->name('books.edit');

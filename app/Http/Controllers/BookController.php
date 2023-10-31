@@ -43,7 +43,7 @@ class BookController extends Controller
 
         $tags = Book::where('book_subject')->get();
 
-        $stringArray = explode(",", $tags);
+      
 
         // $tags=DB::table('tags')->get();
         }
@@ -186,6 +186,38 @@ class BookController extends Controller
 
     public function archiveBook(Request $request, Book $book){
 
-        
+        $book->status=1;
+        $book->book_barcode="";
+        $book->save();
+
+        return redirect()->route('books.index')->with('success','Book archived');
     }
+
+    public function restoreBook(Request $request, Book $book){
+
+        $book->update($request->all()); 
+
+        return view('books_layout.restore_books', ['book'=>$book]);
+    }
+
+    public function restoreUpdate(Request $request, Book $book)
+    {
+        $book->update($request->all()); 
+
+        return redirect()->route('archive')->with('success','Book archived');
+    }
+
+    public function archive(){
+        $user = User::all();
+        if($user->type === 'technician librarian' || 'staff librarian') {
+        $archives = Book::where('status', 'like', '1')->paginate(10);
+        }
+        else{
+            return redirect()->back();
+        }
+
+        return view('books_layout.archived_books', ['archives'=>$archives,'user'=>$user]);
+
+    }
+    
 }
