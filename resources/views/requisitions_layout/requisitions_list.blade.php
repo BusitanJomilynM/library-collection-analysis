@@ -157,8 +157,7 @@
 @elseif($user->type == 'department representative')
 
 @forelse($requisitions as $requisition)
-  @foreach($users as $user)
-  @if($requisition->user_id == $user->id)
+
 
   <tr align="center">
     <td>{{$requisition->id}}</td>
@@ -202,8 +201,7 @@
       data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a></td>
   </tr>
 
-  @endif
-  @endforeach
+
 
   <!-- Modal -->
   <div class="modal fade" id="deleteUserModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
@@ -231,10 +229,8 @@
     </div>
 @empty
   <li class="list-group-item list-group-item-danger">Entry not found</li>  
-
 @endforelse
 @endif
-  
 
 
 </table>

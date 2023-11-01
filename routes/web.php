@@ -35,8 +35,8 @@ Route::group(['auth', ['user-access:technician librarian|department representati
 Route::group(['auth', ['user-access:technician librarian|department representative|staff librarian']], function () {
     Route::resource('/books', BookController::class);
     Route::resource('/tags', TagController::class);
-    Route::get('/pdf_viewbooks', [BookController::class, 'createPDFBook'])->name('createPDFBook');
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+    Route::get('/pdf_viewbooks', [BookController::class, 'createPDFBook'])->name('createPDFBook');
 });
 
 Route::group(['auth', ['user-access:technician librarian|staff librarian']], function () {
@@ -65,7 +65,7 @@ Route::middleware(['auth', 'user-access:staff librarian'])->group(function () {
 
 Route::middleware(['auth', 'user-access:department representative'])->group(function () {
     Route::get('/representative/home', [HomeController::class, 'representativeHome'])->name('representative.home');
-    Route::get('/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
-    
+    Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
+
 });
 

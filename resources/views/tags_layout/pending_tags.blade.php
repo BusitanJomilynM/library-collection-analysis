@@ -39,12 +39,7 @@
     <td>{{$pendingt->department}}</td>
     <td>{{$pendingt->book_barcode}}</td>
     <td>{{$pendingt->suggest_book_subject}}</td>
-    <td>@foreach($users as $user)
-      @if($user->id == $pendingt->user_id)
-      {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}
-      @endif
-      @endforeach
-    </td>
+
     <td>
       @if($pendingt->type == 'technician librarian')
       Technician Librarian
@@ -97,7 +92,7 @@
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}" disabled>Delete</a>
     </div>  
-    @endif
+
   
     </td>
   </tr>

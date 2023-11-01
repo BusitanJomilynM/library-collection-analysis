@@ -55,7 +55,7 @@ class TagController extends Controller
         
         $users = User::all();
 
-        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users]);
+        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user]);
     }
 
     /**
