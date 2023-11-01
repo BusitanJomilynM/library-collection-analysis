@@ -23,7 +23,7 @@
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a>
 @endif
 
-<a class="btn btn-primary" href="{{ route('requisitions.create') }}">Add New Requisition</a>
+<!-- <a class="btn btn-primary" href="{{ route('requisitions.create') }}">Add New Requisition</a> -->
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
@@ -98,7 +98,7 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-danger" role="button">Decline</button>
             </form>
-            <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button">Edit</a>
+            <!-- <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button">Edit</a> -->
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
             data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a>
     </div>

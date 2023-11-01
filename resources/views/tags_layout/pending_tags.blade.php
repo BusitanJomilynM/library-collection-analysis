@@ -25,9 +25,11 @@
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
+    <th>Requested by</th>
     <th>Department</th>
     <th>Book Barcode</th>
     <th>Suggested Tags</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
 </thead>
@@ -35,21 +37,15 @@
 @forelse($pending2 as $pendingt)
 <tbody>
   <tr align="center">
-    <td>{{$pendingt->id}}</td>
+     <td>@foreach($users as $user)
+      @if($user->id == $pendingt->user_id)
+      {{$user->first_name}} {{$user->last_name}}
+      @endif
+      @endforeach
+    </td>    
     <td>{{$pendingt->department}}</td>
     <td>{{$pendingt->book_barcode}}</td>
-    <td>{{$pendingt->suggest_book_subject}}</td>
-
-    <td>
-      @if($pendingt->type == 'technician librarian')
-      Technician Librarian
-      @elseif($pendingt->type == 'staff librarian')
-      Staff Librarian
-      @elseif($pendingt->type == 'department representative')
-      Department Representative
-      @endif
-    </td>
-    <td>{{$pendingt->department}}</td>
+    <td>{{$pendingt->suggest_book_subject}} </td>
     <td>
     @if($pendingt->status == 0)
      Pending
