@@ -38,7 +38,7 @@
 
     <div class="form-group">
         <label>Number of Copies</label>
-        <input class="form-control @error('book_copynumber') is-invalid @enderror" type="text" name="book_copynumber" id="book_copynumber" value="{{ old('book_copynumber') }}" minlength="2" maxlength="40">
+        <input class="form-control @error('book_copynumber') is-invalid @enderror" type="text" name="book_copynumber" id="book_copynumber" value="{{ old('book_copynumber') }}" pattern="\d*" minlength="1" maxlength="3">
         @error('book_copynumber')
             <span class="text-danger">{{$message}}</span>
         @enderror

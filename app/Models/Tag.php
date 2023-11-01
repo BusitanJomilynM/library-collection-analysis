@@ -12,6 +12,7 @@ class Tag extends Model
     protected $fillable = [
         'department',
         'suggest_book_subject',
+        'user_id',
         'status'
     ];
     

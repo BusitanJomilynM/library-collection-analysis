@@ -20,6 +20,7 @@ class TagController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $users = User::all();
         Paginator::useBootstrap();
         if($user->type === 'technician librarian') {
             if(request('search')) { 
@@ -36,7 +37,6 @@ class TagController extends Controller
             }
         }   
 
-        $user = Auth::user();
         if($user->type === 'department representative') {
             if(request('search')) { 
                 $tags = Tag::where('book_barcode', 'like', '%' . request('search') . '%')
@@ -46,16 +46,14 @@ class TagController extends Controller
             } 
             else {
                 if(auth()->user()){
-                    $tags = Tag::where('id',auth()->user()->id)->paginate(10);
+                    $tags = Tag::where('user_id',auth()->user()->id)->paginate(10);
                     $user = Auth::user();
-                    $users = User::all();
+                  
                 }
             }
         }
-        
-        $users = User::all();
 
-        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user]);
+        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users]);
     }
 
     /**
@@ -89,8 +87,11 @@ class TagController extends Controller
     
         $tag->department = $request->input('department');
         $tag->suggest_book_subject = $request->input('suggest_book_subject');
+        $tag->user_id = $user->id;
     
         $tag->save();
+
+        
     
         return redirect()->route('tags.index');
     }

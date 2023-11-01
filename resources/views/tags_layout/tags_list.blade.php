@@ -26,6 +26,7 @@
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
+    <th>Requested by</th>
     <th>Department</th>
     <th>Book Barcode</th>
     <th>Suggested Tags</th>
@@ -33,28 +34,17 @@
     <th>Actions</th>
   </tr>
 </thead>
+
 @if($user->type == 'technician librarian')
 @forelse($tags as $tag)
 <tbody>
   <tr align="center">
+    <td>{{$user->first_name}} {{$user->last_name}}</td>
     <td>{{$tag->department}}</td>
     <td>{{$tag->book_barcode}}</td>
-    <td>{{$tag->suggest_book_subject}}</td>
-
-<<<<<<< Updated upstream
-=======
-
-    <td>
-      @if($tag->type == 'technician librarian')
-      Technician Librarian
-      @elseif($tag->type == 'staff librarian')
-      Staff Librarian
-      @elseif($tag->type == 'department representative')
-      Department Representative
-      @endif
-    </td>
->>>>>>> Stashed changes
-    <td>{{$tag->department}}</td>
+    <td><?php $t = $tag->suggest_book_subject;
+            $a = explode(" ", $t );
+            echo implode(", ", $a ); ?></td>
     <td>
       @if($tag->status == 0)
       Pending
@@ -70,13 +60,13 @@
 
     @if($tag->status == 0)
     <div style="width: 50%;">
-            <form action="{{ route('changeStatus', $tag->id) }}" method="POST">
+            <form action="{{ route('accept', $tag->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button">Accept</button>
             </form>
 
-            <form action="{{ route('changeStatus2', $tag->id) }}" method="POST">
+            <form action="{{ route('decline', $tag->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-danger" role="button">Decline</button>
@@ -140,29 +130,17 @@
 @elseif($user->type == 'department representative')
 
 @forelse($tags as $tag)
-
-  <tr align="center">
-<<<<<<< Updated upstream
+  @foreach($users as $user)
+    @if($tag->user_id == $user->id)
+    <tr align="center">
+      <td>{{$user->first_name}} {{$user->last_name}}</td>
       <td>{{$tag->department}}</td>
       <td>{{$tag->book_barcode}}</td>
-      <td>{{$tag->suggest_book_subject}}</td>
+      <td><?php $t = $tag->suggest_book_subject;
+            $a = explode(" ", $t );
+            echo implode(", ", $a ); ?></td>
 
-=======
-        <td>{{$tag->department}}</td>
-        <td>{{$tag->book_barcode}}</td>
-        <td>{{$tag->suggest_book_subject}}</td>
-
-    <td> 
-      @if($tag->type == 'technician librarian')
-      Technician Librarian
-      @elseif($tag->type == 'staff librarian')
-      Staff Librarian
-      @elseif($tag->type == 'department representative')
-      Department Representative
-      @endif
-    </td>
->>>>>>> Stashed changes
-    <td>{{$tag->department}}</td>
+   
     <td>@if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)
@@ -172,19 +150,14 @@
       @else 
       Cancelled 
       @endif</td>
+
     <td>
       <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button">Edit</a>
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
       data-action="{{ route('tags.destroy', $tag->id) }}">Delete</a></td>
   </tr>
 
-<<<<<<< Updated upstream
-
-
   <!-- Modal -->
-=======
-  <!-- Delete User Modal -->
->>>>>>> Stashed changes
   <div class="modal fade" id="deleteUserModal_{{$tag->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -208,10 +181,13 @@
         </div>
       </div>
     </div>
+  @endif 
+@endforeach
 
 @empty
   <li class="list-group-item list-group-item-danger">Entry not found</li>  
 @endforelse
+
 @endif
 
 </table>
@@ -220,8 +196,5 @@
       <?php echo $tags->render(); ?>
     </div>
 </div>
-
-
-
 
 @endsection
