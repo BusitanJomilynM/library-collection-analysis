@@ -196,9 +196,16 @@
       Cancelled 
       @endif</td>
     <td>
+      @if($requisition->status == 0)
       <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button">Edit</a>
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
       data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a></td>
+
+      @else
+      <a class="btn btn-primary"  role="button" disabled>Edit</a>
+      <a data-toggle="modal" class="btn btn-danger" disabled>Delete</a></td>
+
+      @endif
   </tr>
 
 
