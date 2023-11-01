@@ -209,7 +209,6 @@
   </tr>
 
 
-
   <!-- Modal -->
   <div class="modal fade" id="deleteUserModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
