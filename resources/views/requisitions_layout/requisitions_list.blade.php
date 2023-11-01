@@ -157,7 +157,8 @@
 @elseif($user->type == 'department representative')
 
 @forelse($requisitions as $requisition)
-
+  @foreach($users as $user)
+    @if($requisition->user_id == $user->id)
 
   <tr align="center">
     <td>{{$requisition->id}}</td>
@@ -233,6 +234,9 @@
         </div>
       </div>
     </div>
+    @endif
+    @endforeach
+   
 @empty
   <li class="list-group-item list-group-item-danger">Entry not found</li>  
 @endforelse
