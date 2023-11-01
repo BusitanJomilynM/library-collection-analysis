@@ -53,6 +53,21 @@ class TagController extends Controller
             }
         }
 
+        if($user->type === 'staff librarian') {
+            if(request('search')) { 
+                $tags = Tag::where('book_barcode', 'like', '%' . request('search') . '%')
+                ->orwhere('department', 'like', '%' . request('search') . '%')
+                ->orwhere('suggest_book_subject', 'like', '%' . request('search') . '%')
+                ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+
+            else{
+            $tags = Tag::paginate(10);
+            $user = Auth::user();
+            $users = User::all();
+            }
+        }  
+
         return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users]);
     }
 
