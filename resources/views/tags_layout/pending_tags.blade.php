@@ -20,7 +20,7 @@
 </form>
 </div>
 
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('subjects.index') }}">Back to list</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('tags.index') }}">Back to list</a>
 
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
@@ -32,7 +32,7 @@
   </tr>
 </thead>
 
-@forelse($pending as $pendingt)
+@forelse($pending2 as $pendingt)
 <tbody>
   <tr align="center">
     <td>{{$pendingt->id}}</td>
@@ -70,7 +70,6 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-danger" role="button">Decline</button>
             </form>
-            <!-- <a class="btn btn-primary" href="{{ route('tags.edit', $pendingt->id) }}" role="button">Edit</a> -->
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}">Delete</a>
     </div>
@@ -92,7 +91,7 @@
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}" disabled>Delete</a>
     </div>  
-
+    @endif
   
     </td>
   </tr>
@@ -128,7 +127,7 @@
 </table>
 <div class="d-flex">
     <div class="mx-auto">
-      <?php echo $pending->render(); ?>
+      <?php echo $pending2->render(); ?>
     </div>
 </div>
 @endsection

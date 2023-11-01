@@ -20,7 +20,7 @@
 </div>
 
 @if($user->type == 'technician librarian')
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending tags</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending Subject</a>
 @endif
 
 <table class="table table-bordered" style="width:100%">

@@ -18,6 +18,7 @@ class Book extends Model
         'book_sublocation',
         'book_subject',
         'book_copynumber',
+        'book_volume',
         'book_publisher',
         'book_lccn',
         'book_isbn',

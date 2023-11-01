@@ -171,16 +171,16 @@ class TagController extends Controller
         $users = User::all();
 
         if(request('search')) { 
-            $pendingt= Tag::where('book_barcode', 'like', '%' . request('book_barcode') . '%')
+            $pending2= Tag::where('book_barcode', 'like', '%' . request('book_barcode') . '%')
             ->orwhere('suggest_book_subject', 'like', '%' . request('suggest_book_subject') . '%')
             ->orwhere('department', 'like', '%' . request('search') . '%')->paginate(5)->withQueryString();
         }
 
         else{
-            $pending = Tag::where('status', 'like', '0')->paginate(10);
+            $pending2 = Tag::where('status', 'like', '0')->paginate(10);
         }
 
-        return view('tags_layout.pending_tags', ['pending'=>$pending, 'users'=>$users]);
+        return view('tags_layout.pending_tags', ['pending2'=>$pending2, 'users'=>$users]);
     }
 
 }
