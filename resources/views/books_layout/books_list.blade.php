@@ -49,6 +49,7 @@
 
     </td>
     <td><a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Edit</a>
+    <!-- <a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Details</a> -->
         <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
         data-action="{{ route('archiveBook', $book->id) }}">Archive</a> 
     </td>

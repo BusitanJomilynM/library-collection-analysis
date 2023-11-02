@@ -171,7 +171,7 @@ class BookController extends Controller
 
     public function createPDFBook() {
         // retreive all records from db    
-            $books = Book::where('book_tag', 'like', '%' . request('search') . '%')->get();
+            $books = Book::where('book_subject', 'like', '%' . request('search') . '%')->get();
             $pdf = pdf::loadView('books_layout.pdf_view', compact('books'))->setPaper('a4', 'landscape');
 
             return $pdf->stream('book_report.pdf');    
