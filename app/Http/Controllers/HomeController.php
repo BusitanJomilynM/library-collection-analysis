@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\User;
 use App\Models\Requisition;
+use App\Models\Tag;
 
 use Illuminate\Http\Request;
 
@@ -42,8 +43,9 @@ class HomeController extends Controller
         $user = Auth::user();
         $requisitions = Requisition::all();
         $pending = Requisition::where('status', 'like', '0')->count();
+        $pendingsubject = Tag::where('status', 'like', '0')->count();
 
-        return view('technicianHome',  ['user'=>$user, 'requisitions'=>$requisitions, 'pending'=>$pending]);
+        return view('technicianHome',  ['user'=>$user, 'requisitions'=>$requisitions, 'pending'=>$pending, 'pendingsubject' => $pendingsubject]);
     } 
 
     /**
