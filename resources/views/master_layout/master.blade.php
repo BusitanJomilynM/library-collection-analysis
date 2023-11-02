@@ -24,7 +24,7 @@
     
 
 </head>
-<body>
+<body class="container-fluid">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

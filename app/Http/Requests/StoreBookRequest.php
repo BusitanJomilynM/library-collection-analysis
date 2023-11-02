@@ -41,7 +41,7 @@ class StoreBookRequest extends FormRequest
             'book_barcode.required' => 'Fill out book barcode',
             'book_title.required' => 'Fill out book title',
             'book_author.required' => "Fill out book's author",
-            'book_copyrightyear.required' => 'Fill out book release date',
+            'book_copyrightyear.required' => 'Fill out book copyright year',
             'sublocation.required' => 'Select book location',
             'book_sublocation.required' => 'Fill out tags ',
             'book_barcode.unique' => 'A book with that barcode is already registered',

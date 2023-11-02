@@ -13,7 +13,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+<div class="two-col">
+    <div class="col1">
         <label>Call Number</label>
         <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" value="{{$book->book_callnumber}}" minlength="4" maxlength="25">
         @error('book_callnumber')
@@ -21,13 +22,14 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col2">
         <label>Bar Code</label>
         <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode}}" minlength="4" maxlength="25"> 
         @error('book_barcode')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
+</div>
 
     <div class="form-group">
         <label>Author</label>
@@ -57,14 +59,25 @@
             @enderror
     </div>
 
-    <div class="form-group">
+<div class="two-col">
+    <div class="col1">
         <label>Copyright Year</label>
-        <input class="form-control" type="number" name="book_copyrightyear" id="book_copyrightyear" value="{{$book->book_copyrightyear}}">
-        @error('book_copyrightyear')
+            <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" value="{{ old('book_copyrightyear') }}">
+                <option value="">--Select Year--</option>
+                @for($x=1980 ; $x <= 2030 ; $x++)
+                <option value="{{$x}}" {{ old('book_copyrightyear') == $x || $book->book_copyrightyear == $x ? 'selected' : '' }}>{{$x}}</option>
+                @endfor
+            </select>
+</div>
+
+    <div class="col2">
+        <label>Edition</label>
+        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{$book->book_edition}}" minlength="4" maxlength="50">
+        @error('book_edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-    
+</div>  
 
     <div class="form-group">
         <label>Tags</label>
@@ -84,34 +97,50 @@
         @enderror
     </div>
     
-
-    <div class="form-group">
+<div class="two-col">
+    <div class="col1">
         <label>LCCN</label>
         <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn" value="{{$book->book_lccn}}" minlength="4" maxlength="50">
         @error('book_lccn')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-    <div class="form-group">
+    <div class="col2">
         <label>ISBN</label>
         <input class="form-control" type="text" name="book_isbn" id="book_isbn" value="{{$book->book_isbn}}">
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
+</div>
     
-    <div class="form-group">
-        <label>Edition</label>
-        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{$book->book_edition}}" minlength="4" maxlength="50">
-        @error('book_edition')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-    </div>
-
+<br>
 
 <button type="submit" class="btn btn-primary">Submit</button>
 <a class="nav-link" href="{{ route('books.index') }}">Cancel</a>
 
 </form>
+
+<style> 
+.two-col {
+    overflow: hidden;/* Makes this div contain its floats */
+}
+
+.two-col .col1,
+.two-col .col2 {
+    width: 49%;
+}
+
+.two-col .col1 {
+    float: left;
+}
+
+.two-col .col2 {
+    float: right;
+}
+
+.two-col label {
+    display: block;
+}</style>
 
 @endsection
