@@ -46,6 +46,14 @@
         @enderror
     </div>
 
+    <div class="form-group">
+        <label>Volume</label>
+        <input class="form-control @error('book_volume') is-invalid @enderror" type="text" name="book_volume" id="book_volume" value="{{ old('book_copynumber') }}" pattern="\d*" minlength="1" maxlength="3">
+        @error('book_volume')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
 
     <div class="form-group">
         <label>Sublocation</label>

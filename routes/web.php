@@ -44,19 +44,27 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/book/restore/{book}', [BookController::class, 'restoreBook'])->name('restoreBook');
     Route::get('/book/restoreUpdate/{book}', [BookController::class, 'restoreUpdate'])->name('restoreUpdate');
     Route::get('/archives', [BookController::class, 'archive'])->name('archive');
+
+    Route::get('/requisitions/pendingRequisitions', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
+    Route::get('/pending', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
+    Route::get('/requisition/acceptStatus/{requisition}', [RequisitionController::class, 'changeStatus'])->name('changeStatus');
+    Route::get('/requisition/declineStatus/{requisition}', [RequisitionController::class, 'changeStatus2'])->name('changeStatus2');
+
+    Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
+    Route::get('/pendingt', [TagController::class, 'pendingTags'])->name('pendingTags');
+    Route::get('/tag/accept/{tag}', [TagController::class, 'accept'])->name('accept');
+    Route::get('/tag/decline/{tag}', [TagController::class, 'decline'])->name('decline');
+
+    
 });
 
 Route::middleware(['auth', 'user-access:technician librarian'])->group(function () {
     Route::get('/technician/home', [HomeController::class, 'technicianHome'])->name('technician.home');
     Route::get('books/edit/{book}', [BookController::class, 'edit'])->name('books.edit');
     Route::resource('/users', UserController::class);
-    Route::get('/requisitions/pendingRequisitions', [TagController::class, 'pendingRequisitions'])->name('pendingRequisitions');
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
-    Route::get('/requisition/acceptStatus/{requisition}', [RequisitionController::class, 'changeStatus'])->name('changeStatus');
-    Route::get('/requisition/declineStatus/{requisition}', [RequisitionController::class, 'changeStatus2'])->name('changeStatus2');
-    Route::get('/pending', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
-    Route::get('/tag/accept/{tag}', [TagController::class, 'accept'])->name('accept');
-    Route::get('/tag/decline/{tag}', [TagController::class, 'decline'])->name('decline');
+
+    
 });
 
 Route::middleware(['auth', 'user-access:staff librarian'])->group(function () {
@@ -65,7 +73,7 @@ Route::middleware(['auth', 'user-access:staff librarian'])->group(function () {
 
 Route::middleware(['auth', 'user-access:department representative'])->group(function () {
     Route::get('/representative/home', [HomeController::class, 'representativeHome'])->name('representative.home');
-    Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
+    // Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
 
 });
 

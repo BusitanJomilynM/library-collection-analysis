@@ -20,36 +20,32 @@
 </form>
 </div>
 
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('subjects.index') }}">Back to list</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('tags.index') }}">Back to list</a>
 
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
+    <th>Requested by</th>
     <th>Department</th>
     <th>Book Barcode</th>
     <th>Suggested Tags</th>
+    <th>Status</th>
     <th>Actions</th>
   </tr>
 </thead>
 
-@forelse($pending as $pendingt)
+@forelse($pending2 as $pendingt)
 <tbody>
   <tr align="center">
-    <td>{{$pendingt->id}}</td>
+     <td>@foreach($users as $user)
+      @if($user->id == $pendingt->user_id)
+      {{$user->first_name}} {{$user->last_name}}
+      @endif
+      @endforeach
+    </td>    
     <td>{{$pendingt->department}}</td>
     <td>{{$pendingt->book_barcode}}</td>
-    <td>{{$pendingt->suggest_book_subject}}</td>
-
-    <td>
-      @if($pendingt->type == 'technician librarian')
-      Technician Librarian
-      @elseif($pendingt->type == 'staff librarian')
-      Staff Librarian
-      @elseif($pendingt->type == 'department representative')
-      Department Representative
-      @endif
-    </td>
-    <td>{{$pendingt->department}}</td>
+    <td>{{$pendingt->suggest_book_subject}} </td>
     <td>
     @if($pendingt->status == 0)
      Pending
@@ -70,7 +66,6 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-danger" role="button">Decline</button>
             </form>
-            <!-- <a class="btn btn-primary" href="{{ route('tags.edit', $pendingt->id) }}" role="button">Edit</a> -->
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}">Delete</a>
     </div>
@@ -92,7 +87,7 @@
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}" disabled>Delete</a>
     </div>  
-
+    @endif
   
     </td>
   </tr>
@@ -128,7 +123,7 @@
 </table>
 <div class="d-flex">
     <div class="mx-auto">
-      <?php echo $pending->render(); ?>
+      <?php echo $pending2->render(); ?>
     </div>
 </div>
 @endsection

@@ -34,5 +34,14 @@ class UserSeeder extends Seeder
             'type' => '2',
             'password' => '59865986'
         ]);
+        User::create([
+            'first_name' => 'John',
+            'middle_name' => 'Mane',
+            'last_name' => 'doe',
+            'email' => 'staff@mail.com',
+            'school_id' => '20164152',
+            'type' => '1',
+            'password' => '33332222',
+        ]);
     }
 }

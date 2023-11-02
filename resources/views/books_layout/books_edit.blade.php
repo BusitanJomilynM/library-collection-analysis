@@ -40,9 +40,17 @@
     </div>
 
     <div class="form-group">
-        <label>Copy Number</label>
+        <label>Number of Copies</label>
         <input class="form-control @error('book_copynumber') is-invalid @enderror" type="text" name="book_copynumber" id="book_copynumber" value="{{$book->book_copynumber}}" minlength="2" maxlength="40">
         @error('book_copynumber')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>Volume</label>
+        <input class="form-control @error('book_volume') is-invalid @enderror" type="text" name="book_volume" id="book_volume" value="{{$book->book_volume}}" minlength="2" maxlength="40">
+        @error('book_volume')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>

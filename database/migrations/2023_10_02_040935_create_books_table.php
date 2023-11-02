@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('book_callnumber');
             $table->string('book_barcode')->nullable()->unique();
             $table->string('book_copynumber');
+            $table->string('book_volume')->nullable();
             $table->string('book_author');
             $table->integer('book_copyrightyear');
             $table->string('book_sublocation');
