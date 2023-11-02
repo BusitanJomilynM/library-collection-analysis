@@ -220,5 +220,17 @@ class BookController extends Controller
         return view('books_layout.archived_books', ['archives'=>$archives,'user'=>$user]);
 
     }
+    public function view_bookdetails(Book $book)
+    {
+            return view('books_layout.view_bookdetails', compact('book'));
+
+    }
+
+    
+    public function book_createcopy(Book $book)
+    {
+            return view('books_layout.book_createcopy', compact('book'));
+    }
+
     
 }

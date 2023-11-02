@@ -37,6 +37,7 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     Route::resource('/tags', TagController::class);
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
     Route::get('/pdf_viewbooks', [BookController::class, 'createPDFBook'])->name('createPDFBook');
+
 });
 
 Route::group(['auth', ['user-access:technician librarian|staff librarian']], function () {
@@ -55,12 +56,17 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/tag/accept/{tag}', [TagController::class, 'accept'])->name('accept');
     Route::get('/tag/decline/{tag}', [TagController::class, 'decline'])->name('decline');
 
-    
+
 });
 
 Route::middleware(['auth', 'user-access:technician librarian'])->group(function () {
     Route::get('/technician/home', [HomeController::class, 'technicianHome'])->name('technician.home');
     Route::get('books/edit/{book}', [BookController::class, 'edit'])->name('books.edit');
+    
+    Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
+    Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
+
+
     Route::resource('/users', UserController::class);
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
 

@@ -27,10 +27,12 @@
 <thead class="thead-dark">
   <tr align="center">
     <th>Book Title</th>
+    <th>Call Number</th>
     <th>Author</th>
-    <th>Copyright Year</th>
+
+    <!-- <th>Copyright Year</th>
     <th>Sublocation</th>
-    <th>Subject</th>
+    <th>Subject</th> -->
     <th>Actions</th>
   </tr>
 </thead>
@@ -40,18 +42,14 @@
 <tbody>
   <tr align="center">
     <td>{{$book->book_title}}</td>
+    <td>{{$book->book_callnumber}}</td>
     <td>{{$book->book_author}}</td>
-    <td>{{$book->book_copyrightyear}}</td>
-    <td>{{$book->book_sublocation}}</td>
-    <td><?php $t = $book->book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?>
 
-    </td>
-    <td><a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Edit</a>
-    <!-- <a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Details</a> -->
-        <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
-        data-action="{{ route('archiveBook', $book->id) }}">Archive</a> 
+    <td>
+      <!-- <a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Edit</a>  -->
+    <a class="btn btn-primary" href="{{ route('books.view_bookdetails', $book->id) }}" role="button">Details</a>
+        <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
+        data-action="{{ route('archiveBook', $book->id) }}">Archive</a>  -->
     </td>
   </tr>
   </tbody>
@@ -93,10 +91,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Author</th>
-    <th>Copyright Year</th>
-    <th>Sublocation</th>
-    <th>Subjects</th>
-    <th>Actions</th>
+
   </tr>
 </thead>
 
@@ -106,11 +101,7 @@
   <tr align="center">
     <td>{{$book->book_title}}</td>
     <td>{{$book->book_author}}</td>
-    <td>{{$book->book_copyrightyear}}</td>
-    <td>{{$book->book_sublocation}}</td>
-    <td><?php $t = $book->book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?>
+
     </td>
     <td><a class="btn btn-primary" href="{{ route('tags.create', ['book_barcode' => $book->book_barcode]) }}" role="button">Suggest Subject</a></td>
 
@@ -131,10 +122,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Author</th>
-    <th>Copyright Year</th>
-    <th>Sublocation</th>
-    <th>Tags</th>
-    <th>Actions</th>
+
   </tr>
 </thead>
 
@@ -144,11 +132,7 @@
   <tr align="center">
     <td>{{$book->book_title}}</td>
     <td>{{$book->book_author}}</td>
-    <td>{{$book->book_copyrightyear}}</td>
-    <td>{{$book->book_sublocation}}</td>
-    <td><?php $t = $book->book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?>
+
     </td>
     <td><a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
         data-action="{{ route('archiveBook', $book->id) }}">Archive</a> </td>
