@@ -124,9 +124,9 @@
   <li class="list-group-item list-group-item-danger">Entry not found</li>  
 @endforelse
 
-
+<!-- Department Representative -->
 @elseif($user->type == 'department representative')
-
+<br>
 @forelse($tags as $tag)
   @foreach($users as $user)
     @if($tag->user_id == $user->id)
@@ -150,9 +150,14 @@
       @endif</td>
 
     <td>
+    @if($tag->status == 0)
       <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button">Edit</a>
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
       data-action="{{ route('tags.destroy', $tag->id) }}">Delete</a></td>
+    @else
+    <a class="btn btn-primary" role="button" disabled>Edit</a>
+      <a data-toggle="modal" class="btn btn-danger" disabled>Delete</a></td>
+    @endif
   </tr>
 
   <!-- Modal -->
@@ -168,7 +173,7 @@
             <div class="modal-body">
               @csrf
               @method('DELETE')
-              <h5 class="text-center">Delete request for {{$tag->book_title}}?
+              <h5 class="text-center">Delete request for {{$tag->book_barcode}}?
                
             </div>
             <div class="modal-footer">
@@ -189,7 +194,7 @@
 
 <!-- STAFF LIBRARIAN -->
 @elseif($user->type == 'staff librarian')
-
+<br>
 @forelse($tags as $tag)
   @foreach($users as $user)
     @if($tag->user_id == $user->id)
