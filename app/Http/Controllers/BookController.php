@@ -69,6 +69,10 @@ class BookController extends Controller
             ->orwhere('book_author', 'like', '%' . request('search') . '%')
             ->orwhere('book_copyrightyear', 'like', '%' . request('search') . '%')
             ->orwhere('book_sublocation', 'like', '%' . request('search') . '%')
+            ->orwhere('book_publisher', 'like', '%' . request('search') . '%')
+            ->orwhere('book_lccn', 'like', '%' . request('search') . '%')
+            ->orwhere('book_isbn', 'like', '%' . request('search') . '%')
+            ->orwhere('book_edition', 'like', '%' . request('search') . '%')
             ->orwhere('book_subject', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
         } 
     
