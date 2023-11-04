@@ -24,13 +24,15 @@ class StoreBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'book_callnumber'=>'required|unique:books',
+            'book_callnumber'=>'required',
             'book_barcode'=>'required|unique:books',
             'book_title'=>'required',
             'book_author'=>'required',
             'book_copyrightyear'=>'required',
             'book_sublocation'=>'required',
             'book_subject'=>'required',
+            // 'book_edition'=>'required',
+            // 'book_volume'=>'required',
             'book_copynumber'=>'required',
             'book_publisher'=>'required',
             'book_lccn'=>'required',
@@ -47,8 +49,8 @@ class StoreBookRequest extends FormRequest
             'book_title.required' => 'Fill out book title',
             'book_author.required' => "Fill out book's author",
             'book_copyrightyear.required' => 'Fill out book copyright year',
-            'sublocation.required' => 'Select book location',
-            'book_sublocation.required' => 'Fill out tags ',
+            // 'sublocation.required' => 'Select book location',
+            'book_sublocation.required' => 'Select book location ',
             'book_barcode.unique' => 'A book with that barcode is already registered',
             'book_copynumber.required'=>'Number of copies required',
             'book_publisher.required'=>'Fill out book publisher',
