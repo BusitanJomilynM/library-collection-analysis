@@ -6,6 +6,7 @@ use App\Models\Book;
 use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\UpdateBookRequest;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
@@ -196,6 +197,15 @@ class TagController extends Controller
         }
 
         return view('tags_layout.pending_tags', ['pending2'=>$pending2, 'users'=>$users]);
+    }
+
+    public function updateTags(Request $request, Book $book){
+
+        $users = User::all();
+        $books = Book::all();
+        $tags = Tag::all();
+
+        return view('tags_layout.change_tags', ['books'=>$books,'tags'=>$tags, 'users'=>$users]);
     }
 
 }

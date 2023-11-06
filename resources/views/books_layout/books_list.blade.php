@@ -30,6 +30,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Call Number</th>
+    <th>Barcode</th>
     <th>Author</th>
 
     <!-- <th>Copyright Year</th>
@@ -45,6 +46,7 @@
   <tr align="center">
     <td>{{$book->book_title}}</td>
     <td>{{$book->book_callnumber}}</td>
+    <td>{{$book->book_barcode}}</td>
     <td>{{$book->book_author}}</td>
 
     <td>

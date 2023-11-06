@@ -228,6 +228,8 @@
             <button type="submit" class="btn btn-success" role="button">Accept</button>
         </form>
 
+     
+
         <form action="{{ route('decline', $tag->id) }}" method="POST">
             {{ csrf_field() }}
             {{ method_field('GET') }}
