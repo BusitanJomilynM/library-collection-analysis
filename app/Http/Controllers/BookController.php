@@ -11,8 +11,10 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Pagination\Paginator;
-use Barryvdh\DomPDF\Facade\Pdf;
+ use Barryvdh\DomPDF\Facade\Pdf;
 use Codedge\Fpdf\Fpdf\Fpdf;
+// use Barryvdh\DomPDF\Facade as PDF;
+
 
 class BookController extends Controller
 {
@@ -173,13 +175,47 @@ class BookController extends Controller
         }
     }
 
-    public function createPDFBook() {
-        // retreive all records from db    
-            $books = Book::where('book_subject', 'like', '%' . request('search') . '%')->get();
-            $pdf = pdf::loadView('books_layout.pdf_view', compact('books'))->setPaper('a4', 'landscape');
+    // public function createPDFBook() {
+    //     // retreive all records from db    
+    //         $books = Book::where('book_subject', 'like', '%' . request('search') . '%')->get();
+    //         $pdf = pdf::loadView('books_layout.pdf_view', compact('books'))->setPaper('a4', 'landscape');
 
-            return $pdf->stream('book_report.pdf');    
+    //         return $pdf->stream('book_report.pdf');    
+    // }
+
+        public function booklistPdf(Request $request, Book $book)
+    {
+         $book->update($request->all()); 
+        return view('books_layout.booklist_pdf', ['book'=>$book]);
     }
+
+
+    public function generatePdf(Request $request)
+    {
+        $books = Book::select();
+
+        if ($request->input('includeTitle')) {
+            $books->addSelect('book_title');
+        }
+
+        if ($request->input('includeAuthor')) {
+            $books->addSelect('book_author');
+        }
+
+        if ($request->input('includeCopyrightYear')) {
+            $books->addSelect('book_copyrightyear');
+        }
+
+        // Add more conditions based on user selections
+
+        $books = $books->get();
+
+        $pdf = PDF::loadView('books_layout.booklist_pdf', compact('books'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream('generated-pdf.pdf');        
+    }
+    
+        
 
     public function archiveBook(Request $request, Book $book){
 
