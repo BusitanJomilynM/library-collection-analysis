@@ -61,8 +61,9 @@
                                 <h5 class="text-center">Archive {{ $book->book_title }}?</h5>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 <button type="submit" class="btn btn-danger">Archive</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                
                             </div>
                         </form>
                     </div>
