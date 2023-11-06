@@ -114,7 +114,6 @@
 @endif
 @empty
 <li class="list-group-item list-group-item-danger">Entry not found</li> 
-
 @endforelse
 
 <!-- staff librarian -->

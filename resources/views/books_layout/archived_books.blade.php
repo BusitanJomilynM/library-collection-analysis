@@ -14,8 +14,8 @@
 
 <div>
 <form style="margin:auto;max-width:300px">
-    <input type="search" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <input class="btn btn-primary my-2 my-sm-0" type="submit" value="Search">
+    <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
+    <input class="button btn-primary my-2 my-sm-0" type="submit" value="Search">
 </form>
 </div>
 
@@ -54,6 +54,15 @@
     </td>
   </tr>
 </tbody>
+
+<style> 
+form { 
+  display: flex; 
+}
+input[type=text] 
+{ flex-grow: 1; 
+}
+</style>
 
 
 @endforeach
