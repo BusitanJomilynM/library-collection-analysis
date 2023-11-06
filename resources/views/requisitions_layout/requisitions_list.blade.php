@@ -18,6 +18,7 @@
     <input class="button btn-primary my-2 my-sm-0" type="submit" value="Search">
 </form>
 </div>
+<br>
 
 @if($user->type == 'technician librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a>

@@ -19,6 +19,8 @@
 </form>
 </div>
 
+<br>
+
 @if($user->type == 'technician librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
 <a class="btn btn-primary" href="{{ route('books.create') }}" >Add Book</a>
@@ -91,6 +93,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Author</th>
+    <th>Action</th>
 
   </tr>
 </thead>
@@ -122,6 +125,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Author</th>
+    <th>Action</th>
 
   </tr>
 </thead>

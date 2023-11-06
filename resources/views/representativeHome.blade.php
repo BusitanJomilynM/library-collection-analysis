@@ -25,7 +25,7 @@
                     <div class="float-child">
                         <div class="card text-center" style="width: 18rem;">
                             <div class="card-body">
-                                <a class="btn btn-primary" href="{{ route('tags.create') }}">Create Subject Request</a>   
+                                <a class="btn btn-primary" href="{{ route('books.index') }}">Create Subject Request</a>   
                             </div>
                         </div>
                     </div>
