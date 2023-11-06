@@ -57,6 +57,8 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/tag/accept/{tag}', [TagController::class, 'accept'])->name('accept');
     Route::get('/tag/decline/{tag}', [TagController::class, 'decline'])->name('decline');
 
+    Route::get('/tag/update/{tag}', [TagController::class, 'updateTags'])->name('updateTags');
+
 
 
     

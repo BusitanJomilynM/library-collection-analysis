@@ -14,8 +14,8 @@
 
 <div>
 <form style="margin:auto;max-width:300px">
-    <input type="search" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <input class="btn btn-primary my-2 my-sm-0" type="submit" value="Search">
+    <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
+    <input class="button btn-primary my-2 my-sm-0" type="submit" value="Search">
 </form>
 </div>
 
@@ -189,6 +189,7 @@
 
 @empty
   <li class="list-group-item list-group-item-danger">Entry not found</li>  
+  
 @endforelse
 
 
@@ -226,6 +227,8 @@
             {{ method_field('GET') }}
             <button type="submit" class="btn btn-success" role="button">Accept</button>
         </form>
+
+     
 
         <form action="{{ route('decline', $tag->id) }}" method="POST">
             {{ csrf_field() }}
@@ -289,14 +292,20 @@
 @endforelse
 @endif
 
-
-
-
 </table>
 <div class="d-flex">
     <div class="mx-auto">
       <?php echo $tags->render(); ?>
     </div>
 </div>
+
+<style> 
+form { 
+  display: flex; 
+}
+input[type=text] 
+{ flex-grow: 1; 
+}
+</style>
 
 @endsection

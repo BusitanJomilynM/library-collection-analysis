@@ -44,23 +44,18 @@
 
     <div class="form-group">
         <label>Sublocation</label>
+        <input class="form-control" type="text" name="book_sublocation" id="book_sublocation" value="{{ $book->book_sublocation }}" readonly>
         <input type="hidden" name="book_sublocation" value="{{ $book->book_sublocation }}">
-        <span>{{ $book->book_sublocation }}</span>
+      
     </div>
 
 
     <div class="two-col">
         <div class="col1">
-                <label>Copyright Year</label>
-            <select class="form-control" name="book_copyrightyear" id="book_copyrightyear" style="display: none;">
-                @for ($x = 1980; $x <= 2030; $x++)
-                    <option value="{{ $x }}" {{ old('book_copyrightyear') == $x || $book->book_copyrightyear == $x ? 'selected' : '' }}></option>
-                @endfor
-            </select>
-            <span id="selected_copyright_year">
-                {{ old('book_copyrightyear', $book->book_copyrightyear) }}
-            </span>        
-    </div>
+            <label>Copyright Year</label>
+            <input class="form-control" type="text" name="book_copyrightyear" id="book_copyrightyear" value="{{ $book->book_copyrightyear }}" readonly>
+            <input type="hidden" name="book_copyrightyear" id="book_copyrightyear" value="{{ $book->book_copyrightyear }}">
+        </div>
 
         <div class="col2">
             <label>Edition</label>

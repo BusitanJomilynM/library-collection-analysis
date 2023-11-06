@@ -14,10 +14,12 @@
 
 <div>
 <form style="margin:auto;max-width:300px">
-    <input type="search" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <input class="btn btn-primary my-2 my-sm-0" type="submit" value="Search">
+    <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
+    <input class="button btn-primary my-2 my-sm-0" type="submit" value="Search">
 </form>
 </div>
+
+<br>
 
 @if($user->type == 'technician librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
@@ -30,6 +32,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Call Number</th>
+    <th>Barcode</th>
     <th>Author</th>
 
     <!-- <th>Copyright Year</th>
@@ -45,6 +48,7 @@
   <tr align="center">
     <td>{{$book->book_title}}</td>
     <td>{{$book->book_callnumber}}</td>
+    <td>{{$book->book_barcode}}</td>
     <td>{{$book->book_author}}</td>
 
     <td>
@@ -94,6 +98,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Author</th>
+    <th>Action</th>
 
   </tr>
 </thead>
@@ -114,7 +119,6 @@
 @endif
 @empty
 <li class="list-group-item list-group-item-danger">Entry not found</li> 
-
 @endforelse
 
 <!-- staff librarian -->
@@ -125,6 +129,7 @@
   <tr align="center">
     <th>Book Title</th>
     <th>Author</th>
+    <th>Action</th>
 
   </tr>
 </thead>
@@ -183,4 +188,13 @@
 
 <br>
 
+
+<style> 
+form { 
+  display: flex; 
+}
+input[type=text] 
+{ flex-grow: 1; 
+}
+</style>
 @endsection
