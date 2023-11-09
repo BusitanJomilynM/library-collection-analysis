@@ -15,48 +15,36 @@
 
 <h2>Generate PDF</h2>
 
-<form method="POST" action="{{ route('generatePdf') }}">
+<!-- booklist_pdf.blade.php -->
+<form method="GET" action="{{ route('booklist_pdf') }}">
     @csrf
-    <label>
-        <input type="checkbox" name="includeTitle" value="1"> Include Title
+    <label for="booktitle">
+        <input type="checkbox" id="booktitle" name="booktitle"> Book Title
     </label>
     <br>
-    <label>
-        <input type="checkbox" name="includeAuthor" value="1"> Include Author
-    </label>
-    <br>
-    <label>
-        <input type="checkbox" name="includeCopyrightYear" value="1"> Include Copyright Year
+    <label for="bookcallnumber">
+        <input type="checkbox" id="bookcallnumber" name="bookcallnumber"> Book Callnumber
     </label>
     <br>
 
-    <!-- Add more checkboxes for other data to include -->
-
-    <button type="submit">Generate PDF</button>
+    <button type="submit">Submit</button>
 </form>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Generated PDF</title>
-</head>
-<body>
-    @if(isset($book_title))
-    <p>Title: {{ $book_title }}</p>
-    @endif
-
-    @if(isset($book_author))
-    <p>Author: {{ $book_author }}</p>
-    @endif
-
-    @if(isset($book_copyrightyear))
-    <p>Copyright Year: {{ $book_copyrightyear }}</p>
-    @endif
-
-    <!-- Add more data as needed -->
-
-</body>
-</html>
-
+<script>
+    function showNotification(checkbox, checkboxName) {
+        if (checkbox.checked) {
+            alert(checkboxName + ' checkbox is clicked!');
+        }
+    }
+</script>
+@if(isset($data))
+    <h2>Retrieved Data:</h2>
+    <ul>
+        @foreach($data as $item)
+            <li>{{ $item->book_title }}</li>
+            <li>{{ $item->book_callnumber }}</li>
+        @endforeach
+    </ul>
+@endif
 @endsection
 
