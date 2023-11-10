@@ -4,7 +4,8 @@
 
 <form action="{{ route('users.store') }}" method="POST">
     @csrf
-    <div class="form-group">
+<div class="three-col">
+    <div class="col1">
         <label>First Name</label>
         <input class="form-control @error('first_name') is-invalid @enderror" type="text" name="first_name" id="first_name"  minlength="2" maxlength="30">
         @error('first_name')
@@ -12,19 +13,20 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col2">
         <label>Middle Name</label>
             <input class="form-control" type="text" name="middle_name" id="middle_name" minlength="2" maxlength="30">
     </div>
 
-    <div class="form-group">
+    <div class="col3">
         <label>Last Name</label>
         <input class="form-control @error('last_name') is-invalid @enderror" type="text" name="last_name" id="last_name" minlength="2" maxlength="30">
         @error('last_name')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+</div>
+<br>
     <div class="form-group">
         <label>ID Number</label>
         <input class="form-control @error('school_id') is-invalid @enderror" name="school_id" id="school_id" type="text" pattern="\d*" minlength="8" maxlength="8">
@@ -33,7 +35,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+<div class="two-col">
+    <div class="col1">
         <label>Email</label>
         <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="email">
         @error('email')
@@ -41,14 +44,14 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col2">
         <label>Contact Number</label>
-        <input class="form-control @error('email') is-invalid @enderror" type="text" name="contact_number" id="contact_number"  pattern="\d*" minlength="12" maxlength="12">
+        <input class="form-control @error('email') is-invalid @enderror" type="text" name="contact_number" id="contact_number"  pattern="\d*" minlength="12" maxlength="12" placeholder="09XX-XXX-XXXX">
         @error('contact_number')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+</div>
     <div class="form-group">
         <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" minlength="8" maxlength="25" hidden>
         @error('password')
@@ -74,4 +77,53 @@
 
 </form>
 
+<style> 
+.three-col {
+    overflow: hidden;/* Makes this div contain its floats */
+}
+
+.three-col .col1,
+.three-col .col2,
+.three-col .col3 {
+    width: 33%;
+}
+
+.three-col .col1 {
+    float: left;
+}
+.three-col .col2 {
+    display: block;
+    display: inline-block;
+   
+    float: left;
+     margin-left: 10px;
+}
+.three-col .col3 {
+    float: right;
+}
+
+.three-col label {
+    display: block;
+}
+
+.two-col {
+    overflow: hidden;/* Makes this div contain its floats */
+}
+
+.two-col .col1,
+.two-col .col2 {
+    width: 49%;
+}
+
+.two-col .col1 {
+    float: left;
+}
+
+.two-col .col2 {
+    float: right;
+}
+
+.two-col label {
+    display: block;
+}</style>
 @endsection

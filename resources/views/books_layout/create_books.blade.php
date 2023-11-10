@@ -149,6 +149,7 @@
 
 .two-col label {
     display: block;
-}</style>
+}
+</style>
 
 @endsection
