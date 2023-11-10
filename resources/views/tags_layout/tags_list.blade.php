@@ -39,7 +39,11 @@
 @forelse($tags as $tag)
 <tbody>
   <tr align="center">
-    <td>{{$user->first_name}} {{$user->last_name}}</td>
+    <td>@foreach($users as $user)
+          @if($user->id == $tag->user_id)
+          {{$user->first_name}} {{$user->last_name}}
+          @endif
+      @endforeach</td>
     <td>{{$tag->department}}</td>
     <td>{{$tag->book_barcode}}</td>
     <td><?php $t = $tag->suggest_book_subject;
