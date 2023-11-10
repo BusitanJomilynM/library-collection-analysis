@@ -239,7 +239,7 @@ class BookController extends Controller
         return view('books_layout.restore_books', ['book'=>$book]);
     }
 
-    public function restoreUpdate(Request $request, Book $book)
+    public function restoreUpdate(UpdateBookRequest $request, Book $book)
     {
         $book->update($request->all()); 
 
