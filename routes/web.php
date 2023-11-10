@@ -37,6 +37,9 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     Route::resource('/tags', TagController::class);
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
     // Route::get('/pdf_viewbooks', [BookController::class, 'createPDFBook'])->name('createPDFBook');
+    Route::get('/users/editAccount/{id}', [UserController::class, 'editAccount'])->name('editAccount');
+    Route::get('/users/changePassword/{id}', [UserController::class, 'changePassword'])->name('changePassword');
+    Route::resource('/users', UserController::class);
 
 
 });
@@ -74,12 +77,9 @@ Route::middleware(['auth', 'user-access:technician librarian'])->group(function 
     Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
     Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
     
-    Route::resource('/users', UserController::class);
+    
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
     Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
-
-    
- 
     
 });
 

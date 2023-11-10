@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth; 
 
 use Illuminate\Http\Request;
 
@@ -25,21 +26,26 @@ class UserController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         Paginator::useBootstrap();
-        if (request('search')) {
+        if($user->type === 'technician librarian') {
+            if (request('search')) {
             $users = User::where('first_name', 'like', '%' . request('search') . '%')
             ->orWhere('middle_name', 'like', '%' . request('search') . '%')
             ->orWhere('last_name', 'like', '%' . request('search') . '%')
             ->orWhere('email', 'like', '%' . request('search') . '%')
             ->orWhere('school_id', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+        
+            else{
+            $users = User::paginate(10);
+           
+            }
         }
 
         else{
-            $users = User::paginate(10);
-           
+            return redirect()->back();
         }
-
-      
 
         $techcount = User::where('type', 'like', '0')->count();
 
@@ -122,9 +128,22 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if($user->type === 'technician librarian') {
         $user->update($request->all()); 
 
         return redirect()->route('users.index')->with('success','User successfully updated!');
+        }
+        else if($user->type === 'staff librarian') {
+            $user->update($request->all()); 
+
+            return redirect()->route('staff.home')->with('success','User successfully updated!');
+        }
+
+        else if($user->type === 'department representative') {
+            $user->update($request->all()); 
+
+            return redirect()->route('representative.home')->with('success','User successfully updated!');
+        }
     }
 
     /**
@@ -151,9 +170,26 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('success', 'Password restored');
     }
 
-    public function updatePasswordBlade(User $user)
-    {
-        return view('users_layout.change_password', compact('user'));
+    public function editAccount(User $user){
+        $user = Auth::user();
+            if ($user->id == auth()->user()->id){
+                $user = Auth::user();
+                return view('users_layout.edit_account', ['user'=>$user]);
+            }
+            else{
+                return redirect()->back();
+            }
+    }
+
+    public function changePassword(User $user){
+        $user = Auth::user();
+            if ($user->id == auth()->user()->id){
+                $user = Auth::user();
+                return view('users_layout.change_password', ['user'=>$user]);
+            }
+            else{
+                return redirect()->back();
+            }
     }
 
    
