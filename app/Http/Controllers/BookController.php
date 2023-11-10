@@ -16,6 +16,7 @@ use Illuminate\Pagination\Paginator;
  use Barryvdh\DomPDF\Facade as PDF;
 //  use PDF;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 
 
 
@@ -261,6 +262,20 @@ class BookController extends Controller
     public function book_createcopy(Request $request, Book $book)
     {
             return view('books_layout.book_createcopy', compact('book'));
+    }
+
+    
+    public function validateMaterialType(Request $request)
+    {
+        $request->validate([
+            'material_type' => 'required|in:Book,JournalMagazine,DocumentaryFilm,DVDVCD,MapsGlobes,Other',
+            'other_material_type' => Rule::requiredIf(function () use ($request) {
+                return $request->input('material_type') == 'Other';
+            }) . '|min:2|max:40',
+        ], [
+            'other_material_type.required' => 'The Other field is required when Material Type is Other.',
+        ]);
+
     }
 
     
