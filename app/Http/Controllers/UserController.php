@@ -39,7 +39,7 @@ class UserController extends Controller
            
         }
 
-     
+      
 
         $techcount = User::where('type', 'like', '0')->count();
 
