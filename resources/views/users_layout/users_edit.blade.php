@@ -68,6 +68,6 @@
 
 </form>
 
-<a class="btn btn-primary" href="{{ route('restorePassword', $user->id) }}" role="button">Restore Password</a>
+
 
 @endsection

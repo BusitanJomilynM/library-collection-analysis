@@ -36,20 +36,12 @@ class UserController extends Controller
 
         else{
             $users = User::paginate(10);
-            $techcount = User::where('type', 'like', '0')->count();
+           
         }
 
-        if(request('search')) { 
-            $users = User::where('type', '=', '0' . request('search') . 'technician librarian')->paginate(10)->withQueryString();
-        }
+     
 
-        if(request('search')) { 
-            $users = User::where('type', '=', '1' . request('search') . 'staff librarian')->paginate(10)->withQueryString();
-        }
-
-        if(request('search')) { 
-            $users = User::where('type', '=', '2' . request('search') . 'department representative')->paginate(10)->withQueryString();
-        }
+        $techcount = User::where('type', 'like', '0')->count();
 
         return view('users_layout.users_list', ['users'=>$users, 'techcount'=>$techcount]);
     }

@@ -49,9 +49,8 @@
       Department Representative
     @endif</td>
     <td><a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
-    
-    
-    
+    <a class="btn btn-primary" href="{{ route('restorePassword', $user->id) }}" role="button">Restore Password</a>
+        
     @if($user->type == 'technician librarian')  
       @if($techcount>1)
      
