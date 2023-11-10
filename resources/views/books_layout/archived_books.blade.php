@@ -30,6 +30,7 @@
     <th>Copyright Year</th>
     <th>Sublocation</th>
     <th>Subject</th>
+    <th>Reason for archive</th>
     <th>Actions</th>
   </tr>
 </thead>
@@ -44,6 +45,17 @@
     <td><?php $t = $archive->book_subject;
             $a = explode(" ", $t );
             echo implode(", ", $a ); ?>
+    </td>
+    <td>
+    @if($archive->archive_reason == 1)  
+      Lost
+    @elseif($archive->archive_reason == 2)
+      Old
+    @elseif($archive->archive_reason == 3)
+      Damaged
+    @elseif($archive->archive_reason == 4)
+      Missing
+    @endif
     </td>
     <td>
             <form action="{{ route('restoreBook', $archive->id) }}" method="POST">

@@ -41,8 +41,10 @@
                     <td>
                         <a class="btn btn-primary" href="{{ route('books.edit', ['book' => $book->id]) }}" role="button">Edit</a>
                         <a class="btn btn-primary" href="{{ route('books.book_createcopy', ['book' => $book->id]) }}" role="button">Add Copy</a>
-                        <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}"
-                           data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
+                        <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}"
+                           data-action="{{ route('archiveBook', $book->id) }}">Archive</a> -->
+
+                           <a class="btn btn-primary" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">ar</a>
                     </td>
                 </tr>
             </tbody>

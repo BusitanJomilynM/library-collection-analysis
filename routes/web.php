@@ -45,6 +45,7 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/book/archive/{book}', [BookController::class, 'archiveBook'])->name('archiveBook');
     Route::get('/book/restore/{book}', [BookController::class, 'restoreBook'])->name('restoreBook');
     Route::get('/book/restoreUpdate/{book}', [BookController::class, 'restoreUpdate'])->name('restoreUpdate');
+    Route::get('/book/archiveUpdate/{book}', [BookController::class, 'archiveUpdate'])->name('archiveUpdate');
     Route::get('/archives', [BookController::class, 'archive'])->name('archive');
 
     Route::get('/requisitions/pendingRequisitions', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
