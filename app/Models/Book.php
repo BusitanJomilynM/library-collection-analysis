@@ -23,7 +23,8 @@ class Book extends Model
         'book_lccn',
         'book_isbn',
         'book_edition',
-        'status'
+        'status',
+        'archive_reason'
     ];
 
     protected $attributes = [
