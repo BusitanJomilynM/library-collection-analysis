@@ -39,9 +39,9 @@
     </div>
 
     <div class="form-group">
-        <label>Number of Copies</label>
-        <input class="form-control @error('book_copynumber') is-invalid @enderror" type="text" name="book_copynumber" id="book_copynumber" value="{{ old('book_copynumber') }}" pattern="\d*" minlength="1" maxlength="3">
-        @error('book_copynumber')
+        <label>Purchased Date</label>
+        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ old('book_copynumber') }}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+        @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
@@ -81,7 +81,7 @@
 
     <div class="col2">
         <label>Edition</label>
-        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{ old('book_edition') }}" minlength="1" maxlength="3">
+        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{ old('book_edition') }}" minlength="1" maxlength="10">
         @error('book_edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
