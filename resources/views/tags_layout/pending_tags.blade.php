@@ -58,13 +58,13 @@
             <form action="{{ route('accept', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button">Accept</button>
+                <button type="submit" class="btn btn-success" role="button">Approve</button>
             </form>
 
             <form action="{{ route('decline', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button">Decline</button>
+                <button type="submit" class="btn btn-danger" role="button">Disapprove</button>
             </form>
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}">Delete</a>
@@ -76,13 +76,13 @@
             <form action="{{ route('accept', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button" disabled>Accept</button>
+                <button type="submit" class="btn btn-success" role="button" disabled>Approve</button>
             </form>
 
             <form action="{{ route('decline', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button" disabled>Decline</button>
+                <button type="submit" class="btn btn-danger" role="button" disabled>Disapprove</button>
             </form>
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}" disabled>Delete</a>
