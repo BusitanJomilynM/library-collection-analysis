@@ -76,42 +76,33 @@
     <td>
 
     @if($pendingr->status == 0)
-    <div style="width: 50%;">
+    <div class="flex-parent jc-center">
             <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button">Approve</button>
+                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
             </form>
-
+</div>
+<div class="flex-parent jc-center">
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button">Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
-            <a class="btn btn-primary" href="{{ route('requisitions.edit', $pendingr->id) }}" role="button">Edit</a>
+</div>
+
+<div class="flex-parent jc-center">
+            <!-- <a class="btn btn-primary" href="{{ route('requisitions.edit', $pendingr->id) }}" role="button">Edit</a> -->
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('requisitions.destroy', $pendingr->id) }}">Delete</a>
+            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i>Delete</a>
     </div>
         
         
        
 
     @else
-    <div style="width: 50%">
-            <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button" disabled>Approve</button>
-            </form>
-
-            <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button" disabled>Disapprove</button>
-            </form>
-            <a class="btn btn-primary" href="{{ route('requisitions.edit', $pendingr->id) }}" role="button" disabled>Edit</a>
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('requisitions.destroy', $pendingr->id) }}" disabled>Delete</a>
+            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i>Delete</a>
     </div>  
     @endif
   
@@ -159,6 +150,13 @@ form {
 }
 input[type=text] 
 { flex-grow: 1; 
+}
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
 }
 </style>
 @endsection

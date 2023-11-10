@@ -74,9 +74,9 @@
       @if($requisition->status == 0)
       Pending
       @elseif($requisition->status == 1)
-      Accepted 
+      Approved
       @elseif($requisition->status == 2)
-      Declined 
+      Disapproved
       @else 
       Cancelled 
       @endif
@@ -96,7 +96,7 @@
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
     </div>
 
@@ -107,26 +107,15 @@
 
     @else
     <div class="flex-parent jc-center">
-            <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button" disabled>Approve</button>
-            </form>
-</div>
-            <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button" disabled>Disapprove</button>
-            </form>
-            <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button" disabled>Edit</a>
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}" disabled>Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
     </div>  
     @endif
   
     </td>
   </tr>
   </tbody>
+
   <!-- Modal -->
 <div class="modal fade" id="deleteUserModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
@@ -192,22 +181,20 @@
     <td>@if($requisition->status == 0)
       Pending
       @elseif($requisition->status == 1)
-      Accepted 
+      Approved
       @elseif($requisition->status == 2)
-      Declined 
+      Disapproved
       @else 
       Cancelled 
       @endif</td>
     <td>
       @if($requisition->status == 0)
-      <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button">Edit</a>
+      <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button"><span>&#9776;</span>Edit</a>
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-      data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a></td>
+      data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a></td>
 
       @else
-      <a class="btn btn-primary"  role="button" disabled>Edit</a>
-      <a data-toggle="modal" class="btn btn-danger" disabled>Delete</a></td>
-
+      <a data-toggle="modal" class="btn btn-danger" disabled>No Actions Available</a></td>
       @endif
   </tr>
 
@@ -279,47 +266,37 @@
     <td>@if($requisition->status == 0)
       Pending
       @elseif($requisition->status == 1)
-      Accepted 
+      Approved
       @elseif($requisition->status == 2)
-      Declined 
+      Disapproved 
       @else 
       Cancelled 
       @endif</td>
       <td>
     @if($requisition->status == 0)
-    <div style="width: 50%;">
+    <div class="flex-parent jc-center">
             <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button">Approve</button>
+                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
             </form>
-
+</div>
+<div class="flex-parent jc-center">
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button">Disapprove</button>
+                <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
-            <!-- <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button">Edit</a> -->
+</div>
+    <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
     </div>
 
     @else
-    <div style="width: 50%">
-            <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button" disabled>Approve</button>
-            </form>
-
-            <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button" disabled>Disapprove</button>
-            </form>
-            <!-- <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button" disabled>Edit</a> -->
+    <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}" disabled>Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
     </div>  
     @endif
   

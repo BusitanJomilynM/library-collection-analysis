@@ -49,9 +49,9 @@
       @if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)
-      Accepted 
+      Approved
       @elseif($tag->status == 2)
-      Declined 
+      Disapproved
       @else 
       Cancelled 
       @endif
@@ -69,7 +69,7 @@
             <form action="{{ route('decline', $tag->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
       </div><br>
       <div class="flex-parent jc-center">        
@@ -133,9 +133,9 @@
     <td>@if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)
-      Accepted 
+      Approved
       @elseif($tag->status == 2)
-      Declined 
+      Disapproved
       @else 
       Cancelled 
       @endif</td>
@@ -208,9 +208,9 @@
     <td>@if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)
-      Accepted 
+      Approved
       @elseif($tag->status == 2)
-      Declined 
+      Disapproved
       @else 
       Cancelled 
       @endif
@@ -230,7 +230,7 @@
         <form action="{{ route('decline', $tag->id) }}" method="POST">
             {{ csrf_field() }}
             {{ method_field('GET') }}
-            <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
+            <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
         </form>
 </div>
 

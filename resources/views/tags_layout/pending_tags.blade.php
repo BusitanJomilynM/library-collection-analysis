@@ -64,7 +64,7 @@
             <form action="{{ route('decline', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
       </div><br>
       <div class="flex-parent jc-center">   
@@ -72,10 +72,8 @@
             data-action="{{ route('tags.destroy', $pendingt->id) }}"><i class="fa fa-trash"></i>Delete</a>
       </div>
         
-      
     @else
     <div class="flex-parent jc-center">
-        
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
             data-action="{{ route('tags.destroy', $pendingt->id) }}"><i class="fa fa-trash"></i>Delete</a>
     </div>  
