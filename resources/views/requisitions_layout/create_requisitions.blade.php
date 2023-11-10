@@ -14,7 +14,7 @@
 
     <div class="form-group">
         <label>Number of Copies</label>
-        <input class="form-control @error('copies') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="3" name="copies" id="copies" value="{{ old('copies') }}">
+        <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="60" name="copies" id="copies" value="{{ old('copies') }}">
         @error('copies')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -32,10 +32,12 @@
         <option value="MapsGlobes">Maps/Globes</option>
         <option value="Other">Other</option>
     </select>
+    <label>Other</label>
     <input class="form-control @if(old('material_type') == 'Other') is-invalid @endif" type="text" name="other_material_type" id="other_material_type" value="{{ old('other_material_type') }}" minlength="2" maxlength="40">
     @error('material_type')
         <span class="text-danger">{{$message}}</span>
     @enderror
+
     @error('other_material_type')
         <span class="text-danger">{{$message}}</span>
     @enderror

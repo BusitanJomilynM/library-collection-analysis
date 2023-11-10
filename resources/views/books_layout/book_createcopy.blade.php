@@ -4,7 +4,6 @@
 
 <form action="{{ route('books.store') }}" method="POST">
     @csrf
-
     <div class="form-group">
         <label>Book Title</label>
         <input class="form-control" type="text" name="book_title" id="book_title" value="{{ $book->book_title }}" minlength="1" maxlength="60" readonly>
@@ -14,26 +13,31 @@
     <div class="two-col">
         <div class="col1">
             <label>Book Callnumber</label>
-            <input class="form-control" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
+            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_callnumber" value="{{ $book->book_callnumber }}">
         </div>
 
         <div class="col2">
             <label>Book Barcode</label>
             <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{ $book->book_barcode }}" minlength="4" maxlength="25">
+            @error('book_barcode')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
         </div>
     </div>
 
     <div class="form-group">
         <label>Author</label>
         <input class="form-control" type="text" name="book_author" id="book_author" value="{{ $book->book_author }}" minlength="1" maxlength="60" readonly>
-        <!-- <input type="hidden" name="book_author" value="{{ $book->book_author }}"> -->
+        <input type="hidden" name="book_author" value="{{ $book->book_author }}">
     </div>
 
     <div class="form-group">
-        <label>Number of Copies</label>
-        <input class="form-control" type="text" name="book_copynumber" id="book_copynumber" value="{{ $book->book_copynumber }}" minlength="1" maxlength="60" readonly>
-        <input type="hidden" name="book_copynumber" value="{{ $book->book_copynumber }}">
+        <label>Purchase Date</label>
+        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ $book->book_purchasedwhen}}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
+        @error('book_purchasedwhen')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
     </div>
 
     <div class="form-group">
