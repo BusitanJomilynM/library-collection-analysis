@@ -15,7 +15,7 @@
                     @endif
                     Welcome, technician librarian {{$user->first_name}} {{$user->last_name}}. 
                 </div>
-
+              
                 <div class="float-container">
                     <div class="float-child">
                         <div class="card text-center" style="width: 18rem;">
@@ -33,6 +33,7 @@
                                 <h5 class="card-title">{{$pendingsubject}}</h5>
                                 <p class="card-text">Pending subject requests</p>
                                 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Go to pending subject requests</a>
+                                
                                 
                             </div>
                         </div>

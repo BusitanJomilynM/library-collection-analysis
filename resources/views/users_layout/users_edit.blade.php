@@ -6,8 +6,8 @@
     @csrf
     @method('PUT')
     <div class="form-group">
-        <label>User ID</label>
-            <input class="form-control" type="text" name="id" id="id" value="{{$user->id}}" readonly>
+
+            <input class="form-control" type="text" name="id" id="id" value="{{$user->id}}" hidden>
     </div>
     <div class="form-group">
         <label>First Name</label>
@@ -67,5 +67,7 @@
 <a class="nav-link" href="{{ route('users.index') }}">Cancel</a>
 
 </form>
+
+<a class="btn btn-primary" href="{{ route('restorePassword', $user->id) }}" role="button">Restore Password</a>
 
 @endsection

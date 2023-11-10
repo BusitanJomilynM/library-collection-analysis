@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -142,6 +147,24 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User deleted!');
     }
+
+    public function restorePassword(){
+       $users = User::all();
+
+            foreach ($users as $user){
+                $user->update([
+                    'password' => $user->school_id,
+                ]);
+            }
+            return redirect()->route('users.index')->with('success', 'Password restored');
+    }
+
+    public function updatePasswordBlade(User $user)
+    {
+        return view('users_layout.change_password', compact('user'));
+    }
+
+   
 
     
 }

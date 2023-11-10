@@ -66,6 +66,7 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
 
 });
 
+//technician lib
 Route::middleware(['auth', 'user-access:technician librarian'])->group(function () {
     Route::get('/technician/home', [HomeController::class, 'technicianHome'])->name('technician.home');
     Route::get('books/edit/{book}', [BookController::class, 'edit'])->name('books.edit');
@@ -75,13 +76,20 @@ Route::middleware(['auth', 'user-access:technician librarian'])->group(function 
     
     Route::resource('/users', UserController::class);
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
+    Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
+
+    
+ 
     
 });
 
+//staff lib
 Route::middleware(['auth', 'user-access:staff librarian'])->group(function () {
     Route::get('/staff/home', [HomeController::class, 'staffHome'])->name('staff.home');
 });
 
+
+//dept rep
 Route::middleware(['auth', 'user-access:department representative'])->group(function () {
     Route::get('/representative/home', [HomeController::class, 'representativeHome'])->name('representative.home');
     // Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');

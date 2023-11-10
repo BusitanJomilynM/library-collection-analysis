@@ -82,13 +82,13 @@
             <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button">Accept</button>
+                <button type="submit" class="btn btn-success" role="button">Approve</button>
             </form>
 
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button">Decline</button>
+                <button type="submit" class="btn btn-danger" role="button">Disapprove</button>
             </form>
             <a class="btn btn-primary" href="{{ route('requisitions.edit', $pendingr->id) }}" role="button">Edit</a>
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
@@ -103,13 +103,13 @@
             <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button" disabled>Accept</button>
+                <button type="submit" class="btn btn-success" role="button" disabled>Approve</button>
             </form>
 
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button" disabled>Decline</button>
+                <button type="submit" class="btn btn-danger" role="button" disabled>Disapprove</button>
             </form>
             <a class="btn btn-primary" href="{{ route('requisitions.edit', $pendingr->id) }}" role="button" disabled>Edit</a>
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"

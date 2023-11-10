@@ -23,7 +23,6 @@
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
-    <th>ID</th>
     <th>School ID Number</th>
     <th>First Name</th>
     <th>Middle Name</th>
@@ -36,7 +35,6 @@
 @forelse($users as $user)
 <tbody>
   <tr align="center">
-    <td>{{$user->id}}</td>
     <td>{{$user->school_id}}</td>
     <td>{{$user->first_name}}</td>
     <td>{{$user->middle_name}}</td>
@@ -51,6 +49,8 @@
       Department Representative
     @endif</td>
     <td><a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
+    
+    
     
     @if($user->type == 'technician librarian')  
       @if($techcount>1)
