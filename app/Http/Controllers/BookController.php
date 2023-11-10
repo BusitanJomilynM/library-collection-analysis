@@ -11,9 +11,13 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Pagination\Paginator;
- use Barryvdh\DomPDF\Facade\Pdf;
-use Codedge\Fpdf\Fpdf\Fpdf;
-// use Barryvdh\DomPDF\Facade as PDF;
+//  use Barryvdh\DomPDF\Facade\Pdf;
+// use Codedge\Fpdf\Fpdf\Fpdf;
+ use Barryvdh\DomPDF\Facade as PDF;
+//  use PDF;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
+
 
 
 class BookController extends Controller
@@ -185,37 +189,29 @@ class BookController extends Controller
 
         public function booklistPdf(Request $request, Book $book)
     {
-         $book->update($request->all()); 
-        return view('books_layout.booklist_pdf', ['book'=>$book]);
-    }
+        // $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.booklist_pdf');
+        //  $book->update($request->all()); 
+        if ($request->has('booktitle')) {
+            $data = Book::all();
+            // return view('books_layout.booklist_pdf', ['data' => $data]);
+
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('data'))->setPaper('a4', 'landscape');
+
+            return $pdf->stream('book_report.pdf');
 
 
-    public function generatePdf(Request $request)
-    {
-        $books = Book::select();
-
-        if ($request->input('includeTitle')) {
-            $books->addSelect('book_title');
         }
-
-        if ($request->input('includeAuthor')) {
-            $books->addSelect('book_author');
-        }
-
-        if ($request->input('includeCopyrightYear')) {
-            $books->addSelect('book_copyrightyear');
-        }
-
-        // Add more conditions based on user selections
-
-        $books = $books->get();
-
-        $pdf = PDF::loadView('books_layout.booklist_pdf', compact('books'))->setPaper('a4', 'portrait');
-
-        return $pdf->stream('generated-pdf.pdf');        
-    }
     
-        
+        if ($request->has('book_callnumber') && $request->input('book_callnumber') == 'on') {
+            // Callnumber checkbox is checked
+            Session::flash('notification', 'Book Callnumber checkbox is clicked!');
+
+        }
+        return view('books_layout.booklist_pdf', ['books'=>$book]);
+    }
+
+
+
 
     public function archiveBook(Request $request, Book $book){
 
@@ -266,6 +262,20 @@ class BookController extends Controller
     public function book_createcopy(Request $request, Book $book)
     {
             return view('books_layout.book_createcopy', compact('book'));
+    }
+
+    
+    public function validateMaterialType(Request $request)
+    {
+        $request->validate([
+            'material_type' => 'required|in:Book,JournalMagazine,DocumentaryFilm,DVDVCD,MapsGlobes,Other',
+            'other_material_type' => Rule::requiredIf(function () use ($request) {
+                return $request->input('material_type') == 'Other';
+            }) . '|min:2|max:40',
+        ], [
+            'other_material_type.required' => 'The Other field is required when Material Type is Other.',
+        ]);
+
     }
 
     

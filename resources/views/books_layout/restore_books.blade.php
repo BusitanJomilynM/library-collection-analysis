@@ -39,8 +39,8 @@
 
     <div class="form-group">
         
-        <input class="form-control @error('book_copynumber') is-invalid @enderror" type="text" name="book_copynumber" id="book_copynumber" value="{{$book->book_copynumber}}" minlength="2" maxlength="40" hidden>
-        @error('book_copynumber')
+        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="text" name="book_purchasedwhen" id="book_purchasedwhen" value="{{$book->book_copynumber}}" minlength="2" maxlength="40" hidden>
+        @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>

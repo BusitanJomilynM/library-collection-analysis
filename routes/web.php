@@ -58,12 +58,10 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/tag/decline/{tag}', [TagController::class, 'decline'])->name('decline');
 
     Route::get('/tag/update/{tag}', [TagController::class, 'updateTags'])->name('updateTags');
-
-
-
     
     Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
-    Route::match(['get', 'post'], '/generatePdf', [BookController::class, 'generatePDF'])->name('generatePdf');    
+    // Route::match(['get', 'post'], '/generatePdf', [BookController::class, 'generatePDF'])->name('generatePdf');    
+    Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
 
 });
 

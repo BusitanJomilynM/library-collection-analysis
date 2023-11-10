@@ -23,7 +23,7 @@
 
     <div class="col2">
         <label>Barcode</label>
-        <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode') }}" minlength="4" maxlength="25">
+        <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode') }}" minlength="2" maxlength="7">
         @error('book_barcode')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -39,9 +39,9 @@
     </div>
 
     <div class="form-group">
-        <label>Number of Copies</label>
-        <input class="form-control @error('book_copynumber') is-invalid @enderror" type="text" name="book_copynumber" id="book_copynumber" value="{{ old('book_copynumber') }}" pattern="\d*" minlength="1" maxlength="3">
-        @error('book_copynumber')
+        <label>Purchased Date</label>
+        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ old('book_copynumber') }}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+        @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
@@ -81,7 +81,7 @@
 
     <div class="col2">
         <label>Edition</label>
-        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{ old('book_edition') }}" minlength="4" maxlength="50">
+        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{ old('book_edition') }}" minlength="1" maxlength="10">
         @error('book_edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -107,7 +107,7 @@
 <div class="two-col">
     <div class="col1">
         <label>LCCN</label>
-        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn" value="{{ old('book_lccn') }}" minlength="4" maxlength="50">
+        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn" value="{{ old('book_lccn') }}" minlength="5" maxlength="13">
         @error('book_lccn')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -115,7 +115,7 @@
 
     <div class="col2">
         <label>ISBN</label>
-        <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn" value="{{ old('book_isbn') }}" minlength="4" maxlength="50">
+        <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn" value="{{ old('book_isbn') }}" minlength="10" maxlength="13">
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror

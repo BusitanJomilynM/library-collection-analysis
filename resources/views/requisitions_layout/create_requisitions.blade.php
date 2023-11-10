@@ -20,12 +20,25 @@
         @enderror
     </div>
 
+
     <div class="form-group">
-        <label>Material Type</label>
-        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="material_type" id="material_type" value="{{ old('material_type') }}">
-        @error('material_type')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+        <label for="material_type">Material Type</label>
+    <select class="form-control @error('material_type') is-invalid @enderror" name="material_type" id="material_type">
+        <option value="">--Select Material Type--</option>
+        <option value="Book">Book</option>
+        <option value="JournalMagazine">Journal/Magazine</option>
+        <option value="DocumentaryFilm">Documentary Film</option>
+        <option value="DVDVCD">DVD/VCD</option>
+        <option value="MapsGlobes">Maps/Globes</option>
+        <option value="Other">Other</option>
+    </select>
+    <input class="form-control @if(old('material_type') == 'Other') is-invalid @endif" type="text" name="other_material_type" id="other_material_type" value="{{ old('other_material_type') }}" minlength="2" maxlength="40">
+    @error('material_type')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+    @error('other_material_type')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
     </div>
     </div>
 
