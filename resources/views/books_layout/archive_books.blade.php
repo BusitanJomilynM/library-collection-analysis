@@ -129,7 +129,6 @@
             <option value="1">Lost</option>
             <option value="2">Old</option>
             <option value="3">Damaged</option>
-            <option value="4">Missing</option>
             </select>
     </div>
 

@@ -21,13 +21,15 @@
         @enderror
     </div>
 
-    <div class="form-group">
-        <label>Bar Code</label>
-        <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode}}" minlength="4" maxlength="25" > 
-        @error('book_barcode')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-    </div>
+    <div class="col2">
+    <label>Barcode</label>
+    <input class="form-control @error('book_barcode') is-invalid @enderror" 
+       type="text" name="book_barcode" id="book_barcode" 
+       value="{{ old('book_barcode', $barcode) }}" 
+       minlength="2" maxlength="7" readonly>
+    @error('book_barcode')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
 
     <div class="form-group">
        

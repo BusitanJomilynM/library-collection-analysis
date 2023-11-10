@@ -98,14 +98,24 @@ class BookController extends Controller
      */
     public function create()
     {
-        // $tags=DB::table('tags')->get();
         $user = Auth::user();
-        if($user->type === 'technician librarian') {
-            return view('books_layout.create_books');
-        }
-        else{
+        if ($user->type === 'technician librarian') {
+            $barcode = $this->generateUniqueBarcode();
+            return view('books_layout.create_books', compact('barcode'));
+        } else {
             return redirect()->back();
         }
+    }
+
+    protected function generateUniqueBarcode() {
+        $barcode = 'T' . rand(1, 99999);
+    
+        // Check if the generated barcode already exists in the database
+        while (Book::where('book_barcode', $barcode)->exists()) {
+            $barcode = 'T' . rand(1, 99999);
+        }
+    
+        return $barcode;
     }
 
     /**
@@ -234,9 +244,11 @@ class BookController extends Controller
     public function restoreBook(Request $request, Book $book){
 
         $book->update(['archive_reason'=>null]);
+        $barcode = $this->generateUniqueBarcode();
+
         $book->update($request->all()); 
 
-        return view('books_layout.restore_books', ['book'=>$book]);
+        return view('books_layout.restore_books', ['book'=>$book], compact('barcode'));
     }
 
     public function restoreUpdate(UpdateBookRequest $request, Book $book)

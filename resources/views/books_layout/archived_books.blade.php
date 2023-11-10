@@ -53,8 +53,7 @@
       Old
     @elseif($archive->archive_reason == 3)
       Damaged
-    @elseif($archive->archive_reason == 4)
-      Missing
+
     @endif
     </td>
     <td>

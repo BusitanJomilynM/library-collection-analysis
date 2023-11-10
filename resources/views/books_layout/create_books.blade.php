@@ -22,12 +22,16 @@
     </div>
 
     <div class="col2">
-        <label>Barcode</label>
-        <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode') }}" minlength="2" maxlength="7">
-        @error('book_barcode')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-    </div>
+    <label>Barcode</label>
+    <input class="form-control @error('book_barcode') is-invalid @enderror" 
+       type="text" name="book_barcode" id="book_barcode" 
+       value="{{ old('book_barcode', $barcode) }}" 
+       minlength="2" maxlength="7" readonly>
+    @error('book_barcode')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+</div>
+
 </div>
 
     <div class="form-group">
