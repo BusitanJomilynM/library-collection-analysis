@@ -14,11 +14,8 @@
     </div>
 
     <div class="form-group">
-     
-        <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" value="{{$book->book_callnumber}}" minlength="4" maxlength="25" hidden>
-        @error('book_callnumber')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+        <input class="form-control" type="text" name="book_callnumber" id="book_callnumber" value="{{$book->book_callnumber}}" minlength="4" maxlength="25" hidden>
+      
     </div>
 
     <div class="form-group">
@@ -77,7 +74,6 @@
 
 
     <div class="form-group">
-    
         <input class="form-control" type="text" name="book_publisher" id="book_publisher" value="{{$book->book_publisher}}" hidden>
         @error('book_publisher')
             <span class="text-danger">{{$message}}</span>
@@ -85,7 +81,6 @@
     </div>
     
     <div class="form-group">
-       
         <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn" value="{{$book->book_lccn}}" minlength="4" maxlength="50" hidden>
         @error('book_lccn')
             <span class="text-danger">{{$message}}</span>

@@ -15,7 +15,7 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <input class="button btn-primary my-2 my-sm-0" type="submit" value="Search">
+    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
 </form>
 </div>
 <br>
@@ -25,10 +25,10 @@
 @endif
 
 <table class="table table-bordered" style="width:100%">
-<thead class="thead-dark">
+<thead class="thead-dark" >
   <tr align="center">
     <th>Book Title</th>
-    <th>Number of Copies</th>
+    <th>Volume</th>
     <th>Material Type</th>
     <th>Author</th>
     <th>ISBN</th>
@@ -81,33 +81,38 @@
       Cancelled 
       @endif
     </td>
+
     <td>
     @if($requisition->status == 0)
-    <div style="width: 50%;">
+    <div class="flex-parent jc-center">
             <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button">Approve</button>
+                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
             </form>
+    </div>
 
+    <div class="flex-parent jc-center">
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button">Disapprove</button>
+                <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
-            <!-- <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button">Edit</a> -->
+    </div>
+
+    <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}">Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i> Delete</a>
     </div>
 
     @else
-    <div style="width: 50%">
+    <div class="flex-parent jc-center">
             <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button" disabled>Approve</button>
             </form>
-
+</div>
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
@@ -369,6 +374,14 @@ form {
 }
 input[type=text] 
 { flex-grow: 1; 
+}
+
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
 }
 </style>
 

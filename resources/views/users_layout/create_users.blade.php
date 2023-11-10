@@ -46,7 +46,7 @@
 
     <div class="col2">
         <label>Contact Number</label>
-        <input class="form-control @error('email') is-invalid @enderror" type="text" name="contact_number" id="contact_number"  pattern="\d*" minlength="12" maxlength="12" placeholder="09XX-XXX-XXXX">
+        <input class="form-control @error('email') is-invalid @enderror" type="text" name="contact_number" id="contact_number"  pattern="\d*" minlength="11" maxlength="11" placeholder="09XX-XXX-XXXX">
         @error('contact_number')
             <span class="text-danger">{{$message}}</span>
         @enderror
