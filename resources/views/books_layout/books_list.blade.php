@@ -142,8 +142,7 @@
     <td>{{$book->book_author}}</td>
 
     </td>
-    <td><a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
-        data-action="{{ route('archiveBook', $book->id) }}">Archive</a> </td>
+    <td><a class="btn btn-warning" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">Archive</a> </td>
     </td>
   </tr>
   </tbody>

@@ -226,18 +226,20 @@ class BookController extends Controller
 
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
 
-        $book->status=1;
-        $book->update(['book_barcode'=>null]);
+        
         $book->update($request->all()); 
-        $book->save();
+        
 
         return view('books_layout.archive_books', ['book'=>$book]);
     }
 
     public function archiveUpdate(UpdateArchiveRequest $request, Book $book)
     {
-        $book->update($request->all()); 
 
+        $book->status=1;
+        $book->update(['book_barcode'=>null]);
+        $book->update($request->all()); 
+        $book->save();
         return redirect()->route('archive')->with('success','Book archived');
     }
 
