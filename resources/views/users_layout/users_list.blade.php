@@ -15,7 +15,7 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Users" name="search"  value="{{ request('search') }}">
-    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
+    <a class="btn btn-danger" type="submit"><i class="fa fa-search"></i></a>
 </form>
 </div>
 
