@@ -17,6 +17,7 @@ class User extends \Illuminate\Foundation\Auth\User
         'middle_name',
         'last_name',
         'email',
+        'contact_number',
         'password',
         'type'
     ];

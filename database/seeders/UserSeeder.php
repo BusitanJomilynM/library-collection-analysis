@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Abalos',
             'email' => 'technician@mail.com',
             'school_id' => '20160092',
+            'contact_number' => '639991112222',
             'type' => '0',
             'password' => '12341234',
         ]);
@@ -31,6 +32,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Busitan',
             'email' => 'deptrep@mail.com',
             'school_id' => '20192618',
+            'contact_number' => '639991112211',
             'type' => '2',
             'password' => '59865986'
         ]);
@@ -40,6 +42,7 @@ class UserSeeder extends Seeder
             'last_name' => 'doe',
             'email' => 'staff@mail.com',
             'school_id' => '20164152',
+            'contact_number' => '639991112233',
             'type' => '1',
             'password' => '33332222',
         ]);

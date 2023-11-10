@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('middle_name', 50)->nullable();
             $table->string('last_name', 50);
             $table->string('email')->unique();
+            $table->bigInteger('contact_number')->unique();
             $table->string('password');
             $table->integer('type');
         });

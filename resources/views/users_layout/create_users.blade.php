@@ -42,6 +42,14 @@
     </div>
 
     <div class="form-group">
+        <label>Contact Number</label>
+        <input class="form-control @error('email') is-invalid @enderror" type="text" name="contact_number" id="contact_number"  pattern="\d*" minlength="12" maxlength="12">
+        @error('contact_number')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
         <label>Password</label>
         <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" minlength="8" maxlength="25">
         @error('password')

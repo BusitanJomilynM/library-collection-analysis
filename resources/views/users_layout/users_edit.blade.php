@@ -47,6 +47,14 @@
     </div>
 
     <div class="form-group">
+        <label>Contact Number</label>
+        <input class="form-control @error('contact_number') is-invalid @enderror" type="text" name="contact_number" id="contact_number" value="{{$user->contact_number}}" pattern="\d*" minlength="12" maxlength="12">
+        @error('contact_number')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
         <label>Role</label>
             <select class="form-control" name="type" id="type" value="{{$user->type}}">
                 <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technician Librarian</option>

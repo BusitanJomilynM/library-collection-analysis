@@ -30,6 +30,7 @@ class UpdateUserRequest extends FormRequest
             'last_name'=>'required',
             'school_id'=>'required|integer|unique:users,school_id,'.$this->id,
             'email'=>'email|unique:users,email,'.$this->id,
+            'contact_number'=>'required|unique:users,contact_number,'.$this->id,
             'type'=>'required'
         ];
     }
