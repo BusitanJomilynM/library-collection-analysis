@@ -25,7 +25,6 @@
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
-    <th>ID</th>
     <th>Book Title</th>
     <th>Number of Copies</th>
     <th>Material Type</th>
@@ -45,7 +44,6 @@
 @forelse($pending as $pendingr)
 <tbody>
   <tr align="center">
-    <td>{{$pendingr->id}}</td>
     <td>{{$pendingr->book_title}}</td>
     <td>{{$pendingr->copies}}</td>
     <td>{{$pendingr->material_type}}</td>

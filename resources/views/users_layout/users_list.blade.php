@@ -55,14 +55,14 @@
       @if($techcount>1)
      
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
-                data-action="{{ route('users.destroy', $user->id) }}">Delete</a>
+                data-action="{{ route('users.destroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
       @else
-      <a data-toggle="modal" class="btn btn-danger" disabled>Delete</a>
+      <a data-toggle="modal" class="btn btn-danger" disabled><i class="fa fa-trash"></i> Delete</a>
       @endif
     
     @else
     <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
-              data-action="{{ route('users.destroy', $user->id) }}">Delete</a>
+              data-action="{{ route('users.destroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
     @endif
     </td>
   </tr>

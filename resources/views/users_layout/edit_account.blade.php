@@ -1,5 +1,5 @@
 @extends('master_layout.master')
-@section('Title', 'Edit User')
+@section('Title', 'Edit Account')
 @section('content')
 
 <form action="{{ route('users.update', $user->id) }}" method="POST">

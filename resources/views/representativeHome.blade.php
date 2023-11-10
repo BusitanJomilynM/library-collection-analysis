@@ -6,26 +6,25 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
+            <div class="card-header text-white" style="background-color: black">{{ __('Dashboard') }}</div>
                 <div class="card-body">
 
                 Welcome, Department Representative {{$user->first_name}} {{$user->last_name}}. 
 
-                </div> 
+            
 
                 <div class="float-container">
                     <div class="float-child">
                         <div class="card text-center" style="width: 18rem;">
                             <div class="card-body">
-                            <a class="btn btn-primary" href="{{ route('requisitions.create') }}">Create New Requisition</a>   
+                            <a class="btn btn-danger" href="{{ route('requisitions.create') }}">Create New Requisition</a>   
                             </div>
                         </div>
                     </div>
                     <div class="float-child">
                         <div class="card text-center" style="width: 18rem;">
                             <div class="card-body">
-                                <a class="btn btn-primary" href="{{ route('books.index') }}">Create Subject Request</a>   
+                                <a class="btn btn-danger" href="{{ route('books.index') }}">Create Subject Request</a>   
                             </div>
                         </div>
                     </div>

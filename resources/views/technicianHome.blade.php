@@ -6,15 +6,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header text-white" style="background-color: black">{{ __('Dashboard') }}</div>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-                    Welcome, technician librarian {{$user->first_name}} {{$user->last_name}}. 
-                </div>
+                    Welcome, Technician Librarian {{$user->first_name}} {{$user->last_name}}. 
+            
               
                 <div class="float-container">
                     <div class="float-child">
@@ -22,7 +22,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$pending}}</h5>
                                 <p class="card-text">Pending requisitions</p>
-                                <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Go to pending requisitions</a>
+                                <a class="btn btn-danger my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Go to pending requisitions</a>
                                 
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{$pendingsubject}}</h5>
                                 <p class="card-text">Pending subject requests</p>
-                                <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Go to pending subject requests</a>
+                                <a class="btn btn-danger my-2 my-sm-0" href="{{ route('pendingTags') }}">Go to pending subject requests</a>
                                 
                                 
                             </div>

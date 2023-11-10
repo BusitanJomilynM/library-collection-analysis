@@ -20,7 +20,17 @@
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.1/lux/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        
+.navbar-custom {
+	background-color: red;
+}
+.navbar-custom .navbar-brand,
+        .navbar-custom .navbar-text {
+            color: white;
+        }
+</style>
     
 
 </head>
@@ -28,8 +38,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand">
-            Library Collection System
+            <img src="{{url('/images/logo.png')}}" alt="Image" width="60" height="60"/><a class="navbar-brand"> 
+              Library Collection System
           </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -145,8 +155,8 @@
                 </div>
             </div>
         </nav>
-        
-        <main class="py-4">
+        <br>
+        <main class="container-fluid">
             @yield('content')
         </main>
     </div>

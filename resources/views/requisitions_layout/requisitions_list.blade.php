@@ -27,7 +27,6 @@
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
-    <th>ID</th>
     <th>Book Title</th>
     <th>Number of Copies</th>
     <th>Material Type</th>
@@ -47,7 +46,6 @@
 @forelse($requisitions as $requisition)
 <tbody>
   <tr align="center">
-    <td>{{$requisition->id}}</td>
     <td>{{$requisition->book_title}}</td>
     <td>{{$requisition->copies}}</td>
     <td>{{$requisition->material_type}}</td>
@@ -161,7 +159,6 @@
     @if($requisition->user_id == $user->id)
 
   <tr align="center">
-    <td>{{$requisition->id}}</td>
     <td>{{$requisition->book_title}}</td>
     <td>{{$requisition->copies}}</td>
     <td>{{$requisition->material_type}}</td>
@@ -249,7 +246,6 @@
     @if($requisition->user_id == $user->id)
 
   <tr align="center">
-    <td>{{$requisition->id}}</td>
     <td>{{$requisition->book_title}}</td>
     <td>{{$requisition->copies}}</td>
     <td>{{$requisition->material_type}}</td>

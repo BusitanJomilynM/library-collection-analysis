@@ -20,15 +20,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.6.1/lux/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
-    
-    </style>
+<style>
+.navbar-custom {
+	background-color: red;
+}
+.navbar-custom .navbar-brand,
+        .navbar-custom .navbar-text {
+            color: white;
+        }
+</style>
 
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand">
+        <nav class="navbar navbar-expand-md navbar-custom">
+        <div class="topnav-centered">
+
+            <img src="{{url('/images/logo.png')}}" alt="Image" width="60" height="60" /><a class="navbar-brand">
             Library Collection System
           </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
