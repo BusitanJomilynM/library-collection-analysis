@@ -40,7 +40,7 @@
 
     <div class="form-group">
         <label>Purchased Date</label>
-        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ old('book_copynumber') }}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ old('book_purchasedwhen') }}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
         @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
         @enderror

@@ -115,6 +115,14 @@
         @enderror
     </div>
 
+    <div class="form-group">
+
+        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ $book->book_purchasedwhen}}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" hidden>
+        @error('book_purchasedwhen')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
    
 
 <button type="submit" class="btn btn-primary">Submit</button>

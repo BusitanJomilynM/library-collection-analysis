@@ -32,10 +32,11 @@ class UpdateBookRequest extends FormRequest
             'book_copyrightyear'=>'required',
             'book_sublocation'=>'required',
             'book_subject'=>'required',
-            'book_copynumber'=>'required',
+            
             'book_publisher'=>'required',
             'book_lccn'=>'required',
             'book_isbn'=>'required',
+            'book_purchasedwhen'=>'required',
           
         ];
     }
@@ -50,10 +51,11 @@ class UpdateBookRequest extends FormRequest
             'sublocation.required' => 'Select book location',
             'book_sublocation.required' => 'Fill out tags ',
             'book_barcode.unique' => 'A book with that barcode is already registered',
-            'book_copynumber.required'=>'Number of copies required',
+           
             'book_publisher.required'=>'Fill out book publisher',
             'book_lccn.required'=>'Fill out book LCCN',
             'book_isbn.required'=>'Fill out book ISBN',
+            'book_purchasedwhen.required'=>'Fill out purchase date',
         ];
     }
 }

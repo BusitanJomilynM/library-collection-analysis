@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Requests\UpdateArchiveRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Book;
@@ -213,10 +214,10 @@ class BookController extends Controller
 
 
 
-    public function archiveBook(Request $request, Book $book){
+    public function archiveBook(UpdateArchiveRequest $request, Book $book){
 
         $book->status=1;
-        $book->book_barcode="";
+        $book->update(['book_barcode'=>null]);
         $book->save();
 
         return redirect()->route('books.index')->with('success','Book archived');
