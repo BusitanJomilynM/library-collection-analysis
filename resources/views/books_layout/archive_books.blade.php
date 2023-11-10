@@ -127,8 +127,9 @@
             </select>
     </div>
 
-<button type="submit" class="btn btn-primary">Submit</button>
-<a class="btn" onclick="history.back()">Cancel</a>
+    <button type="submit" class="btn btn-danger">Submit</button>
+<a class="btn btn-primary" onclick="history.back()">Cancel</a>
+<br>
 
 </form>
 

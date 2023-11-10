@@ -28,6 +28,7 @@
     <th>Middle Name</th>
     <th>Last Name</th>
     <th>Email</th>
+    <th>Contact Number</th>
     <th>Role</th>
     <th>Actions</th>
   </tr>
@@ -40,6 +41,7 @@
     <td>{{$user->middle_name}}</td>
     <td>{{$user->last_name}}</td>
     <td>{{$user->email}}</td>
+    <td>{{$user->contact_number}}</td>
     <td>
     @if($user->type == 'technician librarian')  
       Technician Librarian
@@ -114,5 +116,7 @@ input[type=text]
 .table > thead > tr > th{
 background-color: #EEEE00;
 }
+
+
 </style>
 @endsection

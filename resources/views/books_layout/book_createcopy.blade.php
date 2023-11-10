@@ -96,8 +96,8 @@
 
     <br>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="nav-link" href="{{ route('books.index') }}">Cancel</a>
+    <button type="submit" class="btn btn-danger">Submit</button>
+<a class="btn btn-primary" onclick="history.back()">Cancel</a>
 
 </form>
 

@@ -30,6 +30,13 @@
         .navbar-custom .navbar-text {
             color: white;
         }
+        body {
+  background-image: url('/images/bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
 </style>
     
 
@@ -53,14 +60,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('technician.home')}}">Home</a>
                         </li>
-                       
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('books.index')}}">Books</a>
-                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('users.index')}}">Users</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('books.index')}}">Books</a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
                         </li>  
