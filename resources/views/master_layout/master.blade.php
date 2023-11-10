@@ -114,7 +114,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 
-                                <a class="dropdown-item" href="{{route('editAccount', Auth::user()->id)}}">Edit</a>
+                                <a class="dropdown-item" href="{{route('editAccount', Auth::user()->id)}}">Edit Account</a>
                                 </a>
 
                                 <a class="dropdown-item" href="{{route('changePassword', Auth::user()->id)}}">Change Password</a>

@@ -44,7 +44,7 @@
                         <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}"
                            data-action="{{ route('archiveBook', $book->id) }}">Archive</a> -->
 
-                           <a class="btn btn-primary" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">ar</a>
+                           <a class="btn btn-primary" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">Archive</a>
                     </td>
                 </tr>
             </tbody>

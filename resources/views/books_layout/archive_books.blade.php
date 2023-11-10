@@ -124,21 +124,17 @@
     </div>
 
     <div class="form-group">
-            <select class="form-control @error('type') is-invalid @enderror" name="archive_reason" id="archive_reason" >
+            <select class="form-control @error('type') is-invalid @enderror" name="archive_reason" id="archive_reason" required>
+            <option value="">--Select Reason--</option>
             <option value="1">Lost</option>
             <option value="2">Old</option>
             <option value="3">Damaged</option>
             <option value="4">Missing</option>
             </select>
-            @error('book_sublocation')
-            <span class="text-danger">{{$message}}</span>
-            @enderror
     </div>
 
-   
-
 <button type="submit" class="btn btn-primary">Submit</button>
-
+<a class="btn" onclick="history.back()">Cancel</a>
 
 </form>
 
