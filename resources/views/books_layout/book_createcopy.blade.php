@@ -19,7 +19,7 @@
 
         <div class="col2">
             <label>Book Barcode</label>
-            <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{ $book->book_barcode }}" minlength="4" maxlength="25">
+            <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{ $barcode }}" minlength="4" maxlength="25">
             @error('book_barcode')
             <span class="text-danger">{{$message}}</span>
         @enderror

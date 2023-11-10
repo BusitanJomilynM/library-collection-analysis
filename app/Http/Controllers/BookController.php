@@ -183,7 +183,7 @@ class BookController extends Controller
         $user = Auth::user();
         if($user->type === 'technician librarian') {
         $book->delete();
-            return redirect()->route('books.index')->with('success', 'Book deleted!');
+            return redirect()->route('archive')->with('success', 'Book deleted!');
         }
         else{
             return redirect()->back();
@@ -283,7 +283,8 @@ class BookController extends Controller
     
     public function book_createcopy(Request $request, Book $book)
     {
-            return view('books_layout.book_createcopy', compact('book'));
+        $barcode = $this->generateUniqueBarcode();
+            return view('books_layout.book_createcopy', compact('book','barcode'));
     }
 
     

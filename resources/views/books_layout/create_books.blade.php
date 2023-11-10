@@ -91,7 +91,7 @@
         @enderror
     </div>
 </div>
-    
+    <br>
     <div class="form-group">
         <label>Subject</label>
         <input class="form-control @error('book_subject') is-invalid @enderror" type="text" name="book_subject" id="book_subject" value="{{ old('book_subject') }}" minlength="4" maxlength="50">
