@@ -51,8 +51,20 @@
       Department Representative
     @endif</td>
     <td><a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
+    
+    @if($user->type == 'technician librarian')  
+      @if($techcount>1)
+     
+      <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
+                data-action="{{ route('users.destroy', $user->id) }}">Delete</a>
+      @else
+      <a data-toggle="modal" class="btn btn-danger" disabled>Delete</a>
+      @endif
+    
+    @else
     <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
               data-action="{{ route('users.destroy', $user->id) }}">Delete</a>
+    @endif
     </td>
   </tr>
 </tbody>

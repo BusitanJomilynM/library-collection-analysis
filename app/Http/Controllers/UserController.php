@@ -31,6 +31,7 @@ class UserController extends Controller
 
         else{
             $users = User::paginate(10);
+            $techcount = User::where('type', 'like', '0')->count();
         }
 
         if(request('search')) { 
@@ -45,7 +46,7 @@ class UserController extends Controller
             $users = User::where('type', '=', '2' . request('search') . 'department representative')->paginate(10)->withQueryString();
         }
 
-        return view('users_layout.users_list', ['users'=>$users]);
+        return view('users_layout.users_list', ['users'=>$users, 'techcount'=>$techcount]);
     }
 
     /**
@@ -64,9 +65,30 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
-        User::create($request->all());
+        $request->validate([
+        'first_name'=>'required',
+        'last_name'=>'required',
+        'school_id'=>'required|integer|unique:users',
+        'email'=>'email|unique:users',
+        'contact_number'=>'required|unique:users',
+        'type'=>'required']);
+
+        $data = [
+            'first_name' => $request->input('first_name'),
+            'middle_name' => $request->input('middle_name'),
+            'last_name' => $request->input('last_name'),
+            'school_id' => $request->input('school_id'),
+            'email' => $request->input('email'),
+            'contact_number' => $request->input('contact_number'),
+            'password' => $request->input('school_id'),
+            'type' => $request->input('type'),
+        ];
+
+        User::create($data);
+
+        
         return redirect()->route('users.index');
     }
 

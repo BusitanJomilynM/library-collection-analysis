@@ -50,8 +50,7 @@
     </div>
 
     <div class="form-group">
-        <label>Password</label>
-        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" minlength="8" maxlength="25">
+        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="password" minlength="8" maxlength="25" hidden>
         @error('password')
             <span class="text-danger">{{$message}}</span>
         @enderror
