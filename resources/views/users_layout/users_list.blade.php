@@ -19,7 +19,7 @@
 </form>
 </div>
 
-<a class="btn btn-primary" href="{{ route('users.create') }}">Create New User</a>
+<a class="btn btn-primary" href="{{ route('users.create') }}"><span>&#43;</span>Create New User</a>
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
@@ -109,6 +109,10 @@ form {
 }
 input[type=text] 
 { flex-grow: 1; 
+}
+
+.table > thead > tr > th{
+background-color: #EEEE00;
 }
 </style>
 @endsection

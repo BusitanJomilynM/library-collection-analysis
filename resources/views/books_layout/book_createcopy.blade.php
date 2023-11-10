@@ -13,7 +13,7 @@
     <div class="two-col">
         <div class="col1">
             <label>Book Callnumber</label>
-            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
+            <input class="form-control" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_callnumber" value="{{ $book->book_callnumber }}">
         </div>
 

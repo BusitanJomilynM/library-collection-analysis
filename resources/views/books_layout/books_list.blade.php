@@ -23,8 +23,8 @@
 
 @if($user->type == 'technician librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
-<a class="btn btn-primary" href="{{ route('books.create') }}" >Add Book</a>
-<a class="btn btn-primary" href="{{ route('booklist_pdf') }}">Export to PDF</a>
+<a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span>Add Book</a>
+<a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Export to PDF</a>
 
 
 <table class="table table-bordered" style="width:100%">
@@ -53,7 +53,7 @@
 
     <td>
       <!-- <a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Edit</a>  -->
-    <a class="btn btn-primary" href="{{ route('books.view_bookdetails', $book->id) }}" role="button">Details</a>
+    <a class="btn btn-primary" href="{{ route('books.view_bookdetails', $book->id) }}" role="button"><span>&#9783;</span>Details</a>
 
         <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
         data-action="{{ route('archiveBook', $book->id) }}">Archive</a>  -->

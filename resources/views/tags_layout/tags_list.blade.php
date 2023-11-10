@@ -143,10 +143,10 @@
     <td>
     @if($tag->status == 0)
     <div class="flex-parent jc-center">
-      <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button">Edit</a>
+      <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button"><span>&#9776;</span>Edit</a>
 
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-      data-action="{{ route('tags.destroy', $tag->id) }}">Delete</a></td>
+      data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
     </div>
 
     @else
