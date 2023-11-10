@@ -99,7 +99,7 @@
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
     </div>
-
+  <br>
     <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
             data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
@@ -288,6 +288,7 @@
                 <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
 </div>
+<br>
     <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
             data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>

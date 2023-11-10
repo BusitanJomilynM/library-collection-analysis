@@ -25,7 +25,7 @@ class StoreRequisitionRequest extends FormRequest
     {
         return [
             'book_title'=>'required',
-            'copies'=>'required|digits:3',
+            'copies'=>'required',
             'material_type'=>'required',
             'author'=>'required',
             'isbn'=>'required',
