@@ -49,11 +49,39 @@
             <form action="{{ route('restoreBook', $archive->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button">Restore</button>
+                <button type="submit" class="btn btn-success" role="button">Restore</button>
+
+                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteBookModal_{{$archive->id}}"
+              data-action="{{ route('books.destroy', $archive->id) }}">Delete</a>
             </form>
     </td>
   </tr>
 </tbody>
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="deleteBookModal_{{$archive->id}}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to delete this book?</h5>
+            
+          </div>
+          <form action="{{ route('books.destroy', $archive->id) }}" method="POST">
+            <div class="modal-body">
+              @csrf
+              @method('DELETE')
+              <h5 class="text-center">Delete user {{$archive->book_title}}?
+               
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
 
 <style> 
 form { 
