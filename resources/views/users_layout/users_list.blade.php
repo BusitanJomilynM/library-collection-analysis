@@ -15,7 +15,7 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Users" name="search"  value="{{ request('search') }}">
-    <input class="button btn-primary my-2 my-sm-0" type="submit" value="Search">
+    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
 </form>
 </div>
 
@@ -48,8 +48,8 @@
     @elseif($user->type == 'department representative')
       Department Representative
     @endif</td>
-    <td><a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button">Edit</a>
-    <a class="btn btn-primary" href="{{ route('restorePassword', $user->id) }}" role="button">Restore Password</a>
+    <td><a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button"><span>&#9776;</span>Edit</a>
+    <a class="btn btn-success" href="{{ route('restorePassword', $user->id) }}" role="button"><span>&#9733;</span>Restore Password</a>
         
     @if($user->type == 'technician librarian')  
       @if($techcount>1)

@@ -25,7 +25,7 @@ class UpdateBookRequest extends FormRequest
     public function rules()
     {
         return [
-            'book_callnumber'=>'required|unique:books,book_callnumber,'.$this->book->id,
+            'book_callnumber'=>'required',
             'book_barcode'=>'required|unique:books,book_barcode,'.$this->book->id,
             'book_title'=>'required',
             'book_author'=>'required',

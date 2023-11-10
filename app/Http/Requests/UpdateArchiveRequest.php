@@ -26,7 +26,6 @@ class UpdateArchiveRequest extends FormRequest
     public function rules()
     {
         return [
-            'book_callnumber'=>'nullable|sometimes|unique:books,book_callnumber,'.$this->book->id,
             'book_barcode'=>[
                 'nullable',Rule::unique((new Book)->getTable())->ignore($this->route()->book->id ?? null)]
           
