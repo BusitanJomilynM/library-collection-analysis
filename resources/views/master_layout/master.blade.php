@@ -97,12 +97,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('representative.home')}}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
-                        </li> 
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('books.index')}}">Books</a>
                         </li>  
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
+                        </li> 
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('tags.index')}}">Subjects</a>
                         </li>  

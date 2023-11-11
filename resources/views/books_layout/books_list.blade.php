@@ -27,7 +27,7 @@
 <a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Export to PDF</a>
 
 
-<table class="table table-bordered" style="width:100%">
+<table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
     <th>Book Title</th>

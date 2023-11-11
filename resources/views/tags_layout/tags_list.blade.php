@@ -23,7 +23,7 @@
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending Subject Request</a>
 @endif
 
-<table class="table table-bordered" style="width:100%">
+<table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
     <th>Requested by</th>
