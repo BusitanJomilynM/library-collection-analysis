@@ -21,7 +21,7 @@
 <br>
 
 @if($user->type == 'technician librarian')
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a><br><br>
 @endif
 
 <table class="table table-hover table-bordered" style="width:100%">
@@ -146,7 +146,7 @@
 
 
 @elseif($user->type == 'department representative')
-<a class="btn btn-primary" href="{{ route('requisitions.create') }}">Add New Requisition</a>
+<a class="btn btn-primary" href="{{ route('requisitions.create') }}">Add New Requisition</a><br><br>
 
 @forelse($requisitions as $requisition)
   @foreach($users as $user)
@@ -190,6 +190,7 @@
     <td>
       @if($requisition->status == 0)
       <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button"><span>&#9776;</span>Edit</a>
+      <br><br>
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
       data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a></td>
 
@@ -285,7 +286,7 @@
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-danger" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
             </form>
 </div>
 <br>

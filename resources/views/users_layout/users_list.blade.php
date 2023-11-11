@@ -19,7 +19,7 @@
 </form>
 </div>
 
-<a class="btn btn-primary" href="{{ route('users.create') }}"><span>&#43;</span>Create New User</a>
+<a class="btn btn-primary" href="{{ route('users.create') }}"><span>&#43;</span>Create New User</a> <br><br>
 <table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">

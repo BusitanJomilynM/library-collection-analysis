@@ -20,7 +20,7 @@
 </div>
 
 @if($user->type == 'technician librarian' || 'staff librarian')
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending Subject Request</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending Subject Request</a> <br>
 @endif
 
 <table class="table table-hover table-bordered" style="width:100%">
@@ -237,7 +237,7 @@
             <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
         </form>
 </div>
-
+<br>
 <div class="flex-parent jc-center">
         <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
         data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i>Delete</a>

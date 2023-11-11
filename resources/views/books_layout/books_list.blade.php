@@ -23,9 +23,9 @@
 
 @if($user->type == 'technician librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
-<a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span>Add Book</a>
+<a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span> Add Book</a>
 <a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Export to PDF</a>
-
+<br><br>
 
 <table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
@@ -123,7 +123,7 @@
 
 <!-- staff librarian -->
 @elseif($user->type == 'staff librarian')
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a> <br><br>
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
