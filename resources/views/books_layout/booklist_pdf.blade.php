@@ -37,6 +37,19 @@
     <label for="copy">
         <input type="checkbox" id="copy" name="copy"> Number of Copies
     </label>
+    <br>
+    <label for="includeYearRange">
+        <input type="checkbox" id="includeYearRange" name="includeYearRange"> Include Year Range
+    </label>
+
+    <!-- Add input fields for the year range -->
+    <label for="startYear">Start Year:</label>
+    <input type="text" id="startYear" name="startYear" placeholder="Enter start year">
+
+    <label for="endYear">End Year:</label>
+    <input type="text" id="endYear" name="endYear" placeholder="Enter end year">
+
+    <br>
 
 
 

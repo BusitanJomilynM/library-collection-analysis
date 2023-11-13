@@ -14,6 +14,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
+        "maatwebsite/excel": "^1.1",
         "setasign/fpdf": "^1.8"
     },
     "require-dev": {
