@@ -2,7 +2,7 @@
 @section('Title', 'Add a Copy')
 @section('content')
 
-<form action="{{ route('books.store') }}" method="POST">
+<form action="{{ route('books.store', ['book' => $book->id]) }}" method="POST">
     @csrf
     <div class="form-group">
         <label>Book Title</label>
@@ -19,10 +19,10 @@
 
         <div class="col2">
             <label>Book Barcode</label>
-            <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{ $barcode }}" minlength="4" maxlength="25">
+            <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{ $book->book_barcode }}" minlength="4" maxlength="25">
             @error('book_barcode')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+                <span class="text-danger">{{$message}}</span>
+            @enderror
         </div>
     </div>
 

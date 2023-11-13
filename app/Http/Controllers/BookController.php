@@ -18,7 +18,7 @@ use Illuminate\Pagination\Paginator;
 //  use PDF;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
-
+use App\Models\archiveUpdate;
 
 
 class BookController extends Controller
@@ -148,40 +148,68 @@ class BookController extends Controller
             return redirect()->back();
         }
     }
-
-    // public function createPDFBook() {
-    //     // retreive all records from db    
-    //         $books = Book::where('book_subject', 'like', '%' . request('search') . '%')->get();
-    //         $pdf = pdf::loadView('books_layout.pdf_view', compact('books'))->setPaper('a4', 'landscape');
-
-    //         return $pdf->stream('book_report.pdf');    
-    // }
-
-        public function booklistPdf(Request $request, Book $book)
-    {
-        // $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.booklist_pdf');
-        //  $book->update($request->all()); 
-        if ($request->has('booktitle')) {
-            $data = Book::all();
-            // return view('books_layout.booklist_pdf', ['data' => $data]);
-
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('data'))->setPaper('a4', 'landscape');
-
-            return $pdf->stream('book_report.pdf');
-
-
-        }
+    // public function booklistPdf(Request $request, Book $book)
+    // {
+    //     $showBookTitle = $request->has('booktitle');
+    //     $showBookCallnumber = $request->has('bookcallnumber');
+    //     $showBookAuthor = $request->has('bookauthor'); 
+    //     $showBookCopyrightYear = $request->has('bookcopyrightyear'); 
+        
     
-        if ($request->has('book_callnumber') && $request->input('book_callnumber') == 'on') {
-            // Callnumber checkbox is checked
-            Session::flash('notification', 'Book Callnumber checkbox is clicked!');
+    //     if ($showBookTitle || $showBookCallnumber ||  $showBookAuthor || $showBookCopyrightYear) {
+    //         $data = Book::all();
+    
+    //         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('data', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear'))->setPaper('a4', 'landscape');
+    
+    //         return $pdf->stream('book_report.pdf');
+    //     }
+    
+    //     // Default case (when no checkbox is selected)
+    //     return view('books_layout.booklist_pdf', ['books' => $book]);
+    // }
+    public function booklistPdf(Request $request, Book $book)
+{
+    $showBookTitle = $request->has('booktitle');
+    $showBookCallnumber = $request->has('bookcallnumber');
+    $showBookAuthor = $request->has('bookauthor'); 
+    $showBookCopyrightYear = $request->has('bookcopyrightyear'); 
 
+    if ($showBookTitle || $showBookCallnumber || $showBookAuthor || $showBookCopyrightYear) {
+        $data = Book::all();
+        
+        // Group books by call number
+        $groupedBooks = $data->groupBy('book_callnumber');
+
+        $data = [];
+
+        foreach ($groupedBooks as $callnumber => $books) {
+            // Count the number of non-archived books for each call number
+            $nonArchivedBooks = $books->reject(function ($book) {
+                return $book->status == 1; // Assuming status 1 represents archived books
+            });
+
+            $copyCount = $nonArchivedBooks->count();
+
+            // If there are non-archived books, add the first one to the PDF data
+            if ($copyCount > 0) {
+                $firstBook = $nonArchivedBooks->first();
+                $data[] = [
+                    'title' => $firstBook->book_title,
+                    'callnumber' => $callnumber,
+                    'author' => $firstBook->book_author,
+                    'copyrightyear' => $firstBook->book_copyrightyear,
+                    'copy_count' => $copyCount,
+                ];
+            }
         }
-        return view('books_layout.booklist_pdf', ['books'=>$book]);
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('data', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear'))->setPaper('a4', 'landscape');
+        return $pdf->stream('book_report.pdf');
     }
 
-
-
+    // Default case (when no checkbox is selected)
+    return view('books_layout.booklist_pdf', ['books' => $book]);
+}
 
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
 
@@ -244,9 +272,10 @@ class BookController extends Controller
     
     public function book_createcopy(Request $request, Book $book)
     {
-        $barcode = $this->generateUniqueBarcode();
-            return view('books_layout.book_createcopy', compact('book','barcode'));
+            return view('books_layout.book_createcopy', compact('book'));
     }
+
+    
 
     
     public function validateMaterialType(Request $request)
