@@ -272,7 +272,8 @@ class BookController extends Controller
     
     public function book_createcopy(Request $request, Book $book)
     {
-            return view('books_layout.book_createcopy', compact('book'));
+        $barcode = $this->generateUniqueBarcode();
+        return view('books_layout.book_createcopy', compact('book','barcode'));
     }
 
     
