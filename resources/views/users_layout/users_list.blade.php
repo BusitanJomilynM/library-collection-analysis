@@ -2,14 +2,10 @@
 @section('Title', 'Users')
 @section('content')
 <h2 style="text-align: center;">Users</h2>
-
 <div class="panel panel-default">
-@if (session('success'))
-<div class="alert alert-success alert-dismissible">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  {{ session('success') }}
-</div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 </div>
 
 <div>
@@ -58,8 +54,9 @@
     @if($user->type == 'technician librarian')  
       @if($techcount>1)
      
+     
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
-                data-action="{{ route('users.destroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
+                data-action="{{ route('confirmDestroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
       @else
       <a data-toggle="modal" class="btn btn-danger" disabled><i class="fa fa-trash"></i> Delete</a>
       @endif
@@ -81,11 +78,13 @@
             <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to delete this user?</h5>
             
           </div>
-          <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+          <form action="{{ route('confirmDestroy', $user->id) }}" method="POST">
             <div class="modal-body">
-              @csrf
-              @method('DELETE')
-              <h5 class="text-center">Delete user {{$user->first_name}} {{$user->middle_name}} {{$user->last_name}} ?
+              {{ csrf_field() }}
+   
+              Enter password to confirm account deletion 
+              <input type="password" class="form-control" name="password" required>
+              <input type="hidden" name="id" value="{{$user->id}}">
                
             </div>
             <div class="modal-footer">
