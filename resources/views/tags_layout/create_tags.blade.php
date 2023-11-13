@@ -48,6 +48,20 @@
         @enderror
     </div>
 
+    <div class="form-group">
+        <label>Action</label>
+            <select class="form-control" name="action" id="action" required>
+            <option value="">--Select Action--</option>
+            <option value=1>Append</option>
+            <option value=2>Replace</option>
+          
+            
+            </select>
+            @error('department')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+    </div>
+
     <button type="submit" class="btn btn-danger">Submit</button>
 <a class="btn btn-primary" href="{{ route('tags.index') }}">Cancel</a>
 </form>

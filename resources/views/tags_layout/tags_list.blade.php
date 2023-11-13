@@ -37,6 +37,7 @@
     <th>Department</th>
     <th>Book Barcode</th>
     <th>Suggested Tags</th>
+    <th>Suggested Action</th>
     <th>Status</th>
     <th>Actions</th>
   </tr>
@@ -57,6 +58,13 @@
             $a = explode(" ", $t );
             echo implode(", ", $a ); ?></td>
     <td>
+      @if($tag->action == 1)
+      Append
+      @elseif($tag->action == 2)
+      Replace
+      @endif
+    </td>
+    <td>
       @if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)
@@ -71,27 +79,51 @@
     <td>
     @if($tag->status == 0)
     <div class="flex-parent jc-center">
-            <form action="{{ route('accept', $tag->id) }}" method="POST">
+            <!-- <form action="{{ route('accept', $tag->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
-            </form>
+                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
+            </form> -->
  
             <form action="{{ route('decline', $tag->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-      </div><br>
-      <div class="flex-parent jc-center">        
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>
+
+            
+              @foreach($books as $book)
+              
+                @if($tag->book_barcode == $book->book_barcode)
+                  @if($tag->action == 1)
+                  <form action="{{ route('append', ['book' => $book->id, 'tag' => $tag->id]) }}" method="POST">
+                    @csrf 
+                    @method('post')
+                    <button type="submit" class="btn btn-success">Append</button>   
+                  @else
+                  <form action="{{ route('replaceTag', ['book' => $book->id, 'tag' => $tag->id]) }}" method="POST">
+                    @csrf 
+                    @method('post')
+                    <button type="submit" class="btn btn-success">Replace</button>  
+                  @endif
+                @endif
+              @endforeach
+
+        
+</form>
+          
+          
+          </td>
       </div>
 
+
+           
     @else
     <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>
     </div>  
     @endif
   
@@ -233,22 +265,22 @@
         <form action="{{ route('accept', $tag->id) }}" method="POST">
             {{ csrf_field() }}
             {{ method_field('GET') }}
-            <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
+            <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
         </form>
-</div>
 
-<div class="flex-parent jc-center">
+
+
         <form action="{{ route('decline', $tag->id) }}" method="POST">
             {{ csrf_field() }}
             {{ method_field('GET') }}
-            <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
+            <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
         </form>
-</div>
-<br>
-<div class="flex-parent jc-center">
+
         <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-        data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i>Delete</a>
+        data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>
 </div>
+
+
 
 @else
 <div class="flex-parent jc-center">

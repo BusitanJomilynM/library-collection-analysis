@@ -22,6 +22,7 @@ class TagController extends Controller
     {
         $user = Auth::user();
         $users = User::all();
+        $books = Book::all();
         Paginator::useBootstrap();
         if($user->type === 'technician librarian') {
             if(request('search')) { 
@@ -69,7 +70,7 @@ class TagController extends Controller
             }
         }  
 
-        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users]);
+        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users, 'books'=>$books]);
     }
 
     /**
@@ -103,6 +104,7 @@ class TagController extends Controller
     
         $tag->department = $request->input('department');
         $tag->suggest_book_subject = $request->input('suggest_book_subject');
+        $tag->action = $request->input('action');
         $tag->user_id = $user->id;
     
         $tag->save();
@@ -206,6 +208,38 @@ class TagController extends Controller
         $tags = Tag::all();
 
         return view('tags_layout.change_tags', ['books'=>$books,'tags'=>$tags, 'users'=>$users]);
+    }
+
+    public function append(Request $request, $book,$tag){
+      
+        
+        $book = Book::findorFail($book);
+        $tag = Tag::findorFail($tag);
+
+
+        $book->book_subject .= " ".$tag->suggest_book_subject;
+
+        $tag->status = 1;
+
+        $book->save();
+
+        return redirect()->back()->with('success', 'Tags appended');
+    }
+
+    public function replaceTag(Request $request, $book,$tag){
+      
+        
+        $book = Book::findorFail($book);
+        $tag = Tag::findorFail($tag);
+
+
+        $book->book_subject = $tag->suggest_book_subject;
+
+        $tag->status = 1;
+
+        $book->save();
+
+        return redirect()->back()->with('success', 'Tags replaced');
     }
 
 }

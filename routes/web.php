@@ -67,6 +67,10 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     // Route::match(['get', 'post'], '/generatePdf', [BookController::class, 'generatePDF'])->name('generatePdf');    
     Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
 
+    Route::post('/append/{tag}/{book}', [TagController::class, 'append'])->name('append');
+
+    Route::post('/replace/{tag}/{book}', [TagController::class, 'replaceTag'])->name('replaceTag');
+
 });
 
 //technician lib

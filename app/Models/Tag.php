@@ -13,6 +13,7 @@ class Tag extends Model
         'department',
         'suggest_book_subject',
         'user_id',
+        'action',
         'status'
     ];
     

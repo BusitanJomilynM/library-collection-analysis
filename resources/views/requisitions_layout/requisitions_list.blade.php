@@ -38,8 +38,8 @@
     <th>Edition/Year</th>
     <th>Source</th>
     <th>Requested By</th>
-    <th>Role</th>
     <th>Department</th>
+    <!-- <th>Department</th> -->
     <th>Status</th>
     <th>Actions</th>
   </tr>
@@ -62,7 +62,7 @@
       @endif
       @endforeach
     </td>
-    <td>
+    <!-- <td>
       @if($requisition->type == 'technician librarian')
       Technician Librarian
       @elseif($requisition->type == 'staff librarian')
@@ -70,7 +70,7 @@
       @elseif($requisition->type == 'department representative')
       Department Representative
       @endif
-    </td>
+    </td> -->
     <td>{{$requisition->department}}</td>
     <td>
       @if($requisition->status == 0)
@@ -86,31 +86,35 @@
 
     <td>
     @if($requisition->status == 0)
+
     <div class="flex-parent jc-center">
             <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
+                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form>
-    </div>
+   
 
-    <div class="flex-parent jc-center">
+    
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-    </div>
-  <br>
-    <div class="flex-parent jc-center">
+
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
     </div>
 
+ 
+    
+            
+   
+  </div>
     @else
     <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
     </div>  
     @endif
   
@@ -170,7 +174,7 @@
         @endif
       @endforeach
     </td>
-    <td> 
+    <!-- <td> 
       @if($requisition->type == 'technician librarian')
       Technician Librarian
       @elseif($requisition->type == 'staff librarian')
@@ -178,7 +182,7 @@
       @elseif($requisition->type == 'department representative')
       Department Representative
       @endif
-    </td>
+    </td> -->
     <td>{{$requisition->department}}</td>
     <td>@if($requisition->status == 0)
       Pending
@@ -191,11 +195,12 @@
       @endif</td>
     <td>
       @if($requisition->status == 0)
+      <div class="flex-parent jc-center">
       <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button"><span>&#9776;</span>Edit</a>
-      <br><br>
+  
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-      data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a></td>
-
+      data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a></td>
+</div>
       @else
       <a data-toggle="modal" class="btn btn-danger" disabled>No Actions Available</a></td>
       @endif
@@ -256,7 +261,7 @@
         @endif
       @endforeach
     </td>
-    <td> 
+    <!-- <td> 
       @if($requisition->type == 'technician librarian')
       Technician Librarian
       @elseif($requisition->type == 'staff librarian')
@@ -264,7 +269,7 @@
       @elseif($requisition->type == 'department representative')
       Department Representative
       @endif
-    </td>
+    </td> -->
     <td>{{$requisition->department}}</td>
     <td>@if($requisition->status == 0)
       Pending
@@ -281,26 +286,25 @@
             <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
+                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form>
-</div>
-<div class="flex-parent jc-center">
+   
+
+    
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-</div>
-<br>
-    <div class="flex-parent jc-center">
+
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
     </div>
 
     @else
     <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
     </div>  
     @endif
   
@@ -363,6 +367,30 @@ input[type=text]
 
 .jc-center {
   justify-content: center;
+}
+
+.three-col .col1,
+.three-col .col2,
+.three-col .col3 {
+    width: 33%;
+}
+
+.three-col .col1 {
+    float: left;
+}
+.three-col .col2 {
+    display: block;
+    display: inline-block;
+   
+    float: left;
+     margin-left: 10px;
+}
+.three-col .col3 {
+    float: right;
+}
+
+.three-col label {
+    display: block;
 }
 </style>
 

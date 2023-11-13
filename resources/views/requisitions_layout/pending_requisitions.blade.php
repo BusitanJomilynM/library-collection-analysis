@@ -78,25 +78,26 @@
     <td>
 
     @if($pendingr->status == 0)
+  
+
+    <!-- asjkdhaskjdh -->
     <div class="flex-parent jc-center">
-            <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
+    <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span>Approve</button>
+                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form>
-</div>
-<div class="flex-parent jc-center">
+   
+
+    
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
+                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-</div>
 
-<div class="flex-parent jc-center">
-            <!-- <a class="btn btn-primary" href="{{ route('requisitions.edit', $pendingr->id) }}" role="button">Edit</a> -->
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i></a>
     </div>
         
         
@@ -104,7 +105,7 @@
 
     @else
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i>Delete</a>
+            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i></a>
     </div>  
     @endif
   

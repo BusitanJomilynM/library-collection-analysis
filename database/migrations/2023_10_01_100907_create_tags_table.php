@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('department');
             $table->string('suggest_book_subject', 50);
             $table->integer('user_id');
+            $table->integer('action');
             $table->integer('status');
 
         });
