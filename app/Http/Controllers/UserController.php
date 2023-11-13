@@ -49,7 +49,9 @@ class UserController extends Controller
 
         $techcount = User::where('type', 'like', '0')->count();
 
-        return view('users_layout.users_list', ['users'=>$users, 'techcount'=>$techcount]);
+        $userId = Auth::user()->id;
+
+        return view('users_layout.users_list', ['users'=>$users, 'techcount'=>$techcount, 'userId'=>$userId]);
     }
 
     /**
@@ -152,11 +154,30 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
+       
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'User deleted!');
+    }
+
+    public function confirmDestroy(Request $request){
+        $request->validate([
+            'password' => 'required',
+            'id' => 'required|exists:users,id'
+        ]);
+        
+        $user = auth()->user();
+
+        if (Hash::check($request->password, $user->password)){
+            $user = User::findorFail($request->id);
+            $user->delete();
+
+            return redirect()->route('users.index')->with('success', 'User deleted!');
+        }
+       
+        return redirect()->route('users.index')->with('error', 'Incorrect password');
     }
 
     public function restorePassword(){

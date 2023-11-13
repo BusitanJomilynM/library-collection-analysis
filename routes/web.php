@@ -83,6 +83,8 @@ Route::middleware(['auth', 'user-access:technician librarian'])->group(function 
     
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
     Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
+
+    Route::post('/deleteUser/{user}', [UserController::class, 'confirmDestroy'])->name('confirmDestroy');
     
 });
 

@@ -36,6 +36,7 @@
     <th>Requested by</th>
     <th>Department</th>
     <th>Book Barcode</th>
+    <th>Current Tags</th>
     <th>Suggested Tags</th>
     <th>Suggested Action</th>
     <th>Status</th>
@@ -54,6 +55,11 @@
       @endforeach</td>
     <td>{{$tag->department}}</td>
     <td>{{$tag->book_barcode}}</td>
+    <td>@foreach($books as $book)
+@if($book->book_barcode == $tag->book_barcode)
+{{$book->book_subject}}
+@endif
+    @endforeach</td>
     <td><?php $t = $tag->suggest_book_subject;
             $a = explode(" ", $t );
             echo implode(", ", $a ); ?></td>
@@ -87,20 +93,19 @@
             @foreach($books as $book)
                 @if($tag->book_barcode == $book->book_barcode)
                 
-                @if($tag->action == 1)
-                  <form action="{{ route('append', ['tag' => $tag->id, 'book' => $book->id]) }}" method="POST">
-                    @csrf 
-                    @method('post')
-                    <button type="submit" class="btn btn-success">Append</button>   
-                    </form>
-                @else
-                
-                  <form action="{{ route('replace', ['tag' => $tag->id, 'book' => $book->id]) }}" method="POST">
-                    @csrf 
-                    @method('post')
-                    <button type="submit" class="btn btn-success">Replace</button>  
-                    </form>
-                @endif
+                  @if($tag->action == 1)
+                    <form action="{{ route('append', ['tag' => $tag->id, 'book' => $book->id]) }}" method="POST">
+                      @csrf 
+                      @method('post')
+                      <button type="submit" class="btn btn-success">Append</button>   
+                      </form>
+                  @else
+                    <form action="{{ route('replace', ['tag' => $tag->id, 'book' => $book->id]) }}" method="POST">
+                      @csrf 
+                      @method('post')
+                      <button type="submit" class="btn btn-success">Replace</button>  
+                      </form>
+                  @endif
                 @endif
             @endforeach
  
