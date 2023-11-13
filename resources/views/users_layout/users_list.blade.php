@@ -52,13 +52,13 @@
     <a class="btn btn-success" href="{{ route('restorePassword', $user->id) }}" role="button"><span>&#9733;</span>Restore Password</a>
         
     @if($user->type == 'technician librarian')  
-      @if($techcount>1)
+      @if($techcount>1 && $user->id != $userId)
      
-     
-      <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
+
+        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
                 data-action="{{ route('confirmDestroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
       @else
-      <a data-toggle="modal" class="btn btn-danger" disabled><i class="fa fa-trash"></i> Delete</a>
+        
       @endif
     
     @else

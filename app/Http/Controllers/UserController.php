@@ -49,7 +49,9 @@ class UserController extends Controller
 
         $techcount = User::where('type', 'like', '0')->count();
 
-        return view('users_layout.users_list', ['users'=>$users, 'techcount'=>$techcount]);
+        $userId = Auth::user()->id;
+
+        return view('users_layout.users_list', ['users'=>$users, 'techcount'=>$techcount, 'userId'=>$userId]);
     }
 
     /**
