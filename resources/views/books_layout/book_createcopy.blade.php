@@ -13,13 +13,13 @@
     <div class="two-col">
         <div class="col1">
             <label>Book Callnumber</label>
-            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
+            <input class="form-control" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_callnumber" value="{{ $book->book_callnumber }}">
         </div>
 
         <div class="col2">
-            <label>Barcode</label>
-            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode', $barcode) }}"  minlength="2" maxlength="7" readonly>
+            <label>Book Barcode</label>
+            <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{ $book->book_barcode }}" minlength="4" maxlength="25">
             @error('book_barcode')
                 <span class="text-danger">{{$message}}</span>
             @enderror
@@ -96,8 +96,8 @@
 
     <br>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="nav-link" href="{{ route('books.index') }}">Cancel</a>
+    <button type="submit" class="btn btn-danger">Submit</button>
+<a class="btn btn-primary" onclick="history.back()">Cancel</a>
 
 </form>
 

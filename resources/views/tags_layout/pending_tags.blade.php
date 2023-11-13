@@ -16,13 +16,15 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
+    <button type="submit" class="btn btn-danger">
+    <i class="fa fa-search"></i>
+    </button>
 </form>
 </div>
 
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('tags.index') }}">Back to list</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('tags.index') }}">Back to list</a> <br><br>
 
-<table class="table table-bordered" style="width:100%">
+<table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
     <th>Requested by</th>

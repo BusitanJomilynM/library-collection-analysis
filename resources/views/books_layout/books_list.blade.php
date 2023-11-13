@@ -15,7 +15,9 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
+    <button type="submit" class="btn btn-danger">
+    <i class="fa fa-search"></i>
+    </button>
 </form>
 </div>
 
@@ -23,11 +25,11 @@
 
 @if($user->type == 'technician librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
-<a class="btn btn-primary" href="{{ route('books.create') }}" >Add Book</a>
-<a class="btn btn-primary" href="{{ route('booklist_pdf') }}">Export to PDF</a>
+<a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span> Add Book</a>
+<a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Export to PDF</a>
+<br><br>
 
-
-<table class="table table-bordered" style="width:100%">
+<table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
     <th>Book Title</th>
@@ -53,7 +55,7 @@
 
     <td>
       <!-- <a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}" role="button">Edit</a>  -->
-    <a class="btn btn-primary" href="{{ route('books.view_bookdetails', $book->id) }}" role="button">Details</a>
+    <a class="btn btn-primary" href="{{ route('books.view_bookdetails', $book->id) }}" role="button"><span>&#9783;</span>Details</a>
 
         <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
         data-action="{{ route('archiveBook', $book->id) }}">Archive</a>  -->
@@ -123,7 +125,7 @@
 
 <!-- staff librarian -->
 @elseif($user->type == 'staff librarian')
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a> <br><br>
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
@@ -142,8 +144,7 @@
     <td>{{$book->book_author}}</td>
 
     </td>
-    <td><a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}" 
-        data-action="{{ route('archiveBook', $book->id) }}">Archive</a> </td>
+    <td><a class="btn btn-warning" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">Archive</a> </td>
     </td>
   </tr>
   </tbody>

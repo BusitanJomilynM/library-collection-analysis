@@ -12,6 +12,7 @@
     @endif
 </div>
 
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('books.index') }}">Return</a>
 
     <table class="table table-bordered" style="width:100%">
         <thead class="thead-dark">
@@ -40,37 +41,15 @@
                     </td>
                     <td>
                         <a class="btn btn-primary" href="{{ route('books.edit', ['book' => $book->id]) }}" role="button">Edit</a>
-                        <a class="btn btn-primary" href="{{ route('books.book_createcopy', ['book' => $book->id]) }}" role="button">Add Copy</a>
+                        <a class="btn btn-success" href="{{ route('books.book_createcopy', ['book' => $book->id]) }}" role="button"><span>&#43;</span>Add Copy</a>
                         <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}"
                            data-action="{{ route('archiveBook', $book->id) }}">Archive</a> -->
 
-                           <a class="btn btn-primary" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">Archive</a>
+                           <a class="btn btn-warning" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">Archive</a>
                     </td>
                 </tr>
             </tbody>
-            <!-- Archive Modal -->
-            <div class="modal fade" id="archiveBookModal_{{$book->id}}" data-backdrop="static" tabindex="-1" role="dialog"
-                 aria-labelledby="deleteUserModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteUserModalLabel">Are you sure you want to archive this book?</h5>
-                        </div>
-                        <form action="{{ route('archiveBook', $book->id) }}" method="POST">
-                            <div class="modal-body">
-                                {{ csrf_field() }}
-                                {{ method_field('GET') }}
-                                <h5 class="text-center">Archive {{ $book->book_title }}?</h5>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">Archive</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+           
         @endif
     </table>
 

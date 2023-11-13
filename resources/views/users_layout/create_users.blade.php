@@ -72,8 +72,8 @@
             @enderror
     </div>
 
-<button type="submit" class="btn btn-primary">Submit</button>
-<a class="nav-link" href="{{ route('users.index') }}">Cancel</a>
+    <button type="submit" class="btn btn-danger">Submit</button>
+<a class="btn btn-primary" href="{{ route('users.index') }}">Cancel</a>
 
 </form>
 

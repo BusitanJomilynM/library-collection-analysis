@@ -15,15 +15,22 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
+    <button type="submit" class="btn btn-danger">
+    <i class="fa fa-search"></i>
+    </button>
 </form>
 </div>
 
 @if($user->type == 'technician librarian' || 'staff librarian')
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending Subject Request</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending Subject Request</a> 
 @endif
 
-<table class="table table-bordered" style="width:100%">
+@if($user->type == 'technician librarian') 
+<br>
+@endif
+
+<br>
+<table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
     <th>Requested by</th>
@@ -39,7 +46,11 @@
 @forelse($tags as $tag)
 <tbody>
   <tr align="center">
-    <td>{{$user->first_name}} {{$user->last_name}}</td>
+    <td>@foreach($users as $user)
+          @if($user->id == $tag->user_id)
+          {{$user->first_name}} {{$user->last_name}}
+          @endif
+      @endforeach</td>
     <td>{{$tag->department}}</td>
     <td>{{$tag->book_barcode}}</td>
     <td><?php $t = $tag->suggest_book_subject;
@@ -143,10 +154,10 @@
     <td>
     @if($tag->status == 0)
     <div class="flex-parent jc-center">
-      <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button">Edit</a>
+      <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button"><span>&#9776;</span>Edit</a>
 
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-      data-action="{{ route('tags.destroy', $tag->id) }}">Delete</a></td>
+      data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
     </div>
 
     @else
@@ -233,7 +244,7 @@
             <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span>Disapprove</button>
         </form>
 </div>
-
+<br>
 <div class="flex-parent jc-center">
         <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
         data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i>Delete</a>

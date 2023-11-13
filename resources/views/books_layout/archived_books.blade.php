@@ -15,14 +15,16 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
-    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
+    <button type="submit" class="btn btn-danger">
+    <i class="fa fa-search"></i>
+    </button>
 </form>
 </div>
 
 
-<a class="btn btn-primary my-2 my-sm-0" href="{{ route('books.index') }}">Return</a>
+<a class="btn btn-primary my-2 my-sm-0" href="{{ route('books.index') }}">Return</a> <br><br>
 
-<table class="table table-bordered" style="width:100%">
+<table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
     <th>Book Title</th>
@@ -57,6 +59,7 @@
     @endif
     </td>
     <td>
+    <div class="flex-parent jc-center">
             <form action="{{ route('restoreBook', $archive->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
@@ -65,6 +68,7 @@
                 <a data-toggle="modal" class="btn btn-danger" data-target="#deleteBookModal_{{$archive->id}}"
               data-action="{{ route('books.destroy', $archive->id) }}">Delete</a>
             </form>
+</div>
     </td>
   </tr>
 </tbody>
@@ -100,6 +104,14 @@ form {
 }
 input[type=text] 
 { flex-grow: 1; 
+}
+
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
 }
 </style>
 

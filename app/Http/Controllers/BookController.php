@@ -34,7 +34,6 @@ class BookController extends Controller
     $books = Book::paginate(10);
     Paginator::useBootstrap();
 
-    if($user->type === 'technician librarian') {
         if(request('search')) {
             $books = Book::where('book_title', 'like', '%' . request('search') . '%')
             ->orwhere('book_callnumber', 'like', '%' . request('search') . '%')
@@ -48,46 +47,6 @@ class BookController extends Controller
         else{
         $books = Book::paginate(10);
         }
-    }
-
-    $user = Auth::user();
-    if($user->type === 'staff librarian') {
-        if(request('search')) {
-            $books = Book::where('book_title', 'like', '%' . request('search') . '%')
-            ->orwhere('book_callnumber', 'like', '%' . request('search') . '%')
-            ->orwhere('book_barcode', 'like', '%' . request('search') . '%')
-            ->orwhere('book_author', 'like', '%' . request('search') . '%')
-            ->orwhere('book_copyrightyear', 'like', '%' . request('search') . '%')
-            ->orwhere('book_sublocation', 'like', '%' . request('search') . '%')
-            ->orwhere('book_subject', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
-        } 
-    
-        else{
-        $books = Book::paginate(10);
-        }
-    }
-
-    $user = Auth::user();
-    if($user->type === 'department representative') {
-        if(request('search')) {
-            $books = Book::where('book_title', 'like', '%' . request('search') . '%')
-            ->orwhere('book_callnumber', 'like', '%' . request('search') . '%')
-            ->orwhere('book_barcode', 'like', '%' . request('search') . '%')
-            ->orwhere('book_author', 'like', '%' . request('search') . '%')
-            ->orwhere('book_copyrightyear', 'like', '%' . request('search') . '%')
-            ->orwhere('book_sublocation', 'like', '%' . request('search') . '%')
-            ->orwhere('book_publisher', 'like', '%' . request('search') . '%')
-            ->orwhere('book_lccn', 'like', '%' . request('search') . '%')
-            ->orwhere('book_isbn', 'like', '%' . request('search') . '%')
-            ->orwhere('book_edition', 'like', '%' . request('search') . '%')
-            ->orwhere('book_subject', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
-        } 
-    
-        else{
-        $books = Book::paginate(10);
-        }
-    }
-    
 
         return view('books_layout.books_list', ['books'=>$books,'user'=>$user]);
     }
@@ -183,7 +142,7 @@ class BookController extends Controller
         $user = Auth::user();
         if($user->type === 'technician librarian') {
         $book->delete();
-            return redirect()->route('books.index')->with('success', 'Book deleted!');
+            return redirect()->route('archive')->with('success', 'Book deleted!');
         }
         else{
             return redirect()->back();
@@ -254,18 +213,20 @@ class BookController extends Controller
 
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
 
-        $book->status=1;
-        $book->update(['book_barcode'=>null]);
+        
         $book->update($request->all()); 
-        $book->save();
+        
 
         return view('books_layout.archive_books', ['book'=>$book]);
     }
 
     public function archiveUpdate(UpdateArchiveRequest $request, Book $book)
     {
-        $book->update($request->all()); 
 
+        $book->status=1;
+        $book->update(['book_barcode'=>null]);
+        $book->update($request->all()); 
+        $book->save();
         return redirect()->route('archive')->with('success','Book archived');
     }
 
@@ -308,11 +269,11 @@ class BookController extends Controller
 
     }
 
-        public function book_createcopy(Request $request, Book $book)
-        {
-            $barcode = $this->generateUniqueBarcode();
-            return view('books_layout.book_createcopy', compact('book','barcode'));
-        }
+    
+    public function book_createcopy(Request $request, Book $book)
+    {
+            return view('books_layout.book_createcopy', compact('book'));
+    }
 
     
 

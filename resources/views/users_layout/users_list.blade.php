@@ -15,12 +15,14 @@
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Users" name="search"  value="{{ request('search') }}">
-    <a class="btn btn-primary" type="submit"><i class="fa fa-search"></i></a>
+    <button type="submit" class="btn btn-danger">
+    <i class="fa fa-search"></i>
+    </button>
 </form>
 </div>
 
-<a class="btn btn-primary" href="{{ route('users.create') }}">Create New User</a>
-<table class="table table-bordered" style="width:100%">
+<a class="btn btn-primary" href="{{ route('users.create') }}"><span>&#43;</span> Create New User</a> <br><br>
+<table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
     <th>School ID Number</th>
@@ -28,6 +30,7 @@
     <th>Middle Name</th>
     <th>Last Name</th>
     <th>Email</th>
+    <th>Contact Number</th>
     <th>Role</th>
     <th>Actions</th>
   </tr>
@@ -40,6 +43,7 @@
     <td>{{$user->middle_name}}</td>
     <td>{{$user->last_name}}</td>
     <td>{{$user->email}}</td>
+    <td>{{$user->contact_number}}</td>
     <td>
     @if($user->type == 'technician librarian')  
       Technician Librarian
@@ -110,5 +114,9 @@ form {
 input[type=text] 
 { flex-grow: 1; 
 }
+
+
+
+
 </style>
 @endsection
