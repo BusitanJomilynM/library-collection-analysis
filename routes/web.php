@@ -77,7 +77,6 @@ Route::middleware(['auth', 'user-access:technician librarian'])->group(function 
     Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
     Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
     
-    
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
     Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
     
