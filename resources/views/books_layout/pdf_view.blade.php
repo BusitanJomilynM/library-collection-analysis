@@ -1,31 +1,50 @@
 @section('Title', 'Books')
 
+
+
 <table class="table table-bordered" style="width:100%">
-<thead class="thead-dark">
-  <tr align="center">
-    <th>Book Title</th>
-    <th>Book Callnumber</th>
+    <thead class="thead-dark">
+        <tr align="center">
+            @if(isset($showBookTitle) && $showBookTitle)
+                <th>Book Title</th>
+            @endif
+            @if(isset($showBookCallnumber) && $showBookCallnumber)
+                <th>Book Callnumber</th>
+            @endif
+            @if(isset($showBookAuthor) && $showBookAuthor)
+                <th>Author</th>
+            @endif
+            @if(isset($showBookCopyrightYear) && $showBookCopyrightYear)
+                <th>Copyright Year</th>
+            @endif
+            <th>Copy Count</th>
+        </tr>
+    </thead>
 
-    <!-- <th>Author</th>
-    <th>Copyright Year</th>
-    <th>Sublocation</th>
-    <th>Book Subject</th> -->
-  </tr>
-</thead>
+    <tbody>
+    @forelse($data as $book)
+        <tr align="center">
+            @if($showBookTitle)
+                <td>{{$book['title']}}</td>
+            @endif
+            @if($showBookCallnumber)
+                <td>{{$book['callnumber']}}</td>
+            @endif
+            @if($showBookAuthor)
+                <td>{{$book['author']}}</td>
+            @endif
+            @if($showBookCopyrightYear)
+                <td>{{$book['copyrightyear']}}</td>
+            @endif
+            <td>{{$book['copy_count']}}</td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="5">No data available</td>
+        </tr>
+    @endforelse
+</tbody>
 
-@forelse($data as $book)
-<tbody>
-  <tr align="center">
-    <td>{{$book->book_title}}</td>
-    <!-- <td>{{$book->book_callnumber}}</td> -->
-    <!-- <td>{{$book->book_barcode}}</td> -->
-    <!-- <td>{{$book->book_author}}</td>
-    <td>{{$book->book_copyrightyear}}</td>
-    <td>{{$book->book_sublocation}}</td>
-    <td>
-    </td> -->
-    
-@empty
-<li class="list-group-item list-group-item-danger">Entry not found</li>   
+</table>
+</table>
 
-@endforelse

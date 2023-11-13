@@ -26,17 +26,27 @@
         <input type="checkbox" id="bookcallnumber" name="bookcallnumber"> Book Callnumber
     </label>
     <br>
+    <label for="bookauthor">
+        <input type="checkbox" id="bookauthor" name="bookauthor"> Author
+    </label>
+    <br>
+    <label for="bookcopyrightyear">
+        <input type="checkbox" id="bookcopyrightyear" name="bookcopyrightyear"> Copyright Year
+    </label>
+    <br>
+    <label for="copy">
+        <input type="checkbox" id="copy" name="copy"> Number of Copies
+    </label>
+
+
+
+
+
 
     <button type="submit">Submit</button>
 </form>
 
-<script>
-    function showNotification(checkbox, checkboxName) {
-        if (checkbox.checked) {
-            alert(checkboxName + ' checkbox is clicked!');
-        }
-    }
-</script>
+<!-- 
 @if(isset($data))
     <h2>Retrieved Data:</h2>
     <ul>
@@ -45,6 +55,6 @@
             <li>{{ $item->book_callnumber }}</li>
         @endforeach
     </ul>
-@endif
+@endif -->
 @endsection
 
