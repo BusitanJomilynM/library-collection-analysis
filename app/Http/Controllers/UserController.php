@@ -61,7 +61,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users_layout.create_users');
+        return view('users_layout.users_list');
     }
 
     /**
@@ -118,7 +118,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users_layout.users_edit', compact('user'));
+        return view('users_layout.users_list', compact('user'));
     }
 
     /**

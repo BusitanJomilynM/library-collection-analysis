@@ -177,11 +177,23 @@
       <td>{{$user->first_name}} {{$user->last_name}}</td>
       <td>{{$tag->department}}</td>
       <td>{{$tag->book_barcode}}</td>
+      <td>@foreach($books as $book)
+@if($book->book_barcode == $tag->book_barcode)
+{{$book->book_subject}}
+@endif
+    @endforeach</td>
+    
       <td><?php $t = $tag->suggest_book_subject;
             $a = explode(" ", $t );
             echo implode(", ", $a ); ?></td>
 
-   
+<td>
+      @if($tag->action == 1)
+      Append
+      @elseif($tag->action == 2)
+      Replace
+      @endif
+    </td>
     <td>@if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)
@@ -252,11 +264,22 @@
       <td>{{$user->first_name}} {{$user->last_name}}</td>
       <td>{{$tag->department}}</td>
       <td>{{$tag->book_barcode}}</td>
+      <td>@foreach($books as $book)
+@if($book->book_barcode == $tag->book_barcode)
+{{$book->book_subject}}
+@endif
+    @endforeach</td>
       <td><?php $t = $tag->suggest_book_subject;
             $a = explode(" ", $t );
             echo implode(", ", $a ); ?></td>
 
-   
+<td>
+      @if($tag->action == 1)
+      Append
+      @elseif($tag->action == 2)
+      Replace
+      @endif
+    </td>
     <td>@if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)

@@ -6,7 +6,6 @@
     @csrf
     @method('PUT')
     <div class="form-group">
-
             <input class="form-control" type="text" name="id" id="id" value="{{$user->id}}" hidden>
     </div>
 

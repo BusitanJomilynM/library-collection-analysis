@@ -102,7 +102,7 @@ class RequisitionController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('requisitions_layout.create_requisitions', ['user'=>$user]);
+        return view('requisitions_layout.requisitions_list', ['user'=>$user]);
     }
 
     /**

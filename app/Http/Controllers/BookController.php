@@ -33,6 +33,7 @@ class BookController extends Controller
     $user = Auth::user();
     $books = Book::paginate(10);
     Paginator::useBootstrap();
+    $barcode = $this->generateUniqueBarcode();
 
         if(request('search')) {
             $books = Book::where('book_title', 'like', '%' . request('search') . '%')
@@ -46,9 +47,10 @@ class BookController extends Controller
     
         else{
         $books = Book::paginate(10);
+        
         }
 
-        return view('books_layout.books_list', ['books'=>$books,'user'=>$user]);
+        return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode]);
     }
     /**
      * Show the form for creating a new resource.
@@ -60,7 +62,7 @@ class BookController extends Controller
         $user = Auth::user();
         if ($user->type === 'technician librarian') {
             $barcode = $this->generateUniqueBarcode();
-            return view('books_layout.create_books', compact('barcode'));
+            return view('books_layout.books_list', ['barcode'=>$barcode]);
         } else {
             return redirect()->back();
         }
@@ -110,7 +112,7 @@ class BookController extends Controller
     {
         $user = Auth::user();
         if($user->type === 'technician librarian') {
-            return view('books_layout.books_edit', compact('book'));
+            return view('books_layout.view_bookdetails', compact('book'));
         }
         else{
             return redirect()->back();
@@ -265,7 +267,9 @@ class BookController extends Controller
     }
     public function view_bookdetails(Book $book)
     {
-            return view('books_layout.view_bookdetails', compact('book'));
+        $barcode = $this->generateUniqueBarcode();
+            $user = Auth::user();
+            return view('books_layout.view_bookdetails', compact('book','user','barcode'));
 
     }
 
@@ -273,7 +277,7 @@ class BookController extends Controller
     public function book_createcopy(Request $request, Book $book)
     {
         $barcode = $this->generateUniqueBarcode();
-        return view('books_layout.book_createcopy', compact('book','barcode'));
+        return view('books_layout.view_bookdetails', compact('book','barcode'));
     }
 
     
