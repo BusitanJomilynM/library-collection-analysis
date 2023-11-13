@@ -87,19 +87,20 @@
             @foreach($books as $book)
                 @if($tag->book_barcode == $book->book_barcode)
                 
+                @if($tag->action == 1)
                   <form action="{{ route('append', ['tag' => $tag->id, 'book' => $book->id]) }}" method="POST">
                     @csrf 
                     @method('post')
                     <button type="submit" class="btn btn-success">Append</button>   
                     </form>
-
+                @else
                 
                   <form action="{{ route('replace', ['tag' => $tag->id, 'book' => $book->id]) }}" method="POST">
                     @csrf 
                     @method('post')
                     <button type="submit" class="btn btn-success">Replace</button>  
                     </form>
-               
+                @endif
                 @endif
             @endforeach
  
