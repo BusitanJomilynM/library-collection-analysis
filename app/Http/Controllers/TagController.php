@@ -210,7 +210,7 @@ class TagController extends Controller
         return view('tags_layout.change_tags', ['books'=>$books,'tags'=>$tags, 'users'=>$users]);
     }
 
-    public function append(Request $request, $book,$tag){
+    public function append(Request $request,$tag, $book){
       
         
         $book = Book::findorFail($book);
@@ -227,16 +227,13 @@ class TagController extends Controller
         return redirect()->back()->with('success', 'Tags appended');
     }
 
-    public function replace(Request $request, $book, $tag){
+    public function replace(Request $request, $tag, $book){
       
         
         $book = Book::findorFail($book);
         $tag = Tag::findorFail($tag);
 
-
         $book->book_subject = $tag->suggest_book_subject;
-
-        
 
         $book->save();
 

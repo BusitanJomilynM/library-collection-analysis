@@ -69,7 +69,7 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
 
     Route::post('/append/{tag}/{book}', [TagController::class, 'append'])->name('append');
 
-    Route::post('/replace/{tag}/{book}', [TagController::class, 'replace'])->name('replace');
+    Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');
 
 });
 
