@@ -222,11 +222,12 @@ class TagController extends Controller
         $tag->status = 1;
 
         $book->save();
+        $tag->save();
 
         return redirect()->back()->with('success', 'Tags appended');
     }
 
-    public function replaceTag(Request $request, $book,$tag){
+    public function replace(Request $request, $book, $tag){
       
         
         $book = Book::findorFail($book);
@@ -235,9 +236,12 @@ class TagController extends Controller
 
         $book->book_subject = $tag->suggest_book_subject;
 
-        $tag->status = 1;
+        
 
         $book->save();
+
+        $tag->status = 1;
+        $tag->save();
 
         return redirect()->back()->with('success', 'Tags replaced');
     }

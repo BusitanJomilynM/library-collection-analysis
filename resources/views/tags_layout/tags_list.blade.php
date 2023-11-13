@@ -84,6 +84,23 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form> -->
+            @foreach($books as $book)
+                @if($tag->book_barcode == $book->book_barcode)
+                  @if($tag->action == 1)
+                  <form action="{{ route('append', ['book' => $book->id, 'tag' => $tag->id]) }}" method="POST">
+                    @csrf 
+                    @method('post')
+                    <button type="submit" class="btn btn-success">Append</button>   
+                    </form>
+                  @else
+                  <form action="{{ route('replace', ['book' => $book->id, 'tag' => $tag->id]) }}" method="POST">
+                    @csrf 
+                    @method('post')
+                    <button type="submit" class="btn btn-success">Replace</button>  
+                    </form>
+                  @endif
+                @endif
+            @endforeach
  
             <form action="{{ route('decline', $tag->id) }}" method="POST">
                 {{ csrf_field() }}
@@ -94,25 +111,10 @@
             data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>
 
             
-              @foreach($books as $book)
-              
-                @if($tag->book_barcode == $book->book_barcode)
-                  @if($tag->action == 1)
-                  <form action="{{ route('append', ['book' => $book->id, 'tag' => $tag->id]) }}" method="POST">
-                    @csrf 
-                    @method('post')
-                    <button type="submit" class="btn btn-success">Append</button>   
-                  @else
-                  <form action="{{ route('replaceTag', ['book' => $book->id, 'tag' => $tag->id]) }}" method="POST">
-                    @csrf 
-                    @method('post')
-                    <button type="submit" class="btn btn-success">Replace</button>  
-                  @endif
-                @endif
-              @endforeach
+           
 
         
-</form>
+
           
           
           </td>
