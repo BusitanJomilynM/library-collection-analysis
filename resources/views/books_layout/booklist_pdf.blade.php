@@ -54,22 +54,38 @@
     <br>
 
 
+    <!-- <label for="callNumberPrefix">
+        Include Call Number:
+        <select id="callNumberPrefix" name="callNumberPrefix">
+            <option value="">-- Select Subject Head --</option>
+            <option value="COM">COM</option>
+            <option value="EDUC">EDUC</option>
+            <option value="ENG">ENG</option>
+            <option value="LAHS">LAHS</option>
+            <option value="GRAD">GRAD</option>
+            <option value="THES">THES</option>
+            <option value="CD">CD</option>
+            <option value="FIC">FIC</option>
+            <option value="LAW">LAW</option>
+            <option value="REL">REL</option>
+            <option value="AMS">AMS</option>
+            <option value="ARCH">ARCH</option>
+            <option value="FIL">FIL</option>
+            <option value="CRIM">CRIM</option>
+            <option value="ITHM">IHTM</option>
+            <option value="THES">THES</option>
+            <option value="PER">PER</option>
+            <option value="SEF">SEF</option>
+            <option value="SR">SR</option>
+
+        </select>
+    </label>
+    <br> -->
 
 
 
-
-    <button type="submit">Submit</button>
+    <button type="submit">Generate PDF</button>
 </form>
 
-<!-- 
-@if(isset($data))
-    <h2>Retrieved Data:</h2>
-    <ul>
-        @foreach($data as $item)
-            <li>{{ $item->book_title }}</li>
-            <li>{{ $item->book_callnumber }}</li>
-        @endforeach
-    </ul>
-@endif -->
 @endsection
 

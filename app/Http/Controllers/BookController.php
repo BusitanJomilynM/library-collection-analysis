@@ -155,25 +155,7 @@ class BookController extends Controller
             return redirect()->back();
         }
     }
-    // public function booklistPdf(Request $request, Book $book)
-    // {
-    //     $showBookTitle = $request->has('booktitle');
-    //     $showBookCallnumber = $request->has('bookcallnumber');
-    //     $showBookAuthor = $request->has('bookauthor'); 
-    //     $showBookCopyrightYear = $request->has('bookcopyrightyear'); 
-        
-    
-    //     if ($showBookTitle || $showBookCallnumber ||  $showBookAuthor || $showBookCopyrightYear) {
-    //         $data = Book::all();
-    
-    //         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('data', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear'))->setPaper('a4', 'landscape');
-    
-    //         return $pdf->stream('book_report.pdf');
-    //     }
-    
-    //     // Default case (when no checkbox is selected)
-    //     return view('books_layout.booklist_pdf', ['books' => $book]);
-    // }    }
+
         
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
         $book->update($request->all()); 
