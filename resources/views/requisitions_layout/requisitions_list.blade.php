@@ -176,7 +176,7 @@
     <td>
       @if($requisition->status == 0)
       <div class="flex-parent jc-center">
-      <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button"><span>&#9776;</span>Edit</a>
+      <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button"><span>&#9776;</span></a>
   
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
       data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a></td>
