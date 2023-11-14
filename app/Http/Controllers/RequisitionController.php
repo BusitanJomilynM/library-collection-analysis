@@ -139,7 +139,7 @@ class RequisitionController extends Controller
         $user = Auth::user();
             if ($requisition->user_id == auth()->user()->id){
                 $user = Auth::user();
-                    return view('requisitions_layout.requisitions_edit', compact('requisition'), ['user'=>$user]);}
+                    return view('requisitions_layout.requisitions_list', compact('requisition'), ['user'=>$user]);}
             else{
                 return redirect()->back();
             }

@@ -176,15 +176,22 @@
     <td>
       @if($requisition->status == 0)
       <div class="flex-parent jc-center">
-      <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button"><span>&#9776;</span></a>
+      <!-- <a class="btn btn-primary" href="{{ route('requisitions.edit', $requisition->id) }}" role="button"><span>&#9776;</span>Edit</a> -->
+
+      <a data-toggle="modal" class="btn btn-primary" data-target="#editReqModal_{{$requisition->id}}"
+      data-action="{{ route('requisitions.edit', $requisition->id) }}"><span>&#9776;</span>Edit</a>
   
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-      data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a></td>
+      data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
+    </td>
 </div>
       @else
       <a data-toggle="modal" class="btn btn-danger" disabled>No Actions Available</a></td>
       @endif
   </tr>
+
+
+
 
     <!-- Delete Modal -->
 <div class="modal fade" id="deleteUserModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
@@ -205,6 +212,123 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
               <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+        </form>
+        </div>
+      </div>
+</div>
+
+<!-- Edit req -->
+<div class="modal fade" id="editReqModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteUserModalLabel">Edit</h5>
+            
+          </div>
+          <form action="{{ route('requisitions.update', $requisition->id) }}" method="POST">
+            <div class="modal-body">
+            @csrf
+    @method('PUT')
+    <div class="form-group">
+        <label>Book Name</label>
+        <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{$requisition->book_title}}" minlength="1" maxlength="60" required>
+        @error('book_title')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>Number of Copies</label>
+        <input class="form-control @error('copies') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="3" name="copies" id="copies" value="{{$requisition->copies}}" required>
+        @error('copies')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>Material Type</label>
+        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="material_type" id="material_type" value="{{$requisition->material_type}}" required>
+        @error('material_type')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>Author</label>
+        <input class="form-control @error('author') is-invalid @enderror" type="text" name="author" id="author" value="{{$requisition->author}}" minlength="2" maxlength="40" required>
+        @error('author')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>ISBN</label>
+        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="isbn" id="isbn" value="{{$requisition->isbn}}" minlength="2" maxlength="25" required>
+        @error('isbn')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>Publisher</label>
+        <input class="form-control @error('publisher')is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{$requisition->publisher}}" minlength="2" maxlength="25" required>
+        @error('publisher')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>Edition/Year</label>
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{$requisition->edition}}" required>
+        @error('edition')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label>Source</label>
+        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{$requisition->source}}" minlength="2" maxlength="25" required>
+        @error('source')
+            <span class="text-danger">{{$message}}</span>
+        @enderror</div>
+
+    <div class="form-group">
+    
+        <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
+
+    </div>
+
+    <div class="form-group">
+       
+        <input class="form-control" type="text" name="type" id="type" value="{{$user->type}}" hidden>
+    </div>
+
+    <div class="form-group">
+        <label>Department</label>
+            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{$requisition->department}}" required> 
+            <option value="SBAA" {{ old('department') == "SBAA" || $requisition->department == "SBAA" ? 'selected' : '' }}>SBAA - School of Business Administration & Accountancy</option>
+            <option value="SOD" {{ old('department') == "SOD" || $requisition->department == "SOD" ? 'selected' : '' }}>SOD - School of Dentistry</option>
+            <option value="SIT" {{ old('department') == "SIT" || $requisition->department == "SIT" ? 'selected' : '' }}>SIT - School of Information Technology</option>
+            <option value="SIHTM" {{ old('department') == "SIHTM" || $requisition->department == "SIHTM" ? 'selected' : '' }}>SIHTM - School of International Tourism and Hospitality</option>
+            <option value="SEA" {{ old('department') == "SEA" || $requisition->department == "SEA" ? 'selected' : '' }}>SEA - School of Engineering & Architecture</option>
+            <option value="SCJPS" {{ old('department') == "SCJPS" || $requisition->department == "SCJPS" ? 'selected' : '' }}>SCJPS - School of Criminal Justice & Public Safety</option>
+            <option value="SOL" {{ old('department') == "SOL" || $requisition->department == "SOL" ? 'selected' : '' }}>SOL - School of Law</option>
+            <option value="SNS" {{ old('department') == "SNS" || $requisition->department == "SNS" ? 'selected' : '' }}>SNS - School of Natural Sciences</option>
+            <option value="SON" {{ old('department') == "SON" || $requisition->department == "SON" ? 'selected' : '' }}>SON - School of Nursing</option>
+            <option value="STELA" {{ old('department') == "STELA" || $requisition->department == "STELA" ? 'selected' : '' }}>STELA - School of Teacher Education & Liberal Arts</option>
+            <option value="Graduate School" {{ old('department') == "Graduate School" || $requisition->department == "Graduate School" ? 'selected' : '' }}>Graduate School</option>
+            </select>   
+            @error('department')
+            <span class="text-danger">{{$message}}</span>
+            @enderror 
+    </div>
+               
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-danger">Submit</button>
             </div>
         </form>
         </div>
@@ -262,8 +386,6 @@
                 <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form>
    
-
-    
             <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
@@ -314,13 +436,16 @@
    
 @empty
   <li class="list-group-item list-group-item-danger">Entry not found</li>  
+
+  
 @endforelse
 
 
 
 @endif
 
-<!-- Create Modal -->
+<div>
+  <!-- Create Modal -->
 <div class="modal fade" id="createReqModal" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="createReqModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -333,7 +458,7 @@
               @csrf
               <div class="form-group">
                <label>Book Name</label>
-                <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{ old('book_title') }}" minlength="1" maxlength="60">
+                <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{ old('book_title') }}" minlength="1" maxlength="60" required>
                 @error('book_title')
                     <span class="text-danger">{{$message}}</span>
                 @enderror
@@ -341,7 +466,7 @@
 
             <div class="form-group">
                   <label>Number of Copies</label>
-                  <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="60" name="copies" id="copies" value="{{ old('copies') }}">
+                  <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="60" name="copies" id="copies" value="{{ old('copies') }}" required>
                   @error('copies')
                       <span class="text-danger">{{$message}}</span>
                   @enderror
@@ -350,7 +475,7 @@
 
     <div class="form-group">
       <label for="material_type">Material Type</label>
-        <select class="form-control @error('material_type') is-invalid @enderror" name="material_type" id="material_type">
+        <select class="form-control @error('material_type') is-invalid @enderror" name="material_type" id="material_type" required>
           <option value="">--Select Material Type--</option>
           <option value="Book">Book</option>
           <option value="JournalMagazine">Journal/Magazine</option>
@@ -360,7 +485,7 @@
           <option value="Other">Other</option>
         </select>
     <label>Other</label>
-    <input class="form-control @if(old('material_type') == 'Other') is-invalid @endif" type="text" name="other_material_type" id="other_material_type" value="{{ old('other_material_type') }}" minlength="2" maxlength="40">
+    <input class="form-control @if(old('material_type') == 'Other') is-invalid @endif" type="text" name="other_material_type" id="other_material_type" value="{{ old('other_material_type') }}" minlength="2" maxlength="40" required>
     @error('material_type')
         <span class="text-danger">{{$message}}</span>
     @enderror
@@ -372,7 +497,7 @@
   
     <div class="form-group">
         <label>Author</label>
-        <input class="form-control @error('author') is-invalid @enderror" type="text" name="author" id="author" value="{{ old('author') }}"  minlength="2" maxlength="40">
+        <input class="form-control @error('author') is-invalid @enderror" type="text" name="author" id="author" value="{{ old('author') }}"  minlength="2" maxlength="40" required>
         @error('author')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -380,7 +505,7 @@
 
     <div class="form-group">
         <label>ISBN</label>
-        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="isbn" id="isbn" value="{{ old('isbn') }}"  minlength="2" maxlength="25">
+        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="isbn" id="isbn" value="{{ old('isbn') }}"  minlength="2" maxlength="25" required>
         @error('isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -388,7 +513,7 @@
 
     <div class="form-group">
         <label>Publisher</label>
-        <input class="form-control @error('publisher') is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"  minlength="2" maxlength="25">
+        <input class="form-control @error('publisher') is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"  minlength="2" maxlength="25" required>
         @error('publisher')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -396,7 +521,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}">
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -404,31 +529,26 @@
 
     <div class="form-group">
         <label>Source</label>
-        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{ old('source') }}"  minlength="2" maxlength="25">
+        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{ old('source') }}"  minlength="2" maxlength="25" required>
         @error('source')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
 
     <div class="form-group">
-        <label>Requested By</label>
+     
         <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
-        <input class="form-control" type="string" value="{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}" readonly>
+ 
     </div>
 
     <div class="form-group">
-        <label>Role</label>
-        <select class="form-control" name="type" id="type" value="{{$user->type}}" disabled>
-                <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technician Librarian</option>
-                <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
-                <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
-            </select>
+        
         <input class="form-control" type="text" name="type" id="type" value="{{$user->type}}" hidden>
     </div>
 
     <div class="form-group">
         <label>Department</label>
-            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department">
+            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
             <option value="">--Select Department--</option>
             <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD">SOD - School of Dentistry</option>
@@ -457,7 +577,7 @@
         </div>
       </div>
 </div>
-
+</div>
 
 
 </table>

@@ -28,12 +28,17 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
     $user = Auth::user();
     $books = Book::paginate(10);
-    Paginator::useBootstrap();
+
+ 
     $barcode = $this->generateUniqueBarcode();
+    $bookBarcode = $request->input('book_barcode'); // Retrieve the book_barcode from the query parameter
+    
+    Paginator::useBootstrap();
+    
 
         if(request('search')) {
             $books = Book::where('book_title', 'like', '%' . request('search') . '%')
@@ -50,7 +55,7 @@ class BookController extends Controller
         
         }
 
-        return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode]);
+        return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode, 'bookBarcode'=>$bookBarcode]);
     }
     /**
      * Show the form for creating a new resource.
@@ -153,12 +158,8 @@ class BookController extends Controller
 
         
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
-
-        
         $book->update($request->all()); 
-        
-
-        return view('books_layout.archive_books', ['book'=>$book]);
+        return view('books_layout.view_bookdetails', ['book'=>$book]);
     }
 
     public function archiveUpdate(UpdateArchiveRequest $request, Book $book)
@@ -175,10 +176,12 @@ class BookController extends Controller
 
         $book->update(['archive_reason'=>null]);
         $barcode = $this->generateUniqueBarcode();
-
+        $book->book_barcode = $barcode;
+        $book->status=0;
         $book->update($request->all()); 
-
-        return view('books_layout.restore_books', ['book'=>$book], compact('barcode'));
+        $book->save();
+        
+        return redirect()->route('archive')->with('success','Book restored');
     }
 
     public function restoreUpdate(UpdateBookRequest $request, Book $book)
@@ -191,6 +194,7 @@ class BookController extends Controller
     public function archive(){
 
         $user = Auth::user();
+        
         if($user->type === 'technician librarian') {
         $archives = Book::where('status', 'like', '1')->paginate(10);
         }

@@ -60,7 +60,7 @@
 
         @if($user->type == 'technician librarian')  
             @if($techcount>1 && $user->id != $userId)
-                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}" data-action="{{ route('confirmDestroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
+                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}" data-action="{{ route('confirmDestroy', $user->id) }}"><i class="fa fa-trash"></i></a>
             @else
                 <!-- Handle the case where $techcount is not greater than 1 or $user->id is equal to $userId -->
             @endif

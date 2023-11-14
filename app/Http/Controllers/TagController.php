@@ -80,11 +80,11 @@ class TagController extends Controller
      */
     public function create(Request $request)
     {
-
+        $books = Book::all();
         $bookBarcode = $request->input('book_barcode'); // Retrieve the book_barcode from the query parameter
         $user = Auth::user();
     
-        return view('tags_layout.create_tags', ['user' => $user, 'bookBarcode' => $bookBarcode]);
+        return view('books_layout.books_list', ['user' => $user, 'bookBarcode' => $bookBarcode, 'books' => $books]);
     }
 
     /**
@@ -134,7 +134,7 @@ class TagController extends Controller
     {
         $user = Auth::user();
         if($user->type === 'department representative') {
-            return view('tags_layout.tags_edit', compact('tag'), ['user'=>$user]);
+            return view('tags_layout.tags_list', compact('tag'), ['user'=>$user]);
         }
         else{
             return redirect()->back();
