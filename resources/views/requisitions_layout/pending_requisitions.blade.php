@@ -21,11 +21,13 @@
     </button>
 </form>
 </div>
+
 <br>
+
 <div>
 <form style="margin:auto;max-width:300px">
   <select class="form-control mr-sm-2" name="department" id="department" value="{{ request('department') }}">
-    <option value="">--Select Department--</option>
+  <option value="">Filter By Department</option>
             <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD">SOD - School of Dentistry</option>
             <option value="SIT">SIT - School of Information Technology</option>
@@ -41,6 +43,7 @@
   <button type="submit" class="btn btn-danger">Filter</button>
 </form>
 </div>
+
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('requisitions.index') }}">Back to list</a><br><br>
 
 <table class="table table-hover table-bordered" style="width:100%">
