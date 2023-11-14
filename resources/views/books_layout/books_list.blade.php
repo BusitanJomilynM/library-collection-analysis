@@ -141,7 +141,7 @@
 </div>
     <div class="form-group">
         <label>Department</label>
-            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department">
+            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
             <option value="">--Select Department--</option>
             <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD">SOD - School of Dentistry</option>
@@ -168,7 +168,7 @@
     
     <div class="form-group">
         <label>Suggested Subject</label>
-        <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="suggest_book_subject" id="suggest_book_subject" value="{{ old('suggest_book_subject') }}" minlength="1" maxlength="60">
+        <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="suggest_book_subject" id="suggest_book_subject" value="{{ old('suggest_book_subject') }}" minlength="1" maxlength="60" required>
         @error('suggest_book_subject')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -259,7 +259,7 @@
 @endif
 
 
-<!-- Create User Modal -->
+<!-- Create Book Modal -->
 <div class="modal fade" id="createBookModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createBookModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

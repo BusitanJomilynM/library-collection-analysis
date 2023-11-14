@@ -233,7 +233,7 @@
     @method('PUT')
     <div class="form-group">
         <label>Book Name</label>
-        <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{$requisition->book_title}}" minlength="1" maxlength="60">
+        <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{$requisition->book_title}}" minlength="1" maxlength="60" required>
         @error('book_title')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -241,7 +241,7 @@
 
     <div class="form-group">
         <label>Number of Copies</label>
-        <input class="form-control @error('copies') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="3" name="copies" id="copies" value="{{$requisition->copies}}">
+        <input class="form-control @error('copies') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="3" name="copies" id="copies" value="{{$requisition->copies}}" required>
         @error('copies')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -249,7 +249,7 @@
 
     <div class="form-group">
         <label>Material Type</label>
-        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="material_type" id="material_type" value="{{$requisition->material_type}}">
+        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="material_type" id="material_type" value="{{$requisition->material_type}}" required>
         @error('material_type')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -257,7 +257,7 @@
 
     <div class="form-group">
         <label>Author</label>
-        <input class="form-control @error('author') is-invalid @enderror" type="text" name="author" id="author" value="{{$requisition->author}}" minlength="2" maxlength="40">
+        <input class="form-control @error('author') is-invalid @enderror" type="text" name="author" id="author" value="{{$requisition->author}}" minlength="2" maxlength="40" required>
         @error('author')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -265,7 +265,7 @@
 
     <div class="form-group">
         <label>ISBN</label>
-        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="isbn" id="isbn" value="{{$requisition->isbn}}" minlength="2" maxlength="25">
+        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="isbn" id="isbn" value="{{$requisition->isbn}}" minlength="2" maxlength="25" required>
         @error('isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -273,7 +273,7 @@
 
     <div class="form-group">
         <label>Publisher</label>
-        <input class="form-control @error('publisher')is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{$requisition->publisher}}" minlength="2" maxlength="25">
+        <input class="form-control @error('publisher')is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{$requisition->publisher}}" minlength="2" maxlength="25" required>
         @error('publisher')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -281,7 +281,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{$requisition->edition}}">
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{$requisition->edition}}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -289,7 +289,7 @@
 
     <div class="form-group">
         <label>Source</label>
-        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{$requisition->source}}" minlength="2" maxlength="25">
+        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{$requisition->source}}" minlength="2" maxlength="25" required>
         @error('source')
             <span class="text-danger">{{$message}}</span>
         @enderror</div>
@@ -307,7 +307,7 @@
 
     <div class="form-group">
         <label>Department</label>
-            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{$requisition->department}}">
+            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{$requisition->department}}" required> 
             <option value="SBAA" {{ old('department') == "SBAA" || $requisition->department == "SBAA" ? 'selected' : '' }}>SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD" {{ old('department') == "SOD" || $requisition->department == "SOD" ? 'selected' : '' }}>SOD - School of Dentistry</option>
             <option value="SIT" {{ old('department') == "SIT" || $requisition->department == "SIT" ? 'selected' : '' }}>SIT - School of Information Technology</option>
@@ -458,7 +458,7 @@
               @csrf
               <div class="form-group">
                <label>Book Name</label>
-                <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{ old('book_title') }}" minlength="1" maxlength="60">
+                <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{ old('book_title') }}" minlength="1" maxlength="60" required>
                 @error('book_title')
                     <span class="text-danger">{{$message}}</span>
                 @enderror
@@ -466,7 +466,7 @@
 
             <div class="form-group">
                   <label>Number of Copies</label>
-                  <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="60" name="copies" id="copies" value="{{ old('copies') }}">
+                  <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="60" name="copies" id="copies" value="{{ old('copies') }}" required>
                   @error('copies')
                       <span class="text-danger">{{$message}}</span>
                   @enderror
@@ -475,7 +475,7 @@
 
     <div class="form-group">
       <label for="material_type">Material Type</label>
-        <select class="form-control @error('material_type') is-invalid @enderror" name="material_type" id="material_type">
+        <select class="form-control @error('material_type') is-invalid @enderror" name="material_type" id="material_type" required>
           <option value="">--Select Material Type--</option>
           <option value="Book">Book</option>
           <option value="JournalMagazine">Journal/Magazine</option>
@@ -485,7 +485,7 @@
           <option value="Other">Other</option>
         </select>
     <label>Other</label>
-    <input class="form-control @if(old('material_type') == 'Other') is-invalid @endif" type="text" name="other_material_type" id="other_material_type" value="{{ old('other_material_type') }}" minlength="2" maxlength="40">
+    <input class="form-control @if(old('material_type') == 'Other') is-invalid @endif" type="text" name="other_material_type" id="other_material_type" value="{{ old('other_material_type') }}" minlength="2" maxlength="40" required>
     @error('material_type')
         <span class="text-danger">{{$message}}</span>
     @enderror
@@ -497,7 +497,7 @@
   
     <div class="form-group">
         <label>Author</label>
-        <input class="form-control @error('author') is-invalid @enderror" type="text" name="author" id="author" value="{{ old('author') }}"  minlength="2" maxlength="40">
+        <input class="form-control @error('author') is-invalid @enderror" type="text" name="author" id="author" value="{{ old('author') }}"  minlength="2" maxlength="40" required>
         @error('author')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -505,7 +505,7 @@
 
     <div class="form-group">
         <label>ISBN</label>
-        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="isbn" id="isbn" value="{{ old('isbn') }}"  minlength="2" maxlength="25">
+        <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="isbn" id="isbn" value="{{ old('isbn') }}"  minlength="2" maxlength="25" required>
         @error('isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -513,7 +513,7 @@
 
     <div class="form-group">
         <label>Publisher</label>
-        <input class="form-control @error('publisher') is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"  minlength="2" maxlength="25">
+        <input class="form-control @error('publisher') is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"  minlength="2" maxlength="25" required>
         @error('publisher')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -521,7 +521,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}">
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -529,7 +529,7 @@
 
     <div class="form-group">
         <label>Source</label>
-        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{ old('source') }}"  minlength="2" maxlength="25">
+        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{ old('source') }}"  minlength="2" maxlength="25" required>
         @error('source')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -548,7 +548,7 @@
 
     <div class="form-group">
         <label>Department</label>
-            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department">
+            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
             <option value="">--Select Department--</option>
             <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD">SOD - School of Dentistry</option>

@@ -57,7 +57,9 @@
     <td>{{$tag->book_barcode}}</td>
     <td>@foreach($books as $book)
 @if($book->book_barcode == $tag->book_barcode)
-{{$book->book_subject}}
+<?php $t = $book->book_subject;
+            $a = explode(" ", $t );
+            echo implode(", ", $a ); ?>
 @endif
     @endforeach</td>
     <td><?php $t = $tag->suggest_book_subject;
@@ -115,14 +117,7 @@
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>
-
-            
-           
-
-        
-
-          
+            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>  
           
           </td>
       </div>
@@ -177,10 +172,12 @@
       <td>{{$user->first_name}} {{$user->last_name}}</td>
       <td>{{$tag->department}}</td>
       <td>{{$tag->book_barcode}}</td>
-      <td>@foreach($books as $book)
-        
+      <td>
+        @foreach($books as $book)
 @if($book->book_barcode == $tag->book_barcode)
-{{$book->book_subject}}
+<?php $t = $book->book_subject;
+            $a = explode(" ", $t );
+            echo implode(", ", $a ); ?>
 @endif
     @endforeach</td>
     
@@ -269,7 +266,7 @@
 
     <div class="form-group">
         <label>Department</label>
-            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{$tag->department}}">
+            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{$tag->department}}" required>
             <option value="SBAA" {{ old('department') == "SBAA" || $tag->department == "SBAA" ? 'selected' : '' }}>SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD" {{ old('department') == "SOD" || $tag->department == "SOD" ? 'selected' : '' }}>SOD - School of Dentistry</option>
             <option value="SIT" {{ old('department') == "SIT" || $tag->department == "SIT" ? 'selected' : '' }}>SIT - School of Information Technology</option>
@@ -294,7 +291,7 @@
     
     <div class="form-group">
         <label>Suggested Subject</label>
-        <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="suggest_book_subject" id="suggest_book_subject" value="{{($tag->suggest_book_subject) }}" minlength="1" maxlength="60">
+        <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="suggest_book_subject" id="suggest_book_subject" value="{{($tag->suggest_book_subject) }}" minlength="1" maxlength="60" required>
         @error('suggest_book_subject')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -329,7 +326,9 @@
       <td>{{$tag->book_barcode}}</td>
       <td>@foreach($books as $book)
 @if($book->book_barcode == $tag->book_barcode)
-{{$book->book_subject}}
+<?php $t = $book->book_subject;
+            $a = explode(" ", $t );
+            echo implode(", ", $a ); ?>
 @endif
     @endforeach</td>
       <td><?php $t = $tag->suggest_book_subject;
