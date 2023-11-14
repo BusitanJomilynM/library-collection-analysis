@@ -149,7 +149,7 @@ class BookController extends Controller
         $user = Auth::user();
         if($user->type === 'technician librarian') {
         $book->delete();
-            return redirect()->route('archive')->with('success', 'Book deleted!');
+            return redirect()->route('archive')->with('success', 'User Deleted');
         }
         else{
             return redirect()->back();

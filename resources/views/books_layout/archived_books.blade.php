@@ -3,14 +3,7 @@
 @section('content')
 <h2 style="text-align: center;">Books</h2>
 
-<div class="panel panel-default">
-@if (session('success'))
-<div class="alert alert-success alert-dismissible">
-  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  {{ session('success') }}
-</div>
-@endif
-</div>
+
 
 <div>
 <form style="margin:auto;max-width:300px">
@@ -37,7 +30,7 @@
   </tr>
 </thead>
 
-@foreach($archives as $archive)
+@forelse($archives as $archive)
 <tbody>
   <tr align="center">
     <td>{{$archive->book_title}}</td>
@@ -69,12 +62,10 @@
 
                 <a data-toggle="modal" class="btn btn-danger" data-target="#deleteBookModal_{{$archive->id}}" data-action="{{ route('books.destroy', $archive->id) }}">Delete</a>
             </form>
-</div>
+      </div>
     </td>
   </tr>
 </tbody>
-
-
 
 <!-- Delete BookModal -->
 <div class="modal fade" id="deleteBookModal_{{$archive->id}}" data-backdrop="static" tabindex="-1" role="dialog"
@@ -101,6 +92,18 @@
       </div>
     </div>
 
+@empty
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
+@endforelse
+
+</table>
+<div class="d-flex">
+    <div class="mx-auto">
+<?php echo $users->render(); ?>
+  </div>
+</div>
+
+
 <style> 
 form { 
   display: flex; 
@@ -119,6 +122,6 @@ input[type=text]
 </style>
 
 
-@endforeach
+
 
 @endsection

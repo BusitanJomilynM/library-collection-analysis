@@ -159,7 +159,7 @@
       </div>
     </div>
 @empty
-  <li class="list-group-item list-group-item-danger">Entry not found</li>  
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
 
 <!-- Department Representative -->
@@ -309,7 +309,7 @@
 @endforeach
 
 @empty
-  <li class="list-group-item list-group-item-danger">Entry not found</li>  
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
   
 @endforelse
 
@@ -427,7 +427,7 @@
 @endforeach
 
 @empty
-  <li class="list-group-item list-group-item-danger">Entry not found</li>  
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
 @endif
 

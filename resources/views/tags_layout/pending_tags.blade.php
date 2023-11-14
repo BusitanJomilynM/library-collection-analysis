@@ -109,7 +109,7 @@
       </div>
     </div>
 @empty
-  <li class="list-group-item list-group-item-danger">No Pending Tags</li>  
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr>  
 @endforelse
 
 </table>

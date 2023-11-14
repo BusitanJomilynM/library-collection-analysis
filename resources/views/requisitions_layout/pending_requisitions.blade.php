@@ -21,7 +21,26 @@
     </button>
 </form>
 </div>
-
+<br>
+<div>
+<form style="margin:auto;max-width:300px">
+  <select class="form-control mr-sm-2" name="department" id="department" value="{{ request('department') }}">
+    <option value="">--Select Department--</option>
+            <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
+            <option value="SOD">SOD - School of Dentistry</option>
+            <option value="SIT">SIT - School of Information Technology</option>
+            <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
+            <option value="SEA">SEA - School of Engineering & Architecture</option>
+            <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
+            <option value="SOL">SOL - School of Law</option>
+            <option value="SNS">SNS - School of Natural Sciences</option>
+            <option value="SON">SON - School of Nursing</option>
+            <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
+            <option value="Graduate School">Graduate School</option>
+  </select>
+  <button type="submit" class="btn btn-danger">Filter</button>
+</form>
+</div>
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('requisitions.index') }}">Back to list</a><br><br>
 
 <table class="table table-hover table-bordered" style="width:100%">
@@ -138,7 +157,7 @@
       </div>
     </div>
 @empty
-  <li class="list-group-item list-group-item-danger">No Pending Requisitions</li>  
+<tr align="center"> <td colspan="13"><h3>No Pending Requisition</h3></td></tr> 
 @endforelse
 
 </table>

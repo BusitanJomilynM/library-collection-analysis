@@ -53,6 +53,7 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
 
     Route::get('/requisitions/pendingRequisitions', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
     Route::get('/pending', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
+
     Route::get('/requisition/acceptStatus/{requisition}', [RequisitionController::class, 'changeStatus'])->name('changeStatus');
     Route::get('/requisition/declineStatus/{requisition}', [RequisitionController::class, 'changeStatus2'])->name('changeStatus2');
 
