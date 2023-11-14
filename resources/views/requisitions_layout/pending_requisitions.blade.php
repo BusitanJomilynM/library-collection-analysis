@@ -80,7 +80,7 @@
     @if($pendingr->status == 0)
   
 
-    <!-- asjkdhaskjdh -->
+    <!-- Accept/Decline-->
     <div class="flex-parent jc-center">
     <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
@@ -112,6 +112,7 @@
     </td>
   </tr>
   </tbody>
+  
   <!-- Delete User Modal -->
 <div class="modal fade" id="deleteUserModal_{{$pendingr->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">

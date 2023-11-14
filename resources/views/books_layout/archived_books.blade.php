@@ -65,15 +65,18 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button">Restore</button>
 
-                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteBookModal_{{$archive->id}}"
-              data-action="{{ route('books.destroy', $archive->id) }}">Delete</a>
+              
+
+                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteBookModal_{{$archive->id}}" data-action="{{ route('books.destroy', $archive->id) }}">Delete</a>
             </form>
 </div>
     </td>
   </tr>
 </tbody>
 
-<!-- Delete User Modal -->
+
+
+<!-- Delete BookModal -->
 <div class="modal fade" id="deleteBookModal_{{$archive->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -86,7 +89,7 @@
             <div class="modal-body">
               @csrf
               @method('DELETE')
-              <h5 class="text-center">Delete user {{$archive->book_title}}?
+              <h5 class="text-center">Delete book {{$archive->book_title}}?
                
             </div>
             <div class="modal-footer">
