@@ -64,12 +64,17 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/tag/update/{tag}', [TagController::class, 'updateTags'])->name('updateTags');
     
     Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
-    // Route::match(['get', 'post'], '/generatePdf', [BookController::class, 'generatePDF'])->name('generatePdf');    
     Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
 
     Route::post('/append/{tag}/{book}', [TagController::class, 'append'])->name('append');
-
     Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');
+
+        
+    Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
+    Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
+    
+    Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
+    Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
 
 });
 
@@ -78,11 +83,11 @@ Route::middleware(['auth', 'user-access:technician librarian'])->group(function 
     Route::get('/technician/home', [HomeController::class, 'technicianHome'])->name('technician.home');
     Route::get('books/edit/{book}', [BookController::class, 'edit'])->name('books.edit');
     
-    Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
-    Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
+    // Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
+    // Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
     
-    Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
-    Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
+    // Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
+    // Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
 
     Route::post('/deleteUser/{user}', [UserController::class, 'confirmDestroy'])->name('confirmDestroy');
     
