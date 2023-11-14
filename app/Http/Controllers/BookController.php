@@ -168,60 +168,8 @@ class BookController extends Controller
     
     //     // Default case (when no checkbox is selected)
     //     return view('books_layout.booklist_pdf', ['books' => $book]);
-    // }
-    public function booklistPdf(Request $request, Book $book)
-    {
-        $showBookTitle = $request->has('booktitle');
-        $showBookCallnumber = $request->has('bookcallnumber');
-        $showBookAuthor = $request->has('bookauthor');
-        $showBookCopyrightYear = $request->has('bookcopyrightyear');
-    
-        // Check if the includeYearRange checkbox is checked
-        $includeYearRange = $request->has('includeYearRange');
-    
-        // Get the start and end years from the request
-        $startYear = $request->input('startYear');
-        $endYear = $request->input('endYear');
-    
-        if ($showBookTitle || $showBookCallnumber || $showBookAuthor || $showBookCopyrightYear) {
-            $data = Book::all();
-    
-            // Filter the books based on the year range if provided
-            if ($includeYearRange && is_numeric($startYear) && is_numeric($endYear)) {
-                $data = $data->whereBetween('book_copyrightyear', [$startYear, $endYear]);
-            }
-    
-            $groupedBooks = $data->groupBy('book_callnumber');
-    
-            $data = [];
-    
-            foreach ($groupedBooks as $callnumber => $books) {
-                $nonArchivedBooks = $books->reject(function ($book) {
-                    return $book->status == 1; // Assuming status 1 represents archived books
-                });
-    
-                $copyCount = $nonArchivedBooks->count();
-    
-                if ($copyCount > 0) {
-                    $firstBook = $nonArchivedBooks->first();
-                    $data[] = [
-                        'title' => $firstBook->book_title,
-                        'callnumber' => $callnumber,
-                        'author' => $firstBook->book_author,
-                        'copyrightyear' => $firstBook->book_copyrightyear,
-                        'copy_count' => $copyCount,
-                    ];
-                }
-            }
-    
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('data', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear'))->setPaper('a4', 'landscape');
-            return $pdf->stream('book_report.pdf');
-        }
-    
-        // Default case (when no checkbox is selected)
-        return view('books_layout.booklist_pdf', ['books' => $book]);
-    }
-    
+    // }    }
+        
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
 
         
@@ -304,6 +252,67 @@ class BookController extends Controller
         ]);
 
     }
-
+    public function booklistPdf(Request $request, Book $book)
+    {
+        $showBookTitle = $request->has('booktitle');
+        $showBookCallnumber = $request->has('bookcallnumber');
+        $showBookAuthor = $request->has('bookauthor');
+        $showBookCopyrightYear = $request->has('bookcopyrightyear');
+        
+        // Check if the includeYearRange checkbox is checked
+        $includeYearRange = $request->has('includeYearRange');
+        
+        // Get the start and end years from the request
+        $startYear = $request->input('startYear');
+        $endYear = $request->input('endYear');
+        
+        // New checkboxes for subject
+        $showSubject = $request->has('subject');
+        $subjectText = $request->input('subjectText');
+    
+        // Check if there is a space in the entered subject text
+        $subjectTexts = (strpos($subjectText, ' ') !== false) ? explode(' ', $subjectText) : [$subjectText];
+    
+        if ($showBookTitle || $showBookCallnumber || $showBookAuthor || $showBookCopyrightYear || $showSubject) {
+            $data = Book::all();
+        
+            // Filter the books based on the year range if provided
+            if ($includeYearRange && is_numeric($startYear) && is_numeric($endYear)) {
+                $data = $data->whereBetween('book_copyrightyear', [$startYear, $endYear]);
+            }
+    
+            // Filter books based on multiple subjects
+            if ($showSubject && !empty($subjectTexts)) {
+                $data = $data->filter(function ($book) use ($subjectTexts) {
+                    foreach ($subjectTexts as $subjectText) {
+                        if (stripos($book->book_subject, $subjectText) !== false) {
+                            return true; // Match found for at least one subject
+                        }
+                    }
+                    return false; // No match found for any subject
+                });
+            }
+    
+            $resultData = [];
+    
+            foreach ($data as $book) {
+                if ($book->status != 1) { // Assuming status 1 represents archived books
+                    $resultData[] = [
+                        'title' => $book->book_title,
+                        'callnumber' => $book->book_callnumber,
+                        'author' => $book->book_author,
+                        'copyrightyear' => $book->book_copyrightyear,
+                        'copy_count' => 1, // Each book is counted as one copy
+                    ];
+                }
+            }
+        
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('resultData', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear'))->setPaper('a4', 'landscape');
+            return $pdf->stream('book_report.pdf');
+        }
+        
+        // Default case (when no checkbox is selected)
+        return view('books_layout.booklist_pdf', ['books' => $book]);
+    }
     
 }

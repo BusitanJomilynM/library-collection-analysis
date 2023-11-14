@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($data as $book)
+            @forelse($resultData as $book)
                 <tr align="center">
                     @if($showBookTitle)
                         <td>{{$book['title']}}</td>
