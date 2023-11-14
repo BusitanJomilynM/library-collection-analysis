@@ -54,22 +54,21 @@
       Department Representative
     @endif</td>
     <td>
-  
-    <a data-toggle="modal" class="btn btn-primary" data-target="#editUserModal_{{$user->id}}" data-action="{{ route('users.edit', $user->id) }}"><span>&#9776;</span> Edit</a>
-    <a class="btn btn-success" href="{{ route('restorePassword', $user->id) }}" role="button"><span>&#9733;</span>Restore Password</a>
-        
-    @if($user->type == 'technician librarian')  
-      @if($techcount>1 && $user->id != $userId)
-        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}" data-action="{{ route('confirmDestroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
-      @else
-        
-      @endif
-    
-    @else
-    <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}"
-              data-action="{{ route('users.destroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
-    @endif
-    </td>
+    <div class="btn-group">
+        <a data-toggle="modal" class="btn btn-primary" data-target="#editUserModal_{{$user->id}}" data-action="{{ route('users.edit', $user->id) }}"><span>&#9776;</span> </a>
+        <a class="btn btn-success" href="{{ route('restorePassword', $user->id) }}" role="button"><span>&#9733;</span></a>
+
+        @if($user->type == 'technician librarian')  
+            @if($techcount>1 && $user->id != $userId)
+                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}" data-action="{{ route('confirmDestroy', $user->id) }}"><i class="fa fa-trash"></i> Delete</a>
+            @else
+                <!-- Handle the case where $techcount is not greater than 1 or $user->id is equal to $userId -->
+            @endif
+        @else
+            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$user->id}}" data-action="{{ route('users.destroy', $user->id) }}"><i class="fa fa-trash"></i> </a>
+        @endif
+    </div>
+</td>
   </tr>
 </tbody>
 
