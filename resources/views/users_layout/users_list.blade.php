@@ -44,7 +44,7 @@
     <td>{{$user->middle_name}}</td>
     <td>{{$user->last_name}}</td>
     <td>{{$user->email}}</td>
-    <td>{{$user->contact_number}}</td>
+    <td>+{{$user->contact_number}}</td>
     <td>
     @if($user->type == 'technician librarian')  
       Technician Librarian
