@@ -15,7 +15,8 @@
         <h2>{{ $pdfTitle ?? 'Booklist Report' }}</h2>
     </div>
 
-    <table border="1" cellspacing="0" cellpadding="5">
+<div style="margin: 20px auto; text-align: center;">
+    <table border="1" cellspacing="0" cellpadding="5" align= center>
         <thead>
             <tr align="center">
                 @if($showBookTitle)
@@ -57,5 +58,9 @@
             @endforelse
         </tbody>
     </table>
+</div>
+<div class="footer" style="position: absolute; bottom: 0; right: 0; text-align: right; font-style: italic; width: 100%;">
+      <p>Prepared by: {{$user->last_name}} {{$user->first_name}}  {{$user->middle_name}}</p>
+    </div>
 </body>
 </html>

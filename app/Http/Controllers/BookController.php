@@ -149,7 +149,7 @@ class BookController extends Controller
         $user = Auth::user();
         if($user->type === 'technician librarian') {
         $book->delete();
-            return redirect()->route('archive')->with('success', 'Book deleted!');
+            return redirect()->route('archive')->with('success', 'User Deleted');
         }
         else{
             return redirect()->back();
@@ -240,6 +240,7 @@ class BookController extends Controller
     }
     public function booklistPdf(Request $request, Book $book)
     {
+        $user = Auth::user();
         $showBookTitle = $request->has('booktitle');
         $showBookCallnumber = $request->has('bookcallnumber');
         $showBookAuthor = $request->has('bookauthor');
@@ -293,7 +294,7 @@ class BookController extends Controller
                 }
             }
         
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('resultData', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear'))->setPaper('a4', 'landscape');
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('resultData', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear','user'))->setPaper('a4', 'portrait');
             return $pdf->stream('book_report.pdf');
         }
         

@@ -13,7 +13,8 @@
     @endif
 </div>
 
-<h2>Generate PDF</h2>
+<div class="row justify-content-center">
+            <div class="col-md-6" style="background-color: white; black: white; padding: 20px;">
 
 <!-- booklist_pdf.blade.php -->
 <form method="GET" action="{{ route('booklist_pdf') }}">
@@ -54,7 +55,7 @@
     <br>
 
 
-    <!-- <label for="callNumberPrefix">
+    <label for="callNumberPrefix">
         Include Call Number:
         <select id="callNumberPrefix" name="callNumberPrefix">
             <option value="">-- Select Subject Head --</option>
@@ -80,12 +81,15 @@
 
         </select>
     </label>
-    <br> -->
+    <br> 
 
 
 
-    <button type="submit">Generate PDF</button>
-</form>
-
+    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Generate PDF</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
-
