@@ -190,9 +190,10 @@ class RequisitionController extends Controller
         return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
     }
 
-    public function pendingRequisitions()
+    public function pendingRequisitions(Request $request)
     {
         $users = User::all();
+        $filteredData = Requisition::get();
 
         if(request('search')) { 
             $pending= Requisition::where('book_title', 'like', '%' . request('search') . '%')
@@ -205,14 +206,30 @@ class RequisitionController extends Controller
             ->orwhere('user_id', 'like', '%' . request('search') . '%')
             ->orwhere('type', 'like', '%' . request('search') . '%')
             ->orwhere('department', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+
+            return view('requisitions_layout.pending_requisitions', ['pending'=>$pending, 'users'=>$users]);
+        }
+
+        else if(request('department')){
+            $department = $request->input('department');
+    
+            $pending = Requisition::where('department', $department)->paginate(10)->withQueryString();
+
+            return view('requisitions_layout.pending_requisitions', ['pending'=>$pending, 'users'=>$users]);
+       
         }
 
         else{
             $pending = Requisition::where('status', 'like', '0')->paginate(10);
+
+            return view('requisitions_layout.pending_requisitions', ['pending'=>$pending, 'users'=>$users]);
         }
 
-        return view('requisitions_layout.pending_requisitions', ['pending'=>$pending, 'users'=>$users]);
+        
     }
+
+  
+    
 
    
 }

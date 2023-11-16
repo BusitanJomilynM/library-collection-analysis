@@ -22,6 +22,26 @@
 </div>
 <br>
 
+<div>
+<form style="margin:auto;max-width:300px">
+  <select class="form-control mr-sm-2" name="department" id="department" value="{{ request('department') }}">
+    <option value="">Filter By Department</option>
+            <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
+            <option value="SOD">SOD - School of Dentistry</option>
+            <option value="SIT">SIT - School of Information Technology</option>
+            <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
+            <option value="SEA">SEA - School of Engineering & Architecture</option>
+            <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
+            <option value="SOL">SOL - School of Law</option>
+            <option value="SNS">SNS - School of Natural Sciences</option>
+            <option value="SON">SON - School of Nursing</option>
+            <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
+            <option value="Graduate School">Graduate School</option>
+  </select>
+  <button type="submit" class="btn btn-danger">Filter</button>
+</form>
+</div>
+
 @if($user->type == 'technician librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a><br><br>
 @endif
@@ -134,7 +154,7 @@
 
   
 @empty
-  <li class="list-group-item list-group-item-danger">Entry not found</li>  
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
 
 
@@ -339,9 +359,7 @@
 @endforeach
    
 @empty
-  <li class="list-group-item list-group-item-danger">Entry not found</li>  
-
-
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
 
 <!-- staff librarian -->
@@ -435,7 +453,7 @@
 @endforeach
    
 @empty
-  <li class="list-group-item list-group-item-danger">Entry not found</li>  
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 
   
 @endforelse

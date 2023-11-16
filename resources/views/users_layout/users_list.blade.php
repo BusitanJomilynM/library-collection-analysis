@@ -44,7 +44,7 @@
     <td>{{$user->middle_name}}</td>
     <td>{{$user->last_name}}</td>
     <td>{{$user->email}}</td>
-    <td>{{$user->contact_number}}</td>
+    <td>+{{$user->contact_number}}</td>
     <td>
     @if($user->type == 'technician librarian')  
       Technician Librarian
@@ -271,9 +271,10 @@
 
 
 @empty
-<li class="list-group-item list-group-item-danger">Entry not found</li>   
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
 </table>
+
 <div class="d-flex">
     <div class="mx-auto">
 <?php echo $users->render(); ?>
