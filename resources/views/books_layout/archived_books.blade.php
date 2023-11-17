@@ -99,7 +99,7 @@
 </table>
 <div class="d-flex">
     <div class="mx-auto">
-<?php echo $users->render(); ?>
+<?php echo $archives->render(); ?>
   </div>
 </div>
 
