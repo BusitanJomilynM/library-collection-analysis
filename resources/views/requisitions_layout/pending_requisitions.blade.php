@@ -84,7 +84,7 @@
     </td>
     <td>
       @if($pendingr->type == 'technician librarian')
-      Technician Librarian
+      Technical Librarian
       @elseif($pendingr->type == 'staff librarian')
       Staff Librarian
       @elseif($pendingr->type == 'department representative')

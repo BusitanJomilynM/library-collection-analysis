@@ -3,8 +3,6 @@
 @section('content')
 <h2 style="text-align: center;">Books</h2>
 
-
-
 <div>
 <form style="margin:auto;max-width:300px">
     <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search"  value="{{ request('search') }}">
@@ -58,8 +56,6 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button">Restore</button>
 
-              
-
                 <a data-toggle="modal" class="btn btn-danger" data-target="#deleteBookModal_{{$archive->id}}" data-action="{{ route('books.destroy', $archive->id) }}">Delete</a>
             </form>
       </div>
@@ -99,7 +95,7 @@
 </table>
 <div class="d-flex">
     <div class="mx-auto">
-<?php echo $users->render(); ?>
+<?php echo $archives->render(); ?>
   </div>
 </div>
 

@@ -47,7 +47,7 @@
     <td>+{{$user->contact_number}}</td>
     <td>
     @if($user->type == 'technician librarian')  
-      Technician Librarian
+      Technical Librarian
     @elseif($user->type == 'staff librarian')
       Staff  Librarian
     @elseif($user->type == 'department representative')
@@ -164,7 +164,7 @@
         <label>Role</label>
             <select class="form-control @error('type') is-invalid @enderror" name="type" id="type" required>
             <option value="">--Select Role--</option>
-            <option value="0">Technician Librarian</option>
+            <option value="0">Technical Librarian</option>
             <option value="1">Staff Librarian</option>
             <option value="2">Department Representative</option>
             </select>
@@ -250,7 +250,7 @@
     <div class="form-group">
         <label>Role</label>
             <select class="form-control" name="type" id="type" value="{{$user->type}}" required>
-                <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technician Librarian</option>
+                <option value="0" {{ old('type') == "technician librarian" || $user->type == "technician librarian" ? 'selected' : '' }}>Technical Librarian</option>
                 <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
                 <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
             </select>
