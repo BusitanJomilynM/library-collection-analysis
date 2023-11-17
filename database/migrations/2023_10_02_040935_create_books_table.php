@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('book_title');
             $table->string('book_callnumber');
-            $table->string('book_barcode')->unique();
+            $table->string('book_barcode')->unique()->nullable();
             $table->string('book_volume')->nullable();
             $table->string('book_author');
             $table->integer('book_copyrightyear');
