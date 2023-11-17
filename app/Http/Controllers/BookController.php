@@ -260,9 +260,12 @@ class BookController extends Controller
         // Check if there is a space in the entered subject text
         $subjectTexts = (strpos($subjectText, ' ') !== false) ? explode(' ', $subjectText) : [$subjectText];
     
-        if ($showBookTitle || $showBookCallnumber || $showBookAuthor || $showBookCopyrightYear || $showSubject) {
-            $data = Book::all();
-        
+        // New select box for callNumberPrefix
+        $callNumberPrefix = $request->input('callNumberPrefix');
+    
+        if ($showBookTitle || $showBookCallnumber || $showBookAuthor || $showBookCopyrightYear || $showSubject || $callNumberPrefix) {
+            $data = Book::query();
+    
             // Filter the books based on the year range if provided
             if ($includeYearRange && is_numeric($startYear) && is_numeric($endYear)) {
                 $data = $data->whereBetween('book_copyrightyear', [$startYear, $endYear]);
@@ -270,15 +273,19 @@ class BookController extends Controller
     
             // Filter books based on multiple subjects
             if ($showSubject && !empty($subjectTexts)) {
-                $data = $data->filter(function ($book) use ($subjectTexts) {
+                $data = $data->where(function ($query) use ($subjectTexts) {
                     foreach ($subjectTexts as $subjectText) {
-                        if (stripos($book->book_subject, $subjectText) !== false) {
-                            return true; // Match found for at least one subject
-                        }
+                        $query->orWhere('book_subject', 'like', '%' . $subjectText . '%');
                     }
-                    return false; // No match found for any subject
                 });
             }
+    
+            // Filter books based on callNumberPrefix
+            if ($callNumberPrefix) {
+                $data = $data->where('book_callnumber', 'like', $callNumberPrefix . '%');
+            }
+    
+            $data = $data->get();
     
             $resultData = [];
     
@@ -309,4 +316,4 @@ class BookController extends Controller
         // Default case (when no checkbox is selected)
         return view('books_layout.booklist_pdf', ['books' => $book]);
     }
-}    
+    }    
