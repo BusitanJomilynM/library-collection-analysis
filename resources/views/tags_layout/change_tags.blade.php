@@ -1,5 +1,5 @@
 @extends('master_layout.master')
-@section('Title', 'Edit Book')
+@section('Title', 'Create Subject Suggestion')
 @section('content')
 
 <form action="{{ route('append',$book->id, $tag->id) }}" method="POST">

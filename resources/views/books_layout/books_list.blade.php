@@ -23,7 +23,7 @@
 
 <br>
 
-@if($user->type == 'technician librarian' || $user->type == 'staff librarian')
+@if($user->type == 'technician librarian' || 'staff librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
 <!-- <a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span> Add Book</a> -->
 

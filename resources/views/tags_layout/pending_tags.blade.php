@@ -2,7 +2,7 @@
 @section('Title', 'Book Subject')
 @section('content')
 
-<h2 style="text-align: center;">Books Subject</h2>
+<h2 style="text-align: center;">Pending Subject Suggestion</h2>
 
 <div class="panel panel-default">
 @if (session('success'))

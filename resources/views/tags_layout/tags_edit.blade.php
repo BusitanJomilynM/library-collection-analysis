@@ -1,5 +1,5 @@
 @extends('master_layout.master')
-@section('title', 'Edit Subject')
+@section('title', 'Edit Subject Suggestion')
 @section('content')
 
 <form action="{{ route('tags.update', $tag->id) }}" method="POST">

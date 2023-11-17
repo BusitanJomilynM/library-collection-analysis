@@ -1,8 +1,8 @@
 @extends('master_layout.master')
-@section('Title', 'Book Requisitions')
+@section('Title', 'Material Requisitions')
 @section('content')
 
-<h2 style="text-align: center;">Book Requisitions</h2>
+<h2 style="text-align: center;">Material Requisitions</h2>
 
 <div class="panel panel-default">
 @if (session('success'))

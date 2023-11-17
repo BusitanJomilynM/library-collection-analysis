@@ -1,5 +1,5 @@
 @extends('master_layout.master')
-@section('Title', 'Create Book Requisition')
+@section('Title', 'Create Material Requisition')
 @section('content')
 
 <form action="{{ route('requisitions.store') }}" method="POST">

@@ -1,7 +1,7 @@
 @extends('master_layout.master')
-@section('Title', 'Book Subject')
+@section('Title', 'Subject Suggestions')
 @section('content')
-<h2 style="text-align: center;">Book Subjects</h2>
+<h2 style="text-align: center;">Subject Suggestions</h2>
 
 <div class="panel panel-default">
 @if (session('success'))
