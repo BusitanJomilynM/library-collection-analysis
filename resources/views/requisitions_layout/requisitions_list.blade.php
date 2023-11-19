@@ -42,7 +42,7 @@
 </form>
 </div>
 
-@if($user->type == 'technician librarian')
+@if($user->type == 'technician librarian' || $user->type == 'staff librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a><br><br>
 @endif
 
@@ -362,7 +362,6 @@
 
 <!-- staff librarian -->
 @elseif($user->type == 'staff librarian')
-
 @forelse($requisitions as $requisition)
   @foreach($users as $user)
     @if($requisition->user_id == $user->id)

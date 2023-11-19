@@ -18,9 +18,10 @@ class RequisitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+        $users = User::all();
         Paginator::useBootstrap();
         if($user->type === 'technician librarian') {
             if(request('search')) { 
@@ -35,6 +36,12 @@ class RequisitionController extends Controller
                 ->orwhere('type', 'like', '%' . request('search') . '%')
                 ->orwhere('department', 'like', '%' . request('search') . '%')
                 ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+
+            else if(request('department')){
+                $user = Auth::user();
+                $department = $request->input('department');
+                $requisitions = Requisition::where('department', $department)->paginate(10)->withQueryString();
             }
 
             else{
@@ -79,6 +86,12 @@ class RequisitionController extends Controller
                 ->orwhere('type', 'like', '%' . request('search') . '%')
                 ->orwhere('department', 'like', '%' . request('search') . '%')
                 ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+
+            else if(request('department')){
+                $user = Auth::user();
+                $department = $request->input('department');
+                $requisitions = Requisition::where('department', $department)->paginate(10)->withQueryString();
             }
 
             else{

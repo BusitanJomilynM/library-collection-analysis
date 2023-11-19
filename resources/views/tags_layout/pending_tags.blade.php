@@ -22,6 +22,27 @@
 </form>
 </div>
 
+<br>
+<div>
+<form style="margin:auto;max-width:300px">
+  <select class="form-control mr-sm-2" name="department" id="department" value="{{ request('department') }}">
+    <option value="">Filter By Department</option>
+            <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
+            <option value="SOD">SOD - School of Dentistry</option>
+            <option value="SIT">SIT - School of Information Technology</option>
+            <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
+            <option value="SEA">SEA - School of Engineering & Architecture</option>
+            <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
+            <option value="SOL">SOL - School of Law</option>
+            <option value="SNS">SNS - School of Natural Sciences</option>
+            <option value="SON">SON - School of Nursing</option>
+            <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
+            <option value="Graduate School">Graduate School</option>
+  </select>
+  <button type="submit" class="btn btn-danger">Filter</button>
+</form>
+</div>
+
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('tags.index') }}">Back to list</a> <br><br>
 
 <table class="table table-hover table-bordered" style="width:100%">
@@ -57,7 +78,32 @@
     <td>
     @if($pendingt->status == 0)
     <div class="flex-parent jc-center">
-            <form action="{{ route('accept', $pendingt->id) }}" method="POST">
+    @foreach($books as $book)
+                @if($pendingt->book_barcode == $book->book_barcode)
+                
+                  @if($pendingt->action == 1)
+                    <form action="{{ route('append', ['tag' => $pendingt->id, 'book' => $book->id]) }}" method="POST">
+                      @csrf 
+                      @method('post')
+                      <button type="submit" class="btn btn-success">Append</button>   
+                      </form>
+                  @else
+                    <form action="{{ route('replace', ['tag' => $pendingt->id, 'book' => $book->id]) }}" method="POST">
+                      @csrf 
+                      @method('post')
+                      <button type="submit" class="btn btn-success">Replace</button>  
+                      </form>
+                  @endif
+                @endif
+            @endforeach
+
+        <form action="{{ route('decline', $pendingt->id) }}" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('GET') }}
+            <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
+        </form>
+
+            <!-- <form action="{{ route('accept', $pendingt->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
@@ -67,7 +113,7 @@
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
-            </form>
+            </form> -->
       </div>
         
     @else
