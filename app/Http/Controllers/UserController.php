@@ -9,6 +9,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Password;
 
 use Illuminate\Http\Request;
 
@@ -208,12 +209,31 @@ class UserController extends Controller
         $user = Auth::user();
             if ($user->id == auth()->user()->id){
                 $user = Auth::user();
+                
                 return view('users_layout.change_password', ['user'=>$user]);
             }
             else{
                 return redirect()->back();
             }
     }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $user = Auth::user();
+            if ($user->id == auth()->user()->id){
+                $user->update($request->all()); 
+
+        Auth::logout();
+
+        return redirect()->route('login');
+            }
+
+        else{
+            return redirect()->back();
+        }
+    }
+
+    
 
    
 

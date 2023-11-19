@@ -2,9 +2,9 @@
 @section('Title', 'Change Password')
 @section('content')
 
-<form action="{{ route('users.update', $user->id) }}" method="POST">
+<form action="{{ route('updatePassword', $user->id) }}" method="POST">
     @csrf
-    @method('PUT')
+    @method('GET')
     <div class="form-group">
 
             <input class="form-control" type="text" name="id" id="id" value="{{$user->id}}" hidden>
