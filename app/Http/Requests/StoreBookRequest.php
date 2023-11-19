@@ -35,7 +35,7 @@ class StoreBookRequest extends FormRequest
             // 'book_volume'=>'required',
             'book_purchasedwhen'=>'required',
             'book_publisher'=>'required',
-            'book_lccn'=>'required',
+            // 'book_lccn'=>'required',
             'book_isbn'=>'required',
           
         ];
@@ -54,7 +54,7 @@ class StoreBookRequest extends FormRequest
             'book_barcode.unique' => 'A book with that barcode is already registered',
             'book_purchasedwhen.required'=>'Fill out purchased date',
             'book_publisher.required'=>'Fill out book publisher',
-            'book_lccn.required'=>'Fill out book LCCN',
+            // 'book_lccn.required'=>'Fill out book LCCN',
             'book_isbn.required'=>'Fill out book ISBN',
         ];
     }

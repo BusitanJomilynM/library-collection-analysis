@@ -1,5 +1,5 @@
 @extends('master_layout.master')
-@section('title', 'Create Subject')
+@section('title', 'Create Subject Suggestion')
 @section('content')
 
 <form action="{{ route('tags.store') }}" method="POST">

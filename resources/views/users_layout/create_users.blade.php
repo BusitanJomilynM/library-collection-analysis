@@ -63,7 +63,7 @@
         <label>Role</label>
             <select class="form-control @error('type') is-invalid @enderror" name="type" id="type" required>
             <option value="">--Select Role--</option>
-            <option value="0">Technician Librarian</option>
+            <option value="0">Technical Librarian</option>
             <option value="1">Staff Librarian</option>
             <option value="2">Department Representative</option>
             </select>

@@ -65,30 +65,96 @@
                             <a class="nav-link" href="{{route('users.index')}}">Users</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('books.index')}}">Books</a>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Books
+                             </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('books.index')}}">Books</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('archive') }}">Archived Books</a>
+                                    </a>
+                            </div>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
-                        </li>  
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('tags.index')}}">Subjects</a>
-                        </li>  
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Requisitions
+                             </a>
 
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('requisitions.index')}}">Material Requisitions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('pendingRequisitions') }}">Pending Material Requisitions</a>
+                                    </a>
+                                </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Subjects
+                             </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subejct Suggestions</a>
+                                    </a>
+                                </div>
+                        </li>
+
+                      
+
+                        <!-- Staff Librarian Navbar -->
                         @elseif(Auth::user()->type == 'staff librarian')
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('staff.home')}}">Home</a>
+                            <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Books
+                             </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('books.index')}}">Books</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('archive') }}">Archived Books</a>
+                                    </a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="{{route('books.index')}}">Books</a>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Requisitions
+                             </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('requisitions.index')}}">Material Requisitions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('pendingRequisitions') }}">Pending Material Requisitions</a>
+                                    </a>
+                                </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
-                        </li> 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('tags.index')}}">Subjects</a>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Subjects
+                             </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subejct Suggestions</a>
+                                    </a>
+                                </div>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('tags.index')}}">Reports</a>
                         </li>

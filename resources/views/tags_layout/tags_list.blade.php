@@ -1,7 +1,7 @@
 @extends('master_layout.master')
-@section('Title', 'Book Subject')
+@section('Title', 'Subject Suggestions')
 @section('content')
-<h2 style="text-align: center;">Book Subjects</h2>
+<h2 style="text-align: center;">Subject Suggestions</h2>
 
 <div class="panel panel-default">
 @if (session('success'))
@@ -18,6 +18,27 @@
     <button type="submit" class="btn btn-danger">
     <i class="fa fa-search"></i>
     </button>
+</form>
+</div>
+
+<br>
+<div>
+<form style="margin:auto;max-width:300px">
+  <select class="form-control mr-sm-2" name="department" id="department" value="{{ request('department') }}">
+    <option value="">Filter By Department</option>
+            <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
+            <option value="SOD">SOD - School of Dentistry</option>
+            <option value="SIT">SIT - School of Information Technology</option>
+            <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
+            <option value="SEA">SEA - School of Engineering & Architecture</option>
+            <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
+            <option value="SOL">SOL - School of Law</option>
+            <option value="SNS">SNS - School of Natural Sciences</option>
+            <option value="SON">SON - School of Nursing</option>
+            <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
+            <option value="Graduate School">Graduate School</option>
+  </select>
+  <button type="submit" class="btn btn-danger">Filter</button>
 </form>
 </div>
 
@@ -116,8 +137,7 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>  
+          
           
           </td>
       </div>
@@ -215,7 +235,8 @@
 
     @else
     <div class="flex-parent jc-center">
-      <a data-toggle="modal" class="btn btn-danger" disabled>No Actions Available</a></td>
+    <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
+      data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
     </div>
     @endif
   </td>
@@ -381,8 +402,6 @@
             <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
         </form>
 
-        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-        data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>
 </div>
 
 

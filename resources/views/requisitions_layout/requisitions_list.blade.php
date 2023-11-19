@@ -1,7 +1,7 @@
 @extends('master_layout.master')
-@section('Title', 'Book Requisitions')
+@section('Title', 'Material Requisitions')
 @section('content')
-<h2 style="text-align: center;">Book Requisitions</h2>
+<h2 style="text-align: center;">Material Requisitions</h2>
 
 <div class="panel panel-default">
 @if (session('success'))
@@ -42,7 +42,7 @@
 </form>
 </div>
 
-@if($user->type == 'technician librarian')
+@if($user->type == 'technician librarian' || $user->type == 'staff librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a><br><br>
 @endif
 
@@ -110,9 +110,6 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
     </div>
 
   </div>
@@ -206,7 +203,8 @@
     </td>
 </div>
       @else
-      <a data-toggle="modal" class="btn btn-danger" disabled>No Actions Available</a></td>
+      <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
+      data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
       @endif
   </tr>
 
@@ -364,7 +362,6 @@
 
 <!-- staff librarian -->
 @elseif($user->type == 'staff librarian')
-
 @forelse($requisitions as $requisition)
   @foreach($users as $user)
     @if($requisition->user_id == $user->id)
@@ -409,9 +406,6 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
-            data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
     </div>
 
     @else

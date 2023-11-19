@@ -27,11 +27,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//Shared routes for Technical Librarian and Department Representative
 Route::group(['auth', ['user-access:technician librarian|department representative']], function () {
     Route::resource('/requisitions', RequisitionController::class);
     Route::get('/requisitions/requisitionEdit/{id}', [RequisitionController::class, 'requisitionEdit'])->name('requisitionEdit');
 });
 
+//Shared routes for all users
 Route::group(['auth', ['user-access:technician librarian|department representative|staff librarian']], function () {
     Route::resource('/books', BookController::class);
     Route::resource('/tags', TagController::class);
@@ -44,6 +46,7 @@ Route::group(['auth', ['user-access:technician librarian|department representati
 
 });
 
+//Shared routes for Technical and Staff Librarian
 Route::group(['auth', ['user-access:technician librarian|staff librarian']], function () {
     Route::get('/book/archive/{book}', [BookController::class, 'archiveBook'])->name('archiveBook');
     Route::get('/book/restore/{book}', [BookController::class, 'restoreBook'])->name('restoreBook');
@@ -79,7 +82,7 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
 
 });
 
-//technician lib
+//technical lib
 Route::middleware(['auth', 'user-access:technician librarian'])->group(function () {
     Route::get('/technician/home', [HomeController::class, 'technicianHome'])->name('technician.home');
     Route::get('books/edit/{book}', [BookController::class, 'edit'])->name('books.edit');

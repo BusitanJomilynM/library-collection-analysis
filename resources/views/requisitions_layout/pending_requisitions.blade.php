@@ -1,8 +1,8 @@
 @extends('master_layout.master')
-@section('Title', 'Book Requisitions')
+@section('Title', 'Material Requisitions')
 @section('content')
 
-<h2 style="text-align: center;">Book Requisitions</h2>
+<h2 style="text-align: center;">Material Requisitions</h2>
 
 <div class="panel panel-default">
 @if (session('success'))
@@ -84,7 +84,7 @@
     </td>
     <td>
       @if($pendingr->type == 'technician librarian')
-      Technician Librarian
+      Technical Librarian
       @elseif($pendingr->type == 'staff librarian')
       Staff Librarian
       @elseif($pendingr->type == 'department representative')
@@ -109,21 +109,15 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form>
-   
 
-    
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
 
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i></a>
+           
     </div>
-        
-        
-       
 
     @else
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"

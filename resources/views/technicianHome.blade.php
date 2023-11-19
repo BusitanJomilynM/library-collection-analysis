@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    Welcome, Technician Librarian {{$user->first_name}} {{$user->last_name}}. 
+                    Welcome, Technical Librarian {{$user->first_name}} {{$user->last_name}}. 
             
               
                 <div class="float-container">
@@ -107,7 +107,7 @@
 
             <div class="form-group">
                     <select class="form-control" name="type" id="type" value="{{Auth::user()->type}}" hidden>
-                        <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technician Librarian</option>
+                        <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technical Librarian</option>
                         <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
                         <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
                     </select>
@@ -178,7 +178,7 @@
 
             <div class="form-group">
                     <select class="form-control" name="type" id="type" value="{Auth::user()->type}}" hidden>
-                        <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technician Librarian</option>
+                        <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technical Librarian</option>
                         <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
                         <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
                     </select>

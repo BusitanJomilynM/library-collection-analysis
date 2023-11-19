@@ -18,7 +18,7 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $users = User::all();
@@ -30,6 +30,12 @@ class TagController extends Controller
                 ->orwhere('department', 'like', '%' . request('search') . '%')
                 ->orwhere('suggest_book_subject', 'like', '%' . request('search') . '%')
                 ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+
+            else if(request('department')){
+                $department = $request->input('department');
+        
+                $tags = Tag::where('department', $department)->paginate(10)->withQueryString();
             }
 
             else{
@@ -61,6 +67,12 @@ class TagController extends Controller
                 ->orwhere('department', 'like', '%' . request('search') . '%')
                 ->orwhere('suggest_book_subject', 'like', '%' . request('search') . '%')
                 ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+
+            else if(request('department')){
+                $department = $request->input('department');
+        
+                $tags = Tag::where('department', $department)->paginate(10)->withQueryString();
             }
 
             else{
@@ -184,9 +196,10 @@ class TagController extends Controller
         return redirect()->route('tags.index')->with('success', 'Tag declined');
     }
 
-    public function pendingTags()
+    public function pendingTags(Request $request)
     {
         $users = User::all();
+        $books = Book::all();
 
         if(request('search')) { 
             $pending2= Tag::where('book_barcode', 'like', '%' . request('book_barcode') . '%')
@@ -194,11 +207,17 @@ class TagController extends Controller
             ->orwhere('department', 'like', '%' . request('search') . '%')->paginate(5)->withQueryString();
         }
 
+        else if(request('department')){
+            $department = $request->input('department');
+    
+            $pending2 = Tag::where('department', $department)->paginate(10)->withQueryString();
+        }
+
         else{
             $pending2 = Tag::where('status', 'like', '0')->paginate(10);
         }
 
-        return view('tags_layout.pending_tags', ['pending2'=>$pending2, 'users'=>$users]);
+        return view('tags_layout.pending_tags', ['pending2'=>$pending2, 'users'=>$users, 'books'=>$books]);
     }
 
     public function updateTags(Request $request, Book $book){

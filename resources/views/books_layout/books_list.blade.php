@@ -23,7 +23,7 @@
 
 <br>
 
-@if($user->type == 'technician librarian' || $user->type == 'staff librarian')
+@if($user->type == 'technician librarian' || $user->type ==  'staff librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('archive') }}">Archived Books</a>
 <!-- <a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span> Add Book</a> -->
 
@@ -314,7 +314,7 @@
 
     <div class="form-group">
         <label>Volume</label>
-        <input class="form-control @error('book_volume') is-invalid @enderror" type="number" name="book_volume" id="book_volume"  pattern="\d*" minlength="1" maxlength="60" required>
+        <input class="form-control @error('book_volume') is-invalid @enderror" type="number" name="book_volume" id="book_volume"  pattern="\d*" minlength="1" maxlength="60">
         @error('book_volume')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -347,7 +347,7 @@
 
     <div class="col2">
         <label>Edition</label>
-        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition"  minlength="1" maxlength="10" required>
+        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition"  minlength="1" maxlength="10" >
         @error('book_edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -373,7 +373,7 @@
 <div class="two-col">
     <div class="col1">
         <label>LCCN</label>
-        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13" required
+        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13"
         @error('book_lccn')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -381,7 +381,7 @@
 
     <div class="col2">
         <label>ISBN</label>
-        <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn"  minlength="10" maxlength="13" required>
+        <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn"  minlength="10" maxlength="20" required>
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
