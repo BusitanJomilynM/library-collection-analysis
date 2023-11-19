@@ -20,16 +20,21 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
+
+
+Route::get('/login', function () {
     return view('auth/login');
 });
-
 
 
 
 Auth::routes();
 
 Route::middleware(['preventBackHistory'])->group(function () {
+
+Route::get('/', function () {
+    return view('auth/login');
+});
 
 //Shared routes for Technical Librarian and Department Representative
 Route::group(['auth', ['user-access:technician librarian|department representative']], function () {

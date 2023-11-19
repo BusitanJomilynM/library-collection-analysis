@@ -22,6 +22,7 @@
 </div>
 <br>
 
+@if($user->type == 'technician librarian' || $user->type == 'staff librarian')
 <div>
 <form style="margin:auto;max-width:300px">
   <select class="form-control mr-sm-2" name="department" id="department" value="{{ request('department') }}">
@@ -41,6 +42,7 @@
   <button type="submit" class="btn btn-danger">Filter</button>
 </form>
 </div>
+@endif
 
 @if($user->type == 'technician librarian' || $user->type == 'staff librarian')
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a><br><br>
@@ -478,7 +480,7 @@
 
             <div class="form-group">
                   <label>Number of Copies</label>
-                  <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="60" name="copies" id="copies" value="{{ old('copies') }}" required>
+                  <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="3" name="copies" id="copies" value="{{ old('copies') }}" required>
                   @error('copies')
                       <span class="text-danger">{{$message}}</span>
                   @enderror
