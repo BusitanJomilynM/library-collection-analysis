@@ -25,7 +25,11 @@ Route::get('/', function () {
 });
 
 
+
+
 Auth::routes();
+
+Route::middleware(['preventBackHistory'])->group(function () {
 
 //Shared routes for Technical Librarian and Department Representative
 Route::group(['auth', ['user-access:technician librarian|department representative']], function () {
@@ -110,3 +114,4 @@ Route::middleware(['auth', 'user-access:department representative'])->group(func
 
 });
 
+});
