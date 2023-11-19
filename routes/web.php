@@ -45,6 +45,7 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     // Route::get('/pdf_viewbooks', [BookController::class, 'createPDFBook'])->name('createPDFBook');
     Route::get('/users/editAccount/{id}', [UserController::class, 'editAccount'])->name('editAccount');
     Route::get('/users/changePassword/{id}', [UserController::class, 'changePassword'])->name('changePassword');
+    Route::get('/users/updatePassword/{id}', [UserController::class, 'updatePassword'])->name('updatePassword');
     Route::resource('/users', UserController::class);
 
 
