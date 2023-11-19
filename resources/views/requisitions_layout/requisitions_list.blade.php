@@ -203,7 +203,8 @@
     </td>
 </div>
       @else
-      <a data-toggle="modal" class="btn btn-danger" disabled>No Actions Available</a></td>
+      <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
+      data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
       @endif
   </tr>
 

@@ -116,8 +116,7 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-            data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>  
+          
           
           </td>
       </div>
@@ -215,7 +214,8 @@
 
     @else
     <div class="flex-parent jc-center">
-      <a data-toggle="modal" class="btn btn-danger" disabled>No Actions Available</a></td>
+    <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
+      data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
     </div>
     @endif
   </td>
@@ -381,8 +381,6 @@
             <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
         </form>
 
-        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-        data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash"></i></a>
 </div>
 
 

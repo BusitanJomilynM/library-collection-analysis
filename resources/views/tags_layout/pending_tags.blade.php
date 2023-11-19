@@ -68,10 +68,6 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
-     
-  
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingt->id}}"
-            data-action="{{ route('tags.destroy', $pendingt->id) }}"><i class="fa fa-trash"></i></a>
       </div>
         
     @else
