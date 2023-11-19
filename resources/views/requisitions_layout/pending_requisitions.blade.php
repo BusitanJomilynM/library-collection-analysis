@@ -109,21 +109,15 @@
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form>
-   
 
-    
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
                 <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
             </form>
 
-            <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
-            data-action="{{ route('requisitions.destroy', $pendingr->id) }}"><i class="fa fa-trash"></i></a>
+           
     </div>
-        
-        
-       
 
     @else
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$pendingr->id}}"
