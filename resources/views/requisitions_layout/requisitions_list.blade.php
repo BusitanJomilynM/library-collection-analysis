@@ -518,7 +518,7 @@
 
     <div class="form-group">
         <label>Publisher</label>
-        <input class="form-control @error('publisher') is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"  minlength="2" maxlength="25" required>
+        <input class="form-control @error('publisher') is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"  minlength="2" maxlength="25" >
         @error('publisher')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -526,7 +526,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}" required>
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}">
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -534,7 +534,7 @@
 
     <div class="form-group">
         <label>Source</label>
-        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{ old('source') }}"  minlength="2" maxlength="25" required>
+        <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{ old('source') }}"  minlength="2" maxlength="25">
         @error('source')
             <span class="text-danger">{{$message}}</span>
         @enderror
