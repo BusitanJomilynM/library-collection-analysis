@@ -13,6 +13,7 @@
 </div>
 
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('books.index') }}">Return</a>
+<br><br>
 
     <table class="table table-bordered" style="width:100%">
         <thead class="thead-dark">

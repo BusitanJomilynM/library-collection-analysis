@@ -54,12 +54,11 @@ class BookController extends Controller
             ->orwhere('book_author', 'like', '%' . request('search') . '%')
             ->orwhere('book_copyrightyear', 'like', '%' . request('search') . '%')
             ->orwhere('book_sublocation', 'like', '%' . request('search') . '%')
-            ->orwhere('book_subject', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            ->orwhere('book_subject', 'like', '%' . request('search') . '%')->orderBy('book_title','asc')->paginate(10)->withQueryString();
         } 
     
         else{
-        $books = Book::paginate(10);
-        
+        $books = Book::orderBy('book_title','asc')->paginate(10);
         }
 
         return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode, 'bookBarcode'=>$bookBarcode]);
