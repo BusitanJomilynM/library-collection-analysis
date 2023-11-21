@@ -526,7 +526,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}" required>
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror

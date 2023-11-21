@@ -200,7 +200,7 @@
     <div class="three-col">
     <div class="col1">
         <label>First Name</label>
-        <input class="form-control @error('first_name') is-invalid @enderror" type="text" name="first_name" id="first_name" value="{{$user->first_name}}" minlength="2" maxlength="30" required>
+        <input class="form-control @error('first_name') is-invalid @enderror" type="text" name="first_name" id="first_name" value="{{$user->first_name}}" minlength="2" maxlength="30" readonly>
         @error('first_name')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -223,7 +223,7 @@
 
     <div class="form-group">
         <label>ID Number</label>
-        <input class="form-control @error('school_id') is-invalid @enderror" name="school_id" id="school_id" value="{{$user->school_id}}" type="text" pattern="\d*" minlength="8" maxlength="8" required>
+        <input class="form-control @error('school_id') is-invalid @enderror" name="school_id" id="school_id" value="{{$user->school_id}}" type="text" pattern="\d*" minlength="8" maxlength="8" readonly>
         @error('school_id')
             <span class="text-danger">{{$message}}</span>
         @enderror
