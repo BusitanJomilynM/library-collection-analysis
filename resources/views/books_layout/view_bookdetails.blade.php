@@ -16,19 +16,51 @@
 <br><br>
 
     <table class="table table-bordered" style="width:100%">
-        <thead class="thead-dark">
-            <tr align="center">
-                <th>Book Title</th>
-                <th>Author</th>
-                <th>Copyright Year</th>
-                <th>Sublocation</th>
-                <th>Subject</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        @if($book->status == 0)
-            <tbody>
-                <tr align="center">
+
+
+        
+        <tbody >
+       <tr colspan="2">
+        <td> <div class="form"><h5>Book title: {{ $book->book_title }}</h5></div> 
+        <br>
+        <div class="form"><h5>Author: {{ $book->book_author }}</h5></div> 
+        <br>
+        <div class="form"><h5>Copyright Year: {{ $book->book_copyrightyear}}</h5></div> 
+        <br>
+        <div class="form"><h5>Sublocation: {{ $book->book_sublocation}}</h5></div> 
+        <br>
+        <div class="form"><h5>Volume: {{ $book->book_volume}}</h5></div>
+        <br>
+        <div class="form"><h5>Subjects: <?php
+                        $t = $book->book_subject;
+                        $a = explode(" ", $t);
+                        echo implode(", ", $a);
+                        ?></h5></div> 
+        <br>
+        <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
+    <br><br>    <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
+    <br><br>     <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
+        </td>
+        
+
+        <td>
+        <div class="form"><h5>Barcode: {{ $book->book_barcode}}</h5></div> 
+        <br>
+        <div class="form"><h5>Call Number: {{ $book->book_callnumber}}</h5></div> 
+        <br>
+        <div class="form"><h5>Publisher: {{ $book->book_publisher}}</h5></div> 
+        <br>
+        <div class="form"><h5>Date of Purchase: {{ $book->book_purchasedwhen}}</h5></div> 
+        <br>
+        <div class="form"><h5>Edition: {{ $book->book_edition}}</h5></div> 
+        <br>
+        <div class="form"><h5>LCCN: {{ $book->book_lccn}}</h5></div> 
+        <br>
+        <div class="form"><h5>ISBN: {{ $book->book_isbn}}</h5></div> 
+        </td>
+        </tr>
+          
+                <!-- <tr align="center">
                     <td>{{ $book->book_title }}</td>
                     <td>{{ $book->book_author }}</td>
                     <td>{{ $book->book_copyrightyear }}</td>
@@ -41,21 +73,17 @@
                         ?>
                     </td>
                     <td>
-                        <!-- <a class="btn btn-primary" href="{{ route('books.edit', ['book' => $book->id]) }}" role="button">Edit</a> -->
+           
 
                         <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
                         <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
-                        <!-- <a class="btn btn-success" href="{{ route('books.book_createcopy', ['book' => $book->id]) }}" role="button"><span>&#43;</span>Add Copy</a> -->
-                        <!-- <a data-toggle="modal" class="btn btn-danger" data-target="#archiveBookModal_{{$book->id}}"
-                           data-action="{{ route('archiveBook', $book->id) }}">Archive</a> -->
-
-                           <!-- <a class="btn btn-warning" href="{{ route('archiveBook', ['book' => $book->id]) }}" role="button">Archive</a> -->
+                        
                            <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
                     </td>
-                </tr>
+                </tr> -->
             </tbody>
            
-        @endif
+       
 <div>
 
 <!-- Book Modal -->
