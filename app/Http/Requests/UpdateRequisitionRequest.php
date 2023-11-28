@@ -30,7 +30,7 @@ class UpdateRequisitionRequest extends FormRequest
             'author'=>'required',
             'isbn'=>'required',
             'publisher'=>'required',
-            'edition'=>'required',
+            'edition'=>'required|integer',
             'source'=>'required',
             'user_id'=>'required',
             'type'=>'required',

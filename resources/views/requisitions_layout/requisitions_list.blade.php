@@ -111,9 +111,7 @@
         <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
             {{ csrf_field() }}
             {{ method_field('POST') }}
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$requisition->id}}">
-                Disapprove
-            </button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$requisition->id}}"><span>&#10005;</span></button>
         </form>
     </div>
 
@@ -341,7 +339,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" name="edition" id="edition" value="{{$requisition->edition}}" required>
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{$requisition->edition}}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -356,7 +354,7 @@
 
     <div class="form-group">
     
-        <input class="form-control" type="number" name="user_id" id="user_id" value="{{Auth::user()->id}}" hidden> 
+        <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
 
     </div>
 
@@ -566,7 +564,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" name="edition" id="edition" value="{{ old('edition') }}" required>
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="4" name="edition" id="edition" value="{{ old('edition') }}">
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -582,7 +580,7 @@
 
     <div class="form-group">
      
-        <input class="form-control" type="number" name="user_id" id="user_id" value="{{Auth::user()->id}}" hidden> 
+        <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
  
     </div>
 

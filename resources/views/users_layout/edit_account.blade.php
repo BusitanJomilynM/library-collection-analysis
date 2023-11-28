@@ -66,7 +66,7 @@
     </div>
 
     <button type="submit" class="btn btn-danger">Submit</button>
-<a class="btn btn-primary" href="{{ url()->previous() }}">Cancel</a>
+<a class="btn btn-primary" href="{{ route('users.index') }}">Cancel</a>
 
 
 </form>
