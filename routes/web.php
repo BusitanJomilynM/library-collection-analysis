@@ -83,7 +83,8 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
     Route::get('/pdf_collection', [BookController::class, 'collectionanalysisPdf'])->name('pdf_collection');
 
-    
+    Route::get('/requisitions/{requisition}', 'RequisitionController@show')->name('requisitions.show');
+
 
     Route::post('/append/{tag}/{book}', [TagController::class, 'append'])->name('append');
     Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');

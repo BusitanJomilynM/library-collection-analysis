@@ -144,10 +144,11 @@ class RequisitionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Requisition $requisition)
     {
-        //
+        return view('requisitions.show', compact('requisition'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -222,22 +223,24 @@ class RequisitionController extends Controller
         }
     
         // Generate a unique filename to avoid overwriting existing files
-        $fileName = time() . '_' . $file->getClientOriginalName();
+        $fileName = $file->getClientOriginalName();
     
         // Move the uploaded file to the specified folder
         $file->move($destinationPath, $fileName);
     
-        // Save the file path in the database column
-        $filePath = 'disapproval_reason/' . $fileName; // The path to be stored in the 'disapproval_reason' column
+
     
-        // Update the requisition status and save the file path in disapproval_reason column
+        // Save the file path in the database column
+        $filePath = 'disapproval_documents/' . $fileName; // The path to be stored in the 'disapproval_documents' column
+    
+        // Update the requisition status and save the file path in disapproval_documents column
         $requisition->status = 2; // Disapproved status
-        $requisition->disapproval_reason = $filePath; // Save the file path in disapproval_reason column
+        $requisition->disapproval_reason = $filePath; // Save the file path in disapproval_documents column
         $requisition->save();
     
         return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
-    }    
-    
+    }
+        
     
     
 
