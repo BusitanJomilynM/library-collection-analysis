@@ -36,7 +36,7 @@
     <br> 
     <label for="volume">
         <input type="checkbox" id="volume" name="volume"> Volume
-    </label>a
+    </label>
     <br>
     <p>Filters:</p>
     <label for="includeYearRange">

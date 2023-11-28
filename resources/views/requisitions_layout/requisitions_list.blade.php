@@ -127,7 +127,7 @@
     @endif
   
     </td>
-    <td>{{$requisition->disapproval_reason}}</td>
+   
 <td>
     @if($requisition->status == 2 && $requisition->disapproval_reason)
         <p>Disapproval Reason: <a href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a></p>
