@@ -110,7 +110,9 @@
         <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
             {{ csrf_field() }}
             {{ method_field('POST') }}
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$requisition->id}}"><span>&#10005;</span></button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$requisition->id}}">
+                Disapprove
+            </button>
         </form>
     </div>
 
