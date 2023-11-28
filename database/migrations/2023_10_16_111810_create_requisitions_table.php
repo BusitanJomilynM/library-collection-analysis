@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('department');
             $table->integer('status');
-            $table->binary('disapproval_reason')->nullable();
+            $table->string('disapproval_reason')->nullable();
 
         });
     }
