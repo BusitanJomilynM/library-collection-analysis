@@ -202,6 +202,9 @@ class RequisitionController extends Controller
              
         return redirect()->route('requisitions.index')->with('success', 'Requisition accepted');
     }
+
+  
+
     public function changeStatus2(Request $request, Requisition $requisition)
     {
         // Validate the request data
@@ -227,7 +230,7 @@ class RequisitionController extends Controller
         $file->move($destinationPath, $fileName);
     
         // Save the file path in the database column
-        $filePath = 'disapproval_reason/' . $fileName; // The path to be stored in the 'disapproval_reason' column
+        $filePath = 'uploads/' . $fileName; // The path to be stored in the 'disapproval_reason' column
     
         // Update the requisition status and save the file path in disapproval_reason column
         $requisition->status = 2; // Disapproved status
@@ -236,6 +239,15 @@ class RequisitionController extends Controller
     
         return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
     }
+
+
+  
+
+    
+    
+    
+    
+    
 
     public function pendingRequisitions(Request $request)
     {
