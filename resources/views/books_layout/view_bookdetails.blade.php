@@ -15,12 +15,12 @@
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('books.index') }}">Return</a>
 <br><br>
 
-    <table class="table table-bordered" style="width:100%">
+    <table class="table table-bordered" style="width:100%" border="0">
 
 
         
-        <tbody >
-       <tr colspan="2">
+      
+       <tr>
         <td> <div class="form"><h5>Book title: {{ $book->book_title }}</h5></div> 
         <br>
         <div class="form"><h5>Author: {{ $book->book_author }}</h5></div> 
@@ -36,10 +36,7 @@
                         $a = explode(" ", $t);
                         echo implode(", ", $a);
                         ?></h5></div> 
-        <br>
-        <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
-    <br><br>    <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
-    <br><br>     <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
+                       
         </td>
         
 
@@ -58,7 +55,14 @@
         <br>
         <div class="form"><h5>ISBN: {{ $book->book_isbn}}</h5></div> 
         </td>
-        </tr>
+
+        <tr> <td colspan="2" class="center"> <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
+        <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
+        <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
+        </td></tr> 
+    </tr>
+
+   
           
                 <!-- <tr align="center">
                     <td>{{ $book->book_title }}</td>
@@ -470,5 +474,25 @@
     </table>
 
 
+    <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    button {
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    td.center {
+      text-align: center;
+    }
+  </style>
 @endsection
