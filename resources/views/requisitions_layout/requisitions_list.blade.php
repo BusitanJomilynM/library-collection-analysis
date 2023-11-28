@@ -93,6 +93,7 @@
       @elseif($requisition->status == 1)
       Approved
       @elseif($requisition->status == 2)
+      Disapproved
       @else 
       Cancelled 
       @endif
