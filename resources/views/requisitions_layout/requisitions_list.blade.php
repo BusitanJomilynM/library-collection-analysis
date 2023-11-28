@@ -128,12 +128,9 @@
   
     </td>
     <td>{{$requisition->disapproval_reason}}</td>
-    <td>
-    @if ($requisition->status == 2 && $requisition->disapproval_reason)
-        <a href="{{ url('disapproval_documents/' . $requisition->id) }}" target="_blank">View Disapproval Letter</a>
-    @else
-        <!-- Add a message or leave it blank based on your requirement -->
-        No disapproval letter uploaded
+<td>
+    @if($requisition->status == 2 && $requisition->disapproval_reason)
+        <p>Disapproval Reason: <a href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a></p>
     @endif
 </td>
 
