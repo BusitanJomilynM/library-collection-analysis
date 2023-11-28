@@ -92,17 +92,8 @@
       Pending
       @elseif($requisition->status == 1)
       Approved
-      <!-- @elseif($requisition->status == 2)
-      Disapproved -->
-      <!-- Inside the @if($requisition->status == 0) condition for technician librarians -->
       @elseif($requisition->status == 2)
-      <div class="flex-parent jc-center">
-
-      </div>
-      @endif
-
-      @else 
-      Cancelled 
+      Disapproved
       @endif
     </td>
 
@@ -337,7 +328,7 @@
 
     <div class="form-group">
         <label>Edition/Year</label>
-        <input class="form-control @error('edition') is-invalid @enderror" type="text" pattern="\d*" minlength="4" maxlength="4" name="edition" id="edition" value="{{$requisition->edition}}" required>
+        <input class="form-control @error('edition') is-invalid @enderror" type="text" name="edition" id="edition" value="{{$requisition->edition}}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
