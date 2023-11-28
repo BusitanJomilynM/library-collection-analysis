@@ -202,38 +202,44 @@ class RequisitionController extends Controller
              
         return redirect()->route('requisitions.index')->with('success', 'Requisition accepted');
     }
-
-  
-
     public function changeStatus2(Request $request, Requisition $requisition)
     {
         // Validate the request data
-// Validate the request data
-$request->validate([
-    'file_upload' => 'required|mimes:pdf,doc,docx|max:10240', // Adjust the max file size as needed
-]);
-
-// Handle the file upload
-$file = $request->file('file_upload');
-
-// Specify the folder path
-$destinationPath = storage_path().'/uploads/';
-
-// Check if the folder exists, create it if not
-if (!File::exists($destinationPath)) {
-    File::makeDirectory($destinationPath, 0755, true, true);
-}
-
-// Use the 'storeAs' method to store the file in the specified folder
-$filePath = $file->storeAs('uploads', $file->getClientOriginalName(), 'public');
-
-// Update the requisition status, save the file path in disapproval_reason column, and change status to "Disapproved"
-$requisition->status = 2; // Disapproved status
-$requisition->disapproval_reason = $filePath; // Save the file path in disapproval_reason column
-$requisition->save();
-
-return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
+        $request->validate([
+            'file_upload' => 'required|mimes:pdf,doc,docx|max:10240', // Adjust the max file size as needed
+        ]);
+    
+        // Handle the file upload
+        $file = $request->file('file_upload');
+    
+        // Specify the folder path within the Laravel project
+        $destinationPath = public_path('disapproval_documents/'); // Use 'public_path' to get the public folder path
+    
+        // Check if the folder exists, create it if not
+        if (!File::exists($destinationPath)) {
+            File::makeDirectory($destinationPath, 0755, true, true);
+        }
+    
+        // Generate a unique filename to avoid overwriting existing files
+        $fileName = time() . '_' . $file->getClientOriginalName();
+    
+        // Move the uploaded file to the specified folder
+        $file->move($destinationPath, $fileName);
+    
+        // Save the file path in the database column
+        $filePath = 'uploads/' . $fileName; // The path to be stored in the 'disapproval_reason' column
+    
+        // Update the requisition status and save the file path in disapproval_reason column
+        $requisition->status = 2; // Disapproved status
+        $requisition->disapproval_reason = $filePath; // Save the file path in disapproval_reason column
+        $requisition->save();
+    
+        return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
     }
+
+
+  
+
     
     
     

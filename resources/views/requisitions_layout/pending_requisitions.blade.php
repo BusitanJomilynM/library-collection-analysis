@@ -113,7 +113,7 @@
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('GET') }}
-                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$requisition->id}}"><span>&#10005;</span></button>
             </form>
 
            
@@ -156,6 +156,32 @@
 @empty
 <tr align="center"> <td colspan="13"><h3>No Pending Requisition</h3></td></tr> 
 @endforelse
+
+<!-- Disapprove Modal -->
+<div class="modal fade" id="disapproveModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="disapproveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disapproveModalLabel">Disapprove Requisition</h5>
+            </div>
+            <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                {{ method_field('POST') }} <!-- Change method to POST -->
+                <div class="modal-body">
+                    <p>Are you sure you want to disapprove this requisition?</p>
+                    <div class="form-group">
+                        <label for="file_upload">Upload Disapproval Document:</label>
+                        <input type="file" class="form-control-file" id="file_upload" name="file_upload" accept=".pdf, .doc, .docx" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Disapprove</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </table>
 <div class="d-flex">
