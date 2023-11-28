@@ -66,7 +66,16 @@
     </div>
 
     <button type="submit" class="btn btn-danger">Submit</button>
-<a class="btn btn-primary" href="{{ route('users.index') }}">Cancel</a>
+@if($user->type == 'technician librarian')
+<a class="btn btn-primary" href="{{ route('technician.home') }}">Cancel</a>
+
+@elseif($user->type  == 'staff librarian')
+<a class="btn btn-primary" href="{{ route('staff.home') }}">Cancel</a>
+
+@else 
+<a class="btn btn-primary" href="{{ route('representative.home') }}">Cancel</a>
+
+@endif
 
 
 </form>
