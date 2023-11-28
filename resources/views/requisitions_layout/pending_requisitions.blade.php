@@ -179,6 +179,7 @@
         </div>
     </div>
 </div>
+
 @empty
 <tr align="center"> <td colspan="13"><h3>No Pending Requisition</h3></td></tr> 
 @endforelse
