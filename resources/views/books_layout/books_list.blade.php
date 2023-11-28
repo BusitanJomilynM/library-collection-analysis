@@ -133,7 +133,7 @@
           @csrf
           <div class="form-group">
         <label>Requested By</label>
-        <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
+        <input class="form-control" type="number" name="user_id" id="user_id" value="{{Auth::user()->id}}" hidden> 
         <input class="form-control" type="string" value="{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}" readonly>
     </div>
 
