@@ -22,7 +22,8 @@ class Requisition extends Model
         'user_id',
         'type',
         'department',
-        'status'
+        'status',
+        'disapproval_reason'
       ];
 
       protected $attributes = [

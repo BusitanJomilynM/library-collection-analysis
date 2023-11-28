@@ -63,9 +63,11 @@
     <th>Department</th>
     <th>Status</th>
     <th>Actions</th>
+    <th>disapproval_reason</th>
+
   </tr>
 </thead>
-@if($user->type == 'technician librarian')
+@if($user->type == 'technician librarian' || $user->type == 'staff librarian')
 @forelse($requisitions as $requisition)
 <tbody>
   <tr align="center">
@@ -90,8 +92,15 @@
       Pending
       @elseif($requisition->status == 1)
       Approved
+      <!-- @elseif($requisition->status == 2)
+      Disapproved -->
+      <!-- Inside the @if($requisition->status == 0) condition for technician librarians -->
       @elseif($requisition->status == 2)
-      Disapproved
+      <div class="flex-parent jc-center">
+
+      </div>
+      @endif
+
       @else 
       Cancelled 
       @endif
@@ -101,17 +110,19 @@
     @if($requisition->status == 0)
 
     <div class="flex-parent jc-center">
-            <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
-            </form>
+        <form action="{{ route('changeStatus', $requisition->id) }}" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('POST') }}
+            <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
+        </form>
 
-            <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
-            </form>
+        <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('POST') }}
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$requisition->id}}">
+                Disapprove
+            </button>
+        </form>
     </div>
 
   </div>
@@ -123,6 +134,8 @@
     @endif
   
     </td>
+    <td>{{$requisition->disapproval_reason}}</td>
+
   </tr>
   </tbody>
 
@@ -151,6 +164,31 @@
       </div>
 </div>
 
+<!-- Disapprove Modal -->
+<div class="modal fade" id="disapproveModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="disapproveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disapproveModalLabel">Disapprove Requisition</h5>
+            </div>
+            <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                {{ method_field('POST') }} <!-- Change method to POST -->
+                <div class="modal-body">
+                    <p>Are you sure you want to disapprove this requisition?</p>
+                    <div class="form-group">
+                        <label for="file_upload">Upload Disapproval Document:</label>
+                        <input type="file" class="form-control-file" id="file_upload" name="file_upload" accept=".pdf, .doc, .docx" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Disapprove</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
   
 @empty
 <tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 

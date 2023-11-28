@@ -23,11 +23,13 @@ return new class extends Migration
             $table->string('isbn');
             $table->string('publisher');
             $table->string('edition');
-            $table->string('source');
+            $table->string('source')->nullable();
             $table->integer('user_id');
             $table->string('type');
             $table->string('department');
             $table->integer('status');
+            $table->string('disapproval_reason')->nullable();
+
         });
     }
 

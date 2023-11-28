@@ -67,8 +67,8 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/requisitions/pendingRequisitions', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
     Route::get('/pending', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
 
-    Route::get('/requisition/acceptStatus/{requisition}', [RequisitionController::class, 'changeStatus'])->name('changeStatus');
-    Route::get('/requisition/declineStatus/{requisition}', [RequisitionController::class, 'changeStatus2'])->name('changeStatus2');
+    Route::post('/requisition/acceptStatus/{requisition}', [RequisitionController::class, 'changeStatus'])->name('changeStatus');
+    Route::match(['get', 'post'], '/requisition/declineStatus/{requisition}', [RequisitionController::class, 'changeStatus2'])->name('changeStatus2');
 
     Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
     Route::get('/pendingt', [TagController::class, 'pendingTags'])->name('pendingTags');
@@ -78,7 +78,12 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/tag/update/{tag}', [TagController::class, 'updateTags'])->name('updateTags');
     
     Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
+    Route::get('/collection_analysis', [BookController::class, 'collectionanalysisPdf'])->name('collection_analysis');
+
     Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
+    Route::get('/pdf_collection', [BookController::class, 'collectionanalysisPdf'])->name('pdf_collection');
+
+    
 
     Route::post('/append/{tag}/{book}', [TagController::class, 'append'])->name('append');
     Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');

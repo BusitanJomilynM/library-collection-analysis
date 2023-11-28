@@ -1,8 +1,8 @@
 @extends('master_layout.master')
 
-@section('Title', 'Generate Booklist')
+@section('Title', 'Collection Analysis')
 @section('content')
-<h2 style="text-align: center;">Generate Booklist</h2>
+<h2 style="text-align: center;">Collection Analysis</h2>
 
 <div class="panel panel-default">
     @if (session('success'))
@@ -17,7 +17,7 @@
             <div class="col-md-6" style="background-color: white; black: white; padding: 20px;">
 
 <!-- booklist_pdf.blade.php -->
-<form method="GET" action="{{ route('booklist_pdf') }}">
+<form method="GET" action="{{ route('collection_analysis') }}">
     @csrf
     <label for="pdfTitle">Title:</label>
     <input type="text" id="pdfTitle" name="pdfTitle" placeholder="Enter PDF title">
@@ -29,29 +29,14 @@
     <textarea id="courseDescription" name="courseDescription" placeholder="Enter course description"></textarea>
     <br>
 
-    <label for="booktitle">
-        <input type="checkbox" id="booktitle" name="booktitle"> Book Title
-    </label>
-    <br>
-    <label for="bookcallnumber">
-        <input type="checkbox" id="bookcallnumber" name="bookcallnumber"> Book Callnumber
-    </label>
-    <br>
-    <label for="bookauthor">
-        <input type="checkbox" id="bookauthor" name="bookauthor"> Author
-    </label>
-    <!-- <br>
-    <label for="bookcopyrightyear">
-        <input type="checkbox" id="bookcopyrightyear" name="bookcopyrightyear"> Copyright Year
-    </label> -->
     <br>
     <label for="copy">
-        <input type="checkbox" id="copy" name="copy"> Number of Copies
+        <input type="checkbox" id="copy" name="copy"> Number of Titles
     </label>
     <br> 
     <label for="volume">
         <input type="checkbox" id="volume" name="volume"> Volume
-    </label>
+    </label>a
     <br>
     <p>Filters:</p>
     <label for="includeYearRange">
@@ -71,8 +56,9 @@
 
 
     <label for="callNumberPrefix">
+        Include Call Number:
         <select id="callNumberPrefix" name="callNumberPrefix">
-            <option value="">-- Filter by Subject Head --</option>
+            <option value="">-- Select Subject Head --</option>
             <option value="COM">COM</option>
             <option value="EDUC">EDUC</option>
             <option value="ENG">ENG</option>
@@ -99,7 +85,7 @@
 
 
     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary">Generate Booklist</button>
+                        <button type="submit" class="btn btn-primary">Generate Collection Analysis</button>
                     </div>
                 </form>
             </div>

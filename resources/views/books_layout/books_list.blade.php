@@ -28,7 +28,9 @@
 <!-- <a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span> Add Book</a> -->
 
 <a data-toggle="modal" class="btn btn-primary" data-target="#createBookModal"><span>&#43;</span></i> Add New Book</a>
-<a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Export to PDF</a>
+<a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Booklist</a>
+<a class="btn btn-danger" href="{{ route('collection_analysis') }}">Collection Analysis</a>
+
 <br><br>
 
 <table class="table table-hover table-bordered" style="width:100%">

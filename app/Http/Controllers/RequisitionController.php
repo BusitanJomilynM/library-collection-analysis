@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Requisition;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\File;
 
 class RequisitionController extends Controller
 {
@@ -202,13 +203,42 @@ class RequisitionController extends Controller
         return redirect()->route('requisitions.index')->with('success', 'Requisition accepted');
     }
 
+  
+
     public function changeStatus2(Request $request, Requisition $requisition)
     {
-        $requisition->status = 2;
-        $requisition->save();
+        // Validate the request data
+// Validate the request data
+$request->validate([
+    'file_upload' => 'required|mimes:pdf,doc,docx|max:10240', // Adjust the max file size as needed
+]);
 
-        return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
+// Handle the file upload
+$file = $request->file('file_upload');
+
+// Specify the folder path
+$destinationPath = storage_path().'/uploads/';
+
+// Check if the folder exists, create it if not
+if (!File::exists($destinationPath)) {
+    File::makeDirectory($destinationPath, 0755, true, true);
+}
+
+// Use the 'storeAs' method to store the file in the specified folder
+$filePath = $file->storeAs('uploads', $file->getClientOriginalName(), 'public');
+
+// Update the requisition status, save the file path in disapproval_reason column, and change status to "Disapproved"
+$requisition->status = 2; // Disapproved status
+$requisition->disapproval_reason = $filePath; // Save the file path in disapproval_reason column
+$requisition->save();
+
+return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
     }
+    
+    
+    
+    
+    
 
     public function pendingRequisitions(Request $request)
     {

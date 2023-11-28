@@ -28,22 +28,8 @@
                 <th colspan="4">{{$courseDescription}}</th>
             </tr>
             <tr align="center">
-                @if($showBookTitle)
-                    <th>Title</th>
-                @endif
-                @if($showBookCallnumber)
-                    <th>Call Number</th>
-                @endif
-                @if($showBookAuthor)
-                    <th>Author</th>
-                @endif
-                @if($showBookCopyrightYear)
-                    <th>Copyright Year</th>
-                @endif
-                <th>Total Copies</th>
-                @if($showVolume)
-                        <th>Volume</th>
-                    @endif
+            <th>Year</th>
+                <th>Title Count</th>
             </tr>
         </thead>
         <tbody>
@@ -54,28 +40,8 @@
         @endphp
             @forelse($resultData as $book)
                 <tr align="center">
-                    @if($showBookTitle)
-                        <td>{{$book['title']}}</td>
-                    @endif
-                    @if($showBookCallnumber)
-                        <td>{{$book['callnumber']}}</td>
-                    @endif
-                    @if($showBookAuthor)
-                        <td>{{$book['author']}}</td>
-                    @endif
-                    @if($showBookCopyrightYear)
-                        <td>{{$book['copyrightyear']}}</td>
-                    @endif
-                    <td>{{$book['copy_count']}}</td>
-                    @php
-                    $totalCopies += $book['copy_count'];
-                @endphp
-                    @if($showVolume)
-                        <td>{{$book['volume']}}</td>
-                        @php
-                        $totalVolume += $book['volume'];
-                    @endphp
-                    @endif
+                <td>{{ $yearData['year'] }}</td>
+                    <td>{{ $yearData['title_count'] }}</td>
 
                 </tr>
             @empty
@@ -84,12 +50,12 @@
                 </tr>
             @endforelse
             <tr align="center">
-            <td colspan="3">Total</td>
-            <td>{{$totalCopies}}</td>
-            @if($showVolume)
-                <td>{{$totalVolume}}</td>
-            @endif
-        </tr>
+    <td colspan="3">Total</td>
+    <td>{{$totalTitleCount}}</td>
+    @if($showVolume)
+        <td>{{$totalVolume}}</td>
+    @endif
+</tr>
         </tbody>
     </table>
 </div>
