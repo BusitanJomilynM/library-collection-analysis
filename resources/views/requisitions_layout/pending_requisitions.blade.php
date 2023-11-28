@@ -106,14 +106,14 @@
     <div class="flex-parent jc-center">
     <form action="{{ route('changeStatus', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
-                {{ method_field('GET') }}
+                {{ method_field('POST') }}
                 <button type="submit" class="btn btn-success" role="button"><span>&#10003;</span></button>
             </form>
 
             <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST">
                 {{ csrf_field() }}
-                {{ method_field('GET') }}
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$requisition->id}}"><span>&#10005;</span></button>
+                {{ method_field('POST') }}
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disapproveModal_{{$pendingr->id}}"><span>&#10005;</span></button>
             </form>
 
            
@@ -158,13 +158,13 @@
 @endforelse
 
 <!-- Disapprove Modal -->
-<div class="modal fade" id="disapproveModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="disapproveModalLabel" aria-hidden="true">
+<div class="modal fade" id="disapproveModal_{{$pendingr->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="disapproveModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="disapproveModalLabel">Disapprove Requisition</h5>
             </div>
-            <form action="{{ route('changeStatus2', $requisition->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('changeStatus2', $pendingr->id) }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 {{ method_field('POST') }} <!-- Change method to POST -->
                 <div class="modal-body">

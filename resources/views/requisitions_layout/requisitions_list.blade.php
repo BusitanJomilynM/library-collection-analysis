@@ -92,15 +92,7 @@
       Pending
       @elseif($requisition->status == 1)
       Approved
-      <!-- @elseif($requisition->status == 2)
-      Disapproved -->
-      <!-- Inside the @if($requisition->status == 0) condition for technician librarians -->
       @elseif($requisition->status == 2)
-      <div class="flex-parent jc-center">
-
-      </div>
-      @endif
-
       @else 
       Cancelled 
       @endif
@@ -133,6 +125,16 @@
   
     </td>
     <td>{{$requisition->disapproval_reason}}</td>
+    <td>
+    @if ($requisition->status == 2 && $requisition->disapproval_reason)
+        <a href="{{ url('disapproval_documents/' . $requisition->id) }}" target="_blank">View Disapproval Letter</a>
+    @else
+        <!-- Add a message or leave it blank based on your requirement -->
+        No disapproval letter uploaded
+    @endif
+</td>
+
+
 
   </tr>
   </tbody>

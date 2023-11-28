@@ -64,8 +64,8 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/book/archiveUpdate/{book}', [BookController::class, 'archiveUpdate'])->name('archiveUpdate');
     Route::get('/archives', [BookController::class, 'archive'])->name('archive');
 
-    Route::get('/requisitions/pendingRequisitions', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
-    Route::get('/pending', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
+    Route::post('/requisitions/pendingRequisitions', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
+    Route::match(['get', 'post'],'/pending', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
 
     Route::post('/requisition/acceptStatus/{requisition}', [RequisitionController::class, 'changeStatus'])->name('changeStatus');
     Route::match(['get', 'post'], '/requisition/declineStatus/{requisition}', [RequisitionController::class, 'changeStatus2'])->name('changeStatus2');
