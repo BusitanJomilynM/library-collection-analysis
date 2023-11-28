@@ -352,7 +352,7 @@
 
     <div class="form-group">
     
-        <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
+        <input class="form-control" type="number" name="user_id" id="user_id" value="{{Auth::user()->id}}" hidden> 
 
     </div>
 
