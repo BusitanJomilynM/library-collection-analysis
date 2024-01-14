@@ -334,7 +334,7 @@ if ($showSubject && !empty($subjectTexts)) {
             $totalCopyCount = array_sum(array_column($resultData, 'copy_count'));
             $totalVolume = $showVolume ? array_sum(array_column($resultData, 'volume')) : null;
             
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('resultData', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear', 'showVolume', 'user', 'totalCopyCount', 'totalVolume', 'pdfTitle', 'subtitle', 'courseCode', 'courseDescription'))->setPaper('a4', 'portrait');
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('resultData', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear', 'showVolume', 'user', 'totalCopyCount', 'totalVolume', 'pdfTitle', 'subtitle', 'courseCode', 'courseDescription','title','callnumber'))->setPaper('a4', 'portrait');
             return $pdf->stream('book_report.pdf');
                     }
         
@@ -348,26 +348,23 @@ if ($showSubject && !empty($subjectTexts)) {
         $courseCode = $request->input('courseCode');
         $courseDescription = $request->input('courseDescription');
     
-
         $user = Auth::user();
-
-        $showNumberTitles = $request->has('copy');
+        $showBookTitle = $request->has('booktitle');
+        $showBookCallnumber = $request->has('bookcallnumber');
+        $showBookAuthor = $request->has('bookauthor');
+        $showBookCopyrightYear = $request->has('bookcopyrightyear');
         $showVolume = $request->has('volume');
-        
+    
         // Check if the includeYearRange checkbox is checked
         $includeYearRange = $request->has('includeYearRange');
-        
+    
         // Get the start and end years from the request
         $startYear = $request->input('startYear');
         $endYear = $request->input('endYear');
-        
+    
         // New checkboxes for subject
         $showSubject = $request->has('subject');
         $subjectText = $request->input('subjectText');
-        $totalTitleCount = 0;
-        $totalVolume = 0;
-    
-        $resultData = [];
     
         // Check if there is a space in the entered subject text
         $subjectTexts = (strpos($subjectText, ' ') !== false) ? explode(' ', $subjectText) : [$subjectText];
@@ -375,16 +372,7 @@ if ($showSubject && !empty($subjectTexts)) {
         // New select box for callNumberPrefix
         $callNumberPrefix = $request->input('callNumberPrefix');
     
-        foreach ($resultData as $yearData) {
-            $totalTitleCount += $yearData['title_count'];
-            // Assuming 'volume' is a property of the book model, adjust this accordingly
-            if ($showVolume) {
-                // Calculate the sum of volumes for each year
-                $totalVolume += $this->calculateTotalVolume($yearData['year']);
-            }
-        }
-
-        if ($showSubject || $callNumberPrefix) {
+        if ($showBookTitle || $showBookCallnumber || $showBookAuthor || $showBookCopyrightYear || $showSubject || $callNumberPrefix) {
             $data = Book::query();
     
             // Filter the books based on the year range if provided
@@ -396,7 +384,7 @@ if ($showSubject && !empty($subjectTexts)) {
             if ($showSubject && !empty($subjectTexts)) {
                 $data = $data->where(function ($query) use ($subjectTexts) {
                     foreach ($subjectTexts as $subjectText) {
-                        $query->orWhere('book_subject', 'like', '%' . $subjectText . '%');
+                        $query->orWhere('book_callnumber', 'like', $subjectText . '%');
                     }
                 });
             }
@@ -406,37 +394,51 @@ if ($showSubject && !empty($subjectTexts)) {
                 $data = $data->where('book_callnumber', 'like', $callNumberPrefix . '%');
             }
     
-            // Get the books with distinct call numbers
-            $data = $data->distinct('book_callnumber')->get();
+            $data = $data->get();
     
-
+            $resultData = [];
+            $totals = ['totalTitles' => 0, 'totalVolumes' => 0];
     
             foreach ($data as $book) {
                 if ($book->status != 1) { // Assuming status 1 represents archived books
-                    $year = substr($book->book_callnumber, 0, 4);
+                    $key = $book->book_callnumber;
     
-                    if (!isset($resultData[$year])) {
-                        // If the year is not in the resultData array, add it with a title count of 1
-                        $resultData[$year] = [
-                            'year' => $year,
-                            'title_count' => 1,
+                    $bookYear = $book->book_copyrightyear;
+    
+                    if (!isset($resultData[$bookYear][$key])) {
+                        // If the book is not in the resultData array, add it with a copy count of 1
+                        $resultData[$bookYear][$key] = [
+                            'title' => $book->book_title,
+                            'callnumber' => $book->book_callnumber,
+                            'author' => $book->book_author,
+                            'copyrightyear' => $bookYear,
+                            'volume' => $book->book_volume ? 1 : 0,
+                            'copy_count' => 1,
                         ];
+    
+                        // Increment total titles and volumes for the year
+                        $totals['totalTitles']++;
+                        $totals['totalVolumes'] += $book->book_volume ? 1 : 0;
                     } else {
-                        // If the year is already in the resultData array, increment the title count
-                        $resultData[$year]['title_count']++;
+                        // If the book is already in the resultData array, increment the copy count
+                        $resultData[$bookYear][$key]['copy_count']++;
                     }
                 }
             }
     
-            // Sort resultData by year in descending order
-            krsort($resultData);
+            if (!$showVolume) {
+                foreach ($resultData as &$yearData) {
+                    $yearData = array_filter($yearData, function ($book) {
+                        return $book['volume'] > 0;
+                    });
+                }
+            }
     
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_collection', compact('resultData', 'showVolume', 'showNumberTitles', 'user', 'totalTitleCount', 'totalVolume', 'pdfTitle', 'subtitle', 'courseCode', 'courseDescription'))->setPaper('a4', 'portrait');
-            return $pdf->stream('collection_analysis_report.pdf');        }                    
-        
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('resultData', 'showBookTitle', 'showBookCallnumber', 'showBookAuthor', 'showBookCopyrightYear', 'showVolume', 'user', 'totals', 'pdfTitle', 'subtitle', 'courseCode', 'courseDescription'))->setPaper('a4', 'portrait');
+            return $pdf->stream('collection_analysis_report.pdf');
+        }
+    
         // Default case (when no checkbox is selected)
         return view('books_layout.collection_analysis', ['books' => $book]);
     }
-    
-
-    }    
+        }    

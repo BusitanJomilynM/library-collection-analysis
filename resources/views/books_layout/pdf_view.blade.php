@@ -48,10 +48,6 @@
         </thead>
         <tbody>
             
-        @php
-            $totalCopies = 0;
-            $totalVolume = 0;
-        @endphp
             @forelse($resultData as $book)
                 <tr align="center">
                     @if($showBookTitle)

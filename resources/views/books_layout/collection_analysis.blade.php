@@ -16,8 +16,7 @@
 <div class="row justify-content-center">
             <div class="col-md-6" style="background-color: white; black: white; padding: 20px;">
 
-<!-- booklist_pdf.blade.php -->
-<form method="GET" action="{{ route('collection_analysis') }}">
+            <form method="GET" action="{{ route('collection_analysis') }}">
     @csrf
     <label for="pdfTitle">Title:</label>
     <input type="text" id="pdfTitle" name="pdfTitle" placeholder="Enter PDF title">
@@ -29,9 +28,24 @@
     <textarea id="courseDescription" name="courseDescription" placeholder="Enter course description"></textarea>
     <br>
 
+    <label for="booktitle">
+        <input type="checkbox" id="booktitle" name="booktitle"> Book Title
+    </label>
+    <br>
+    <label for="bookcallnumber">
+        <input type="checkbox" id="bookcallnumber" name="bookcallnumber"> Book Callnumber
+    </label>
+    <br>
+    <label for="bookauthor">
+        <input type="checkbox" id="bookauthor" name="bookauthor"> Author
+    </label>
+    <!-- <br>
+    <label for="bookcopyrightyear">
+        <input type="checkbox" id="bookcopyrightyear" name="bookcopyrightyear"> Copyright Year
+    </label> -->
     <br>
     <label for="copy">
-        <input type="checkbox" id="copy" name="copy"> Number of Titles
+        <input type="checkbox" id="copy" name="copy"> Number of Copies
     </label>
     <br> 
     <label for="volume">
@@ -39,15 +53,7 @@
     </label>
     <br>
     <p>Filters:</p>
-    <label for="includeYearRange">
-        <input type="checkbox" id="includeYearRange" name="includeYearRange"> Include Year Range
-    </label>
-    <label for="startYear">Start Year:</label>
-    <input type="text" id="startYear" name="startYear" placeholder="Enter start year">
 
-    <label for="endYear">End Year:</label>
-    <input type="text" id="endYear" name="endYear" placeholder="Enter end year">
-    <br>
     <label for="subject">
         <input type="checkbox" id="subject" name="subject"> Subject
     </label>
@@ -56,9 +62,8 @@
 
 
     <label for="callNumberPrefix">
-        Include Call Number:
         <select id="callNumberPrefix" name="callNumberPrefix">
-            <option value="">-- Select Subject Head --</option>
+            <option value="">-- Filter by Subject Head --</option>
             <option value="COM">COM</option>
             <option value="EDUC">EDUC</option>
             <option value="ENG">ENG</option>
