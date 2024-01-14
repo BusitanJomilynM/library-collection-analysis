@@ -153,11 +153,8 @@
         </div>
       </div>
     </div>
-@empty
-<tr align="center"> <td colspan="13"><h3>No Pending Requisition</h3></td></tr> 
-@endforelse
 
-<!-- Disapprove Modal -->
+    <!-- Disapprove Modal -->
 <div class="modal fade" id="disapproveModal_{{$pendingr->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="disapproveModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -182,6 +179,12 @@
         </div>
     </div>
 </div>
+
+@empty
+<tr align="center"> <td colspan="13"><h3>No Pending Requisition</h3></td></tr> 
+@endforelse
+
+
 
 </table>
 <div class="d-flex">

@@ -63,7 +63,7 @@
     <th>Department</th>
     <th>Status</th>
     <th>Actions</th>
-    <th>disapproval_reason</th>
+    <th>Disapproval Reason</th>
 
   </tr>
 </thead>
@@ -129,10 +129,12 @@
     </td>
    
 <td>
+    <td>
     @if($requisition->status == 2 && $requisition->disapproval_reason)
-        <p>Disapproval Reason: <a href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a></p>
+    <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
     @endif
-</td>
+  </td>
+
 
 
 
@@ -246,10 +248,13 @@
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$requisition->id}}"
       data-action="{{ route('requisitions.destroy', $requisition->id) }}"><i class="fa fa-trash"></i></a>
       @endif
+
+      <td>
+  @if($requisition->status == 2 && $requisition->disapproval_reason)
+    <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
+    @endif
+</td>
   </tr>
-
-
-
 
     <!-- Delete Modal -->
 <div class="modal fade" id="deleteUserModal_{{$requisition->id}}" data-backdrop="static" tabindex="-1" role="dialog"
@@ -456,6 +461,12 @@
     @endif
   
     </td>
+
+    <td>
+  @if($requisition->status == 2 && $requisition->disapproval_reason)
+    <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
+    @endif
+</td>
   </tr>
 
   <!-- Delete Modal -->
