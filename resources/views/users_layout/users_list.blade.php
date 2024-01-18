@@ -52,6 +52,8 @@
       Staff  Librarian
     @elseif($user->type == 'department representative')
       Department Representative
+      @elseif($user->type == 'teacher')
+      Teacher
     @endif</td>
     <td>
     <div class="btn-group">
@@ -167,6 +169,7 @@
             <option value="0">Technical Librarian</option>
             <option value="1">Staff Librarian</option>
             <option value="2">Department Representative</option>
+            <option value="3">Teacher</option>
             </select>
             @error('type')
             <span class="text-danger">{{$message}}</span>
@@ -253,6 +256,7 @@
                 <option value="0" {{ old('type') == "technician librarian" || $user->type == "technician librarian" ? 'selected' : '' }}>Technical Librarian</option>
                 <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
                 <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
+                <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Teacher</option>
             </select>
     </div>
             
