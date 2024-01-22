@@ -126,4 +126,12 @@ Route::middleware(['auth', 'user-access:department representative'])->group(func
 
 });
 
+//teacher
+//dept rep
+Route::middleware(['auth', 'user-access:teacher'])->group(function () {
+    Route::get('/teacher/home', [HomeController::class, 'teacherHome'])->name('teacher.home');
+    // Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
+
+});
+
 });

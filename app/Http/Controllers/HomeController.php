@@ -49,6 +49,14 @@ class HomeController extends Controller
         return view('technicianHome',  ['user'=>$user, 'requisitions'=>$requisitions, 'pending'=>$pending, 'pendingsubject' => $pendingsubject]);
     } 
 
+    public function teacherHome()
+    {
+
+        $user = Auth::user();
+    
+        return view('teaherHome',  ['user'=>$user]);
+    } 
+
     /**
      * Show the application dashboard.
      *

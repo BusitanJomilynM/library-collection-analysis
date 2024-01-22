@@ -44,7 +44,7 @@ class User extends \Illuminate\Foundation\Auth\User
      protected function type(): Attribute
      {
          return new Attribute(
-             get: fn ($value) =>  ["technician librarian", "staff librarian", "department representative"][$value],
+             get: fn ($value) =>  ["technician librarian", "staff librarian", "department representative", "teacher"][$value],
          );
  
      }
