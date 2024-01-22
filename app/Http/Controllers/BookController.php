@@ -98,7 +98,22 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        Book::create($request->all());
+        // Book::create($request->all());
+        // return redirect()->route('books.index');
+        $data = $request->all();
+
+        // Split authors by comma and trim any extra whitespaces
+        $authors = explode(',', $data['book_author']);
+        $authors = array_map('trim', $authors);
+    
+        // Remove empty elements from the array
+        $authors = array_filter($authors);
+    
+        // Join authors back into a comma-separated string
+        $data['book_author'] = implode(', ', $authors);
+    
+        Book::create($data);
+    
         return redirect()->route('books.index');
     }
 

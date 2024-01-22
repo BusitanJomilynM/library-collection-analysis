@@ -288,19 +288,28 @@
         @enderror
     </div>
 
+<!-- <div class="col2">
+    <label>Barcode</label>
+    <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode', $barcode) }}"  minlength="2" maxlength="7" readonly>
+    @error('book_barcode')
+        <span class="text-danger">{{$message}}</span>
+    @enderror
+</div> -->
+
 <div class="col2">
     <label>Barcode</label>
     <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode', $barcode) }}"  minlength="2" maxlength="7" readonly>
     @error('book_barcode')
         <span class="text-danger">{{$message}}</span>
     @enderror
-</div>
 
+    <button class="btn btn-primary" type="button" id="generateBarcodeBtn" onclick="generateBarcode()">Generate Barcode</button>
+    <button class="btn btn-secondary" type="button" id="enterManualBarcodeBtn" onclick="enterManually()">Enter Manually</button>
 </div>
 
     <div class="form-group">
         <label>Author</label>
-        <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="40" required>
+        <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="150" required>
         @error('book_author')
             <span class="text-danger">{{$message}}</span>
         @enderror

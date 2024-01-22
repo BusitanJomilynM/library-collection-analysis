@@ -167,9 +167,13 @@
                 <div class="modal-body">
                     <p>Are you sure you want to disapprove this requisition?</p>
                     <div class="form-group">
-                        <label for="file_upload">Upload Disapproval Document:</label>
-                        <input type="file" class="form-control-file" id="file_upload" name="file_upload" accept=".pdf, .doc, .docx" required>
+                        <label for="reason">Disapproval Reason:</label>
+                        <input type="text" class="form-control" id="disapproval_reason" name="disapproval_reason" required>
                     </div>
+                    <!-- <div class="form-group">
+                        <label for="file_upload">Upload Disapproval Document:</label>
+                        <input type="file" class="form-control-file" id="file_upload" name="file_upload" accept=".pdf, .doc, .docx" >
+                    </div>   -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
