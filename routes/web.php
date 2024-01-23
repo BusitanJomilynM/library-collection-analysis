@@ -95,7 +95,6 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
     Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
-
 });
 
 //technical lib

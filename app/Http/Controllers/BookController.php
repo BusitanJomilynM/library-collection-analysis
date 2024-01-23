@@ -41,8 +41,8 @@ class BookController extends Controller
     $books = Book::paginate(10);
 
  
-    $barcode = $this->generateUniqueBarcode();
-    $bookBarcode = $request->input('book_barcode'); // Retrieve the book_barcode from the query parameter
+    // $barcode = $this->generateUniqueBarcode();
+    // $bookBarcode = $request->input('book_barcode'); // Retrieve the book_barcode from the query parameter
     
     Paginator::useBootstrap();
     
@@ -61,7 +61,8 @@ class BookController extends Controller
         $books = Book::orderBy('book_title','asc')->paginate(10);
         }
 
-        return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode, 'bookBarcode'=>$bookBarcode]);
+        // return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode, 'bookBarcode'=>$bookBarcode]);
+        return view('books_layout.books_list', ['books'=>$books,'user'=>$user]);
     }
     /**
      * Show the form for creating a new resource.
@@ -72,24 +73,38 @@ class BookController extends Controller
     {
         $user = Auth::user();
         if ($user->type === 'technician librarian') {
-            $barcode = $this->generateUniqueBarcode();
-            return view('books_layout.books_list', ['barcode'=>$barcode]);
+            // $barcode = $this->generateUniqueBarcode();
+            // return view('books_layout.books_list', ['barcode'=>$barcode]);
+            $barcode = null;
+            return view('books_layout.books_list', compact('barcode'));
         } else {
             return redirect()->back();
         }
     }
 
-    protected function generateUniqueBarcode() {
+    public function generateBarcode(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->type === 'technician librarian') {
+            $barcode = $this->generateUniqueBarcode();
+            // Display the generated barcode in the same view
+            return view('books_layout.books_list', ['barcode' => $barcode]);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    protected function generateUniqueBarcode()
+    {
         $barcode = 'T' . rand(1, 99999);
-    
+
         // Check if the generated barcode already exists in the database
         while (Book::where('book_barcode', $barcode)->exists()) {
             $barcode = 'T' . rand(1, 99999);
         }
-    
+
         return $barcode;
     }
-
     /**
      * Store a newly created resource in storage.
      *

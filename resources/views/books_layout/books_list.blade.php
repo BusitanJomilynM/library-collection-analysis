@@ -288,23 +288,15 @@
         @enderror
     </div>
 
-<!-- <div class="col2">
-    <label>Barcode</label>
-    <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode', $barcode) }}"  minlength="2" maxlength="7" readonly>
-    @error('book_barcode')
-        <span class="text-danger">{{$message}}</span>
-    @enderror
-</div> -->
 
 <div class="col2">
     <label>Barcode</label>
-    <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode', $barcode) }}"  minlength="2" maxlength="7" readonly>
+    <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
     @error('book_barcode')
         <span class="text-danger">{{$message}}</span>
     @enderror
 
     <button class="btn btn-primary" type="button" id="generateBarcodeBtn" onclick="generateBarcode()">Generate Barcode</button>
-    <button class="btn btn-secondary" type="button" id="enterManualBarcodeBtn" onclick="enterManually()">Enter Manually</button>
 </div>
 
     <div class="form-group">
