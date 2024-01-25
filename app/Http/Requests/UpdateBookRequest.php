@@ -32,7 +32,7 @@ class UpdateBookRequest extends FormRequest
             'book_copyrightyear'=>'required',
             'book_sublocation'=>'required',
             'book_subject'=>'required',
-            
+            'book_keyword'=>'required',
             'book_publisher'=>'required',
             'book_lccn'=>'required',
             'book_isbn'=>'required',

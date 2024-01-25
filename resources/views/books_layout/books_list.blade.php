@@ -199,6 +199,7 @@
   </div>
 </div>
 @endif
+
 @empty
 <tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
@@ -299,6 +300,14 @@
     <button class="btn btn-primary" type="button" id="generateBarcodeBtn" onclick="generateBarcode()">Generate Barcode</button>
 </div>
 
+<br>
+<div class="form-group">
+<div class="col2">
+<label>Keyword</label>
+      <select class="mySelect for" multiple="multiple" style="width: 100%">
+      </select>
+    </div>
+</div>
     <div class="form-group">
         <label>Author</label>
         <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="150" required>
@@ -409,6 +418,17 @@
 
 <br>
 
+<script>
+var data = ["Apple", "Banana", "Cherry", "Date", "ElderberriesElderberry"]; // Programatically-generated options array with > 5 options
+var placeholder = "selsdfect";
+$(".mySelect").select2({
+    data: data,
+    placeholder: placeholder,
+    allowClear: false,
+    minimumResultsForSearch: 5
+});
+
+</script>
 
 <style> 
 form { 

@@ -24,7 +24,8 @@ class Book extends Model
         'book_isbn',
         'book_edition',
         'status',
-        'archive_reason'
+        'archive_reason',
+        'book_keyword'
     ];
 
     protected $attributes = [
