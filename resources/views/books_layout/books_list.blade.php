@@ -304,7 +304,7 @@
 <div class="form-group">
 <div class="col2">
 <label>Keyword</label>
-      <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%">
+      <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
       @foreach($keywords as $keyword)
       <option value="{{$keyword->keyword}}">{{$keyword->keyword}}</option>
       @endforeach
@@ -423,7 +423,7 @@
 
 <script>
 
-var placeholder = "selsdfect";
+var placeholder = "Select Keyword";
 $(".mySelect").select2({
   
     placeholder: placeholder,

@@ -46,6 +46,7 @@ Route::group(['auth', ['user-access:technician librarian|department representati
 //Shared routes for all users
 Route::group(['auth', ['user-access:technician librarian|department representative|staff librarian']], function () {
     Route::resource('/books', BookController::class);
+    Route::post('/bookss/filter', [BookController::class, 'filter']);
     Route::resource('/tags', TagController::class);
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
     // Route::get('/pdf_viewbooks', [BookController::class, 'createPDFBook'])->name('createPDFBook');
@@ -96,7 +97,9 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
 
     //keywords
-    Route::get('/keywords', [KeywordController::class, 'index'])->name('keywords.index');
+    Route::resource('/keywords', KeywordController::class);
+    Route::get('/keywords/{keyword}', [KeywordController::class, 'destroy'])->name('keywords.destroy');
+    
 
 });
 

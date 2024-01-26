@@ -56,6 +56,7 @@ class BookController extends Controller
             ->orwhere('book_author', 'like', '%' . request('search') . '%')
             ->orwhere('book_copyrightyear', 'like', '%' . request('search') . '%')
             ->orwhere('book_sublocation', 'like', '%' . request('search') . '%')
+            ->orwhere('book_keyword', 'like', '%' . request('search') . '%')
             ->orwhere('book_subject', 'like', '%' . request('search') . '%')->orderBy('book_title','asc')->paginate(10)->withQueryString();
         } 
     
@@ -475,5 +476,12 @@ if ($showSubject && !empty($subjectTexts)) {
     
         // Default case (when no checkbox is selected)
         return view('books_layout.collection_analysis', ['books' => $book]);
+    }
+
+    public function filter(Request $request)
+    {
+        $selectedBooks = Book::whereIn('id', $request->input('book_keyword'))->get();
+
+        return response()->json(['$selectedBooks' => $$selectedBooks]);
     }
         }    

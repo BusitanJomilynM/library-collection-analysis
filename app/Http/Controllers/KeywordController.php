@@ -19,8 +19,14 @@ class KeywordController extends Controller
      */
     public function index()
     {
-        $keywords = Keyword::paginate(10);
-
+        if (request('search')) {
+        $keywords = Keyword::where('keyword', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+        }
+    
+        else{
+            $keywords = Keyword::paginate(10);
+        }
+       
         return view('keywords_layout.keywords_list', ['keywords'=>$keywords]);
     }
 
@@ -31,7 +37,7 @@ class KeywordController extends Controller
      */
     public function create()
     {
-        //
+        return view('keywords_layout.keywords_list');
     }
 
     /**
@@ -42,7 +48,8 @@ class KeywordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Keyword::create($request->all());
+        return redirect()->route('keywords.index');
     }
 
     /**
@@ -64,7 +71,7 @@ class KeywordController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('keywords_layout.keywords_list', compact('keyword'));
     }
 
     /**
@@ -74,9 +81,11 @@ class KeywordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Keyword $keyword)
     {
-        //
+        $keyword->update($request->all()); 
+
+            return redirect()->route('keywords.index')->with('success','Keyword successfully updated!');
     }
 
     /**
@@ -85,8 +94,10 @@ class KeywordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Keyword $keyword)
     {
-        //
+        $keyword->delete();
+
+        return redirect()->route('keywords.index')->with('success', 'Keyword deleted!');
     }
 }
