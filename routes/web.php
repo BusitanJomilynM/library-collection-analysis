@@ -7,6 +7,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RequisitionController;
+use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\TrequestController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -58,43 +59,45 @@ Route::group(['auth', ['user-access:technician librarian|department representati
 
 //Shared routes for Technical and Staff Librarian
 Route::group(['auth', ['user-access:technician librarian|staff librarian']], function () {
+
+    //books
     Route::get('/book/archive/{book}', [BookController::class, 'archiveBook'])->name('archiveBook');
     Route::get('/book/restore/{book}', [BookController::class, 'restoreBook'])->name('restoreBook');
     Route::get('/book/restoreUpdate/{book}', [BookController::class, 'restoreUpdate'])->name('restoreUpdate');
     Route::get('/book/archiveUpdate/{book}', [BookController::class, 'archiveUpdate'])->name('archiveUpdate');
     Route::get('/archives', [BookController::class, 'archive'])->name('archive');
+    Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
+    Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
 
+    //requisitions
     Route::post('/requisitions/pendingRequisitions', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
     Route::match(['get', 'post'],'/pending', [RequisitionController::class, 'pendingRequisitions'])->name('pendingRequisitions');
-
     Route::post('/requisition/acceptStatus/{requisition}', [RequisitionController::class, 'changeStatus'])->name('changeStatus');
     Route::match(['get', 'post'], '/requisition/declineStatus/{requisition}', [RequisitionController::class, 'changeStatus2'])->name('changeStatus2');
+    Route::get('/requisitions/{requisition}', 'RequisitionController@show')->name('requisitions.show');
 
+    //tags
     Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
     Route::get('/pendingt', [TagController::class, 'pendingTags'])->name('pendingTags');
     Route::get('/tag/accept/{tag}', [TagController::class, 'accept'])->name('accept');
     Route::get('/tag/decline/{tag}', [TagController::class, 'decline'])->name('decline');
-
     Route::get('/tag/update/{tag}', [TagController::class, 'updateTags'])->name('updateTags');
-    
-    Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
-    Route::get('/collection_analysis', [BookController::class, 'collectionanalysisPdf'])->name('collection_analysis');
-
-    Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
-    Route::get('/pdf_collection', [BookController::class, 'collectionanalysisPdf'])->name('pdf_collection');
-
-    Route::get('/requisitions/{requisition}', 'RequisitionController@show')->name('requisitions.show');
-
-
     Route::post('/append/{tag}/{book}', [TagController::class, 'append'])->name('append');
     Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');
-
-        
-    Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
-    Route::get('/books/book_createcopy/{book}', [BookController::class, 'book_createcopy'])->name('books.book_createcopy');
     
+    //reports
+    Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
+    Route::get('/collection_analysis', [BookController::class, 'collectionanalysisPdf'])->name('collection_analysis');
+    Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
+    Route::get('/pdf_collection', [BookController::class, 'collectionanalysisPdf'])->name('pdf_collection');
+    
+    //user controls
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');
     Route::get('/users/restorePassword/{user}', [UserController::class, 'restorePassword'])->name('restorePassword');
+
+    //keywords
+    Route::get('/keywords', [KeywordController::class, 'index'])->name('keywords.index');
+
 });
 
 //technical lib
@@ -126,10 +129,9 @@ Route::middleware(['auth', 'user-access:department representative'])->group(func
 });
 
 //teacher
-//dept rep
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
     Route::get('/teacher/home', [HomeController::class, 'teacherHome'])->name('teacher.home');
-    // Route::get('/tags/pendingTags', [TagController::class, 'pendingTags'])->name('pendingTags');
+   
 
 });
 

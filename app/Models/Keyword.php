@@ -10,7 +10,9 @@ class Keyword extends Model
     use HasFactory;
 
     protected $fillable = [
-
+      
         'keyword'
       ];
+
+      protected $table = 'keyword';
 }

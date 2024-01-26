@@ -54,6 +54,13 @@
         <div class="form"><h5>LCCN: {{ $book->book_lccn}}</h5></div> 
         <br>
         <div class="form"><h5>ISBN: {{ $book->book_isbn}}</h5></div> 
+        <br>
+        <div class="form"><h5>Keyword:<?php  
+                        $x = $book->book_keyword;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
+                        echo $s;
+                        ?></h5></div> 
         </td>
 
         <tr> <td colspan="2" class="center"> <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>

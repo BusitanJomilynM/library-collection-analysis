@@ -304,7 +304,10 @@
 <div class="form-group">
 <div class="col2">
 <label>Keyword</label>
-      <select class="mySelect for" multiple="multiple" style="width: 100%">
+      <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%">
+      @foreach($keywords as $keyword)
+      <option value="{{$keyword->keyword}}">{{$keyword->keyword}}</option>
+      @endforeach
       </select>
     </div>
 </div>
@@ -419,10 +422,10 @@
 <br>
 
 <script>
-var data = ["Apple", "Banana", "Cherry", "Date", "ElderberriesElderberry"]; // Programatically-generated options array with > 5 options
+
 var placeholder = "selsdfect";
 $(".mySelect").select2({
-    data: data,
+  
     placeholder: placeholder,
     allowClear: false,
     minimumResultsForSearch: 5
