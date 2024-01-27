@@ -13,4 +13,6 @@ class Course extends Model
         'course_name',
         'course_department'
     ];
+
+    protected $table = 'course';
 }

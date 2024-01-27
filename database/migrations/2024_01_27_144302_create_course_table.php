@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('course_code');
             $table->string('course_name');
-            $table->string('course_departmenmt');
+            $table->string('course_department');
         });
     }
 

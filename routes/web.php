@@ -8,6 +8,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\KeywordController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TrequestController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -38,15 +39,15 @@ Route::get('/', function () {
 });
 
 //Shared routes for Technical Librarian and Department Representative
-Route::group(['auth', ['user-access:technician librarian|department representative']], function () {
+Route::group(['auth', ['user-access:technician librarian|department representative|teacher']], function () {
     Route::resource('/requisitions', RequisitionController::class);
     Route::get('/requisitions/requisitionEdit/{id}', [RequisitionController::class, 'requisitionEdit'])->name('requisitionEdit');
 });
 
 //Shared routes for all users
-Route::group(['auth', ['user-access:technician librarian|department representative|staff librarian']], function () {
+Route::group(['auth', ['user-access:technician librarian|department representative|staff librarian|teacher']], function () {
     Route::resource('/books', BookController::class);
-    Route::post('/bookss/filter', [BookController::class, 'filter']);
+    Route::post('/books/filter', [BookController::class, 'filter']);
     Route::resource('/tags', TagController::class);
     Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
     // Route::get('/pdf_viewbooks', [BookController::class, 'createPDFBook'])->name('createPDFBook');
@@ -54,8 +55,6 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     Route::get('/users/changePassword/{id}', [UserController::class, 'changePassword'])->name('changePassword');
     Route::get('/users/updatePassword/{id}', [UserController::class, 'updatePassword'])->name('updatePassword');
     Route::resource('/users', UserController::class);
-
-
 });
 
 //Shared routes for Technical and Staff Librarian
@@ -98,9 +97,10 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
 
     //keywords
     Route::resource('/keywords', KeywordController::class);
-    Route::get('/keywords/{keyword}', [KeywordController::class, 'destroy'])->name('keywords.destroy');
+    Route::get('/keywords/delete/{keyword}', [KeywordController::class, 'destroy'])->name('keywords.destroy');
+    Route::get('/keywords/update/{keyword}', [KeywordController::class, 'update'])->name('keywords.update');
     
-
+    
 });
 
 //technical lib
@@ -134,6 +134,9 @@ Route::middleware(['auth', 'user-access:department representative'])->group(func
 //teacher
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
     Route::get('/teacher/home', [HomeController::class, 'teacherHome'])->name('teacher.home');
+    Route::resource('/courses', CourseController::class);
+    Route::get('/courses/delete/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
+    Route::get('/courses/update/{course}', [CourseController::class, 'update'])->name('courses.update');
    
 
 });

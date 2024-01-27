@@ -81,6 +81,30 @@ class RequisitionController extends Controller
                 }
             }
         } 
+
+        if($user->type === 'teacher') {
+            if(request('search')) { 
+                $requisitions = Requisition::where('book_title', 'like', '%' . request('search') . '%')
+                ->orwhere('material_type', 'like', '%' . request('search') . '%')
+                ->orwhere('author', 'like', '%' . request('search') . '%')
+                ->orwhere('isbn', 'like', '%' . request('search') . '%')
+                ->orwhere('publisher', 'like', '%' . request('search') . '%')
+                ->orwhere('edition', 'like', '%' . request('search') . '%')
+                ->orwhere('source', 'like', '%' . request('search') . '%')
+                ->orwhere('user_id', 'like', '%' . request('search') . '%')
+                ->orwhere('type', 'like', '%' . request('search') . '%')
+                ->orwhere('department', 'like', '%' . request('search') . '%')
+                ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            } 
+            else {
+                if(auth()->user()){
+                    $requisitions = Requisition::where('user_id',auth()->user()->id)->paginate(10);
+                    $user = Auth::user();
+                    $users = User::all();
+                }
+            }
+        } 
+
         if($user->type === 'staff librarian') {
             if(request('search')) { 
                 $requisitions = Requisition::where('book_title', 'like', '%' . request('search') . '%')

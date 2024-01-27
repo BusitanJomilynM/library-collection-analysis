@@ -170,7 +170,26 @@
                             <a class="nav-link" href="{{route('tags.index')}}">Reports</a>
                         </li>
 
+                        <!-- department rep -->
                         @elseif(Auth::user()->type == 'department representative')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('representative.home')}}">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('books.index')}}">Books</a>
+                        </li>  
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
+                        </li> 
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('tags.index')}}">Subjects</a>
+                        </li>  
+
+                        <!-- teacher -->
+                        @elseif(Auth::user()->type == 'teacher')
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('representative.home')}}">Home</a>
                         </li>

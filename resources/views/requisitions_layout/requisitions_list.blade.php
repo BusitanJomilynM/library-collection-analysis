@@ -201,7 +201,7 @@
 @endforelse
 
 
-@elseif($user->type == 'department representative')
+@elseif($user->type == 'department representative' || $user->type == 'teacher')
 <!-- <a class="btn btn-primary" href="{{ route('requisitions.create') }}">Add New Requisition</a><br><br> -->
 <a data-toggle="modal" class="btn btn-primary" data-target="#createReqModal"><span>&#43;</span></i> Create New Requisition</a> <br><br>
 

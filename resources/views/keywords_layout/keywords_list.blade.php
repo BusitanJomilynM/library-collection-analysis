@@ -15,7 +15,7 @@
 
 <div>
 <form style="margin:auto;max-width:300px">
-    <input type="text" class="form-control mr-sm-2" placeholder="Search Users" name="search"  value="{{ request('search') }}">
+    <input type="text" class="form-control mr-sm-2" placeholder="Search Keywords" name="search"  value="{{ request('search') }}">
     <button type="submit" class="btn btn-danger">
     <i class="fa fa-search"></i>
     </button>
@@ -40,10 +40,14 @@
     <td>
         
     <div class="flex-parent jc-center">
+
+            <a data-toggle="modal" class="btn btn-primary" data-target="#editKeywordModal_{{$keyword->id}}"
+            data-action="{{ route('keywords.edit', $keyword->id) }}"><span>&#9776;</span>Edit</a>
+
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteKeywordModal_{{$keyword->id}}"
             data-action="{{ route('keywords.destroy', $keyword->id) }}"><i class="fa fa-trash"></i></a>
     </div> 
-    </div>
+    
     </td>
   </tr>
 </tbody>
@@ -54,14 +58,14 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteKeywordModalLabel">Are you sure you want to delete this request?</h5>
+            <h5 class="modal-title" id="deleteKeywordModalLabel">Are you sure you want to delete this keyword?</h5>
             
           </div>
           <form action="{{ route('keywords.destroy', $keyword->id) }}" method="GET">
             <div class="modal-body">
               @csrf
               @method('DELETE')
-              <h5 class="text-center">Delete request for?
+              <h5 class="text-center">Delete keyword {{$keyword->keyword}}?
                
             </div>
             <div class="modal-footer">
@@ -72,6 +76,35 @@
         </div>
       </div>
 </div>
+
+
+<!-- Edit Keyword Modal -->
+<div class="modal fade" id="editKeywordModal_{{$keyword->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editKeywordModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editKeywordModalLabel">Edit Keyword</h5>
+      </div>
+      <form action="{{ route('keywords.update', $keyword->id) }}" method="PUT">
+          <div class="modal-body">
+          {{ csrf_field() }}
+
+        <div class="form-group">
+        <label>Keyword Name</label>
+        <input class="form-control" type="text" name="keyword" id="keyword" value="{{$keyword->keyword}}" required>
+        </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Submit</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+@endforeach
 
 <!-- Create Keyword Modal -->
 <div class="modal fade" id="createKeywordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createKeywordModal" aria-hidden="true">
@@ -98,7 +131,8 @@
     </div>
   </div>
 </div>
-@endforeach
+
+
 
 
 <style>

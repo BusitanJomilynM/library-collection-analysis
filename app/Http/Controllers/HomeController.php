@@ -54,7 +54,7 @@ class HomeController extends Controller
 
         $user = Auth::user();
     
-        return view('teaherHome',  ['user'=>$user]);
+        return view('teacherHome',  ['user'=>$user]);
     } 
 
     /**
