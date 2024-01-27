@@ -114,6 +114,10 @@
                                 </div>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('keywords.index')}}">Keywords</a>
+                        </li>
+
                       
 
                         <!-- Staff Librarian Navbar -->
