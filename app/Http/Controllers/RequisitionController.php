@@ -266,9 +266,6 @@ class RequisitionController extends Controller
         return redirect()->route('requisitions.index')->with('success', 'Requisition declined');
     }
         
-    
-    
-
     public function pendingRequisitions(Request $request, Requisition $requisition)
     {
         $users = User::all();
