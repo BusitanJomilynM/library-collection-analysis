@@ -109,7 +109,7 @@
 
         <div class="form-group">
         <label>Course</label>
-          <select class="js-example-responsive" name="subject_course[]" id="subject_course" multiple="multiple" style="width: 100%">
+          <select class="js-example-responsive" name="subject_course[]" id="subject_course_{{$subject->id}}" multiple="multiple" style="width: 100%">
           @foreach($courses as $course)
             <?php
                    $selected = in_array($course->id, json_decode($subject->subject_course, true));

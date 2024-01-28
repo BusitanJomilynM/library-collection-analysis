@@ -78,14 +78,52 @@
     <td>{{$tag->book_barcode}}</td>
     <td>@foreach($books as $book)
 @if($book->book_barcode == $tag->book_barcode)
-<?php $t = $book->book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?>
+<?php  
+                        $x = $book->book_subject;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
+
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($subjects as $subject){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $subject->id){
+                                echo $subject->subject_name;
+                                echo '<br>'; }
+                                // if ($key < $count - 1) {
+                                //     echo " ,";
+                                //   } 
+                                // }
+                            }
+                        }
+                   
+                        ?>
 @endif
     @endforeach</td>
-    <td><?php $t = $tag->suggest_book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?></td>
+    <td> <?php  
+                        $x = $tag->suggest_book_subject;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
+
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($subjects as $subject){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $subject->id){
+                                echo $subject->subject_code;
+                                echo '<br>';
+                                // if ($key < $count - 1) {
+                                //     echo " ,";
+                                //   } 
+                                }
+                            }
+                        }
+                   
+                        ?></td>
     <td>
       @if($tag->action == 1)
       Append
@@ -183,8 +221,8 @@
 <tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
 
-<!-- Department Representative -->
-@elseif($user->type == 'department representative')
+<!-- Department Representative & Teacher -->
+@elseif($user->type == 'department representative' || $user->type == 'teacher')
 <br>
 @forelse($tags as $tag)
   @foreach($users as $user)
@@ -194,18 +232,57 @@
       <td>{{$tag->department}}</td>
       <td>{{$tag->book_barcode}}</td>
       <td>
-        @foreach($books as $book)
+@foreach($books as $book)
 @if($book->book_barcode == $tag->book_barcode)
-<?php $t = $book->book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?>
-@endif
-    @endforeach</td>
-    
-      <td><?php $t = $tag->suggest_book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?></td>
+                        <?php  
+                        $x = $book->book_subject;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
 
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($subjects as $subject){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $subject->id){
+                                echo $subject->subject_code;
+                                echo '<br>'; }
+                                // if ($key < $count - 1) {
+                                //     echo " ,";
+                                //   } 
+                                // }
+                            }
+                        }
+                   
+                        ?>
+@endif
+@endforeach</td>
+    
+<td>
+                        <?php  
+                        $x = $tag->suggest_book_subject;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
+
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($subjects as $subject){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $subject->id){
+                                echo $subject->subject_code;
+                                echo '<br>';}
+                                // if ($key < $count - 1) {
+                                //     echo " ,";
+                                //   } 
+                                // }
+                            }
+                        }
+                   
+                        ?>
+</td>
 <td>
       @if($tag->action == 1)
       Append
@@ -348,14 +425,53 @@
       <td>{{$tag->book_barcode}}</td>
       <td>@foreach($books as $book)
 @if($book->book_barcode == $tag->book_barcode)
-<?php $t = $book->book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?>
+<?php  
+                        $x = $book->book_subject;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
+
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($subjects as $subject){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $subject->id){
+                                echo $subject->subject_code;
+                                echo '<br>';}
+                                // if ($key < $count - 1) {
+                                //     echo " ,";
+                                //   } 
+                                // }
+                            }
+                        }
+                   
+                        ?>
 @endif
     @endforeach</td>
-      <td><?php $t = $tag->suggest_book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?></td>
+      <td> <?php  
+                        $x = $tag->suggest_book_subject;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
+
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($subjects as $subject){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $subject->id){
+                                echo $subject->subject_code;
+                                echo '<br>';
+                                }
+                                // if ($key < $count - 1) {
+                                //     echo " ,";
+                                //   } 
+                                // }
+                            }
+                        }
+                   
+                        ?></td>
 
 <td>
       @if($tag->action == 1)

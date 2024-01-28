@@ -48,6 +48,7 @@
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Filter Pending Requisitions</a><br><br>
 @endif
 
+
 <table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark" >
   <tr align="center">
@@ -64,9 +65,11 @@
     <th>Status</th>
     <th>Actions</th>
     <th>Disapproval Reason</th>
-
+  
   </tr>
 </thead>
+
+
 @if($user->type == 'technician librarian' || $user->type == 'staff librarian')
 @forelse($requisitions as $requisition)
 <tbody>
@@ -126,13 +129,15 @@
     </div>  
     @endif
   
-    </td>
-   
-<td>
     <td>
+   
+        
     @if($requisition->status == 2 && $requisition->disapproval_reason)
     <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
-    @endif
+    @else 
+    No File Found
+    @endif 
+  
   </td>
 
 
@@ -254,9 +259,11 @@
       @endif
 
       <td>
-  @if($requisition->status == 2 && $requisition->disapproval_reason)
+      @if($requisition->status == 2 && $requisition->disapproval_reason)
     <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
-    @endif
+    @else 
+    No File Found
+    @endif 
 </td>
   </tr>
 

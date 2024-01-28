@@ -6,6 +6,7 @@ use App\Models\Book;
 use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Subject;
 use App\Http\Requests\UpdateBookRequest;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -30,6 +31,7 @@ class TagController extends Controller
         $user = Auth::user();
         $users = User::all();
         $books = Book::all();
+        $subjects = Subject::all();
         Paginator::useBootstrap();
         if($user->type === 'technician librarian') {
             if(request('search')) { 
@@ -89,7 +91,28 @@ class TagController extends Controller
             }
         }  
 
-        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users, 'books'=>$books]);
+        if($user->type === 'teacher') {
+            if(request('search')) { 
+                $tags = Tag::where('book_barcode', 'like', '%' . request('search') . '%')
+                ->orwhere('department', 'like', '%' . request('search') . '%')
+                ->orwhere('suggest_book_subject', 'like', '%' . request('search') . '%')
+                ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+
+            else if(request('department')){
+                $department = $request->input('department');
+        
+                $tags = Tag::where('department', $department)->paginate(10)->withQueryString();
+            }
+
+            else{
+            $tags = Tag::paginate(10);
+            $user = Auth::user();
+            $users = User::all();
+            }
+        }  
+
+        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users, 'books'=>$books, 'subjects'=>$subjects]);
     }
 
     /**
@@ -122,7 +145,7 @@ class TagController extends Controller
         $tag->book_barcode = $bookBarcode;
     
         $tag->department = $request->input('department');
-        $tag->suggest_book_subject = $request->input('suggest_book_subject');
+        $tag['suggest_book_subject'] = json_encode($request->suggest_book_subject);
         $tag->action = $request->input('action');
         $tag->user_id = $user->id;
     
@@ -242,13 +265,23 @@ class TagController extends Controller
         $book = Book::findorFail($book);
         $tag = Tag::findorFail($tag);
 
+        $x = $book->book_subject;
+        $y = $tag->suggest_book_subject;
 
-        $book->book_subject .= " ".$tag->suggest_book_subject;
+        $array1 = json_decode($x, true);
+        $array2 = json_decode($y, true);
+     
+
+    
+        $resultArray = array_merge($array1, $array2);
+        $book->book_subject = json_encode($resultArray);
+        
 
         $tag->status = 1;
 
         $book->save();
         $tag->save();
+        
 
         return redirect()->back()->with('success', 'Tags appended');
     }

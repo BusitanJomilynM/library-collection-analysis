@@ -48,14 +48,14 @@ class SubjecttagController extends Controller
 
         if($user->type === 'department representative') {
             if(request('search')) { 
-                $tags = Tag::where('book_barcode', 'like', '%' . request('search') . '%')
+                $subjecttags = subjecttag::where('book_barcode', 'like', '%' . request('search') . '%')
                 ->orwhere('department', 'like', '%' . request('search') . '%')
                 ->orwhere('suggest_book_subject', 'like', '%' . request('search') . '%')
                 ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
             } 
             else {
                 if(auth()->user()){
-                    $tags = Tag::where('user_id',auth()->user()->id)->paginate(10);
+                    $subjecttags = subjecttag::where('user_id',auth()->user()->id)->paginate(10);
                     $user = Auth::user();
                   
                 }
@@ -64,7 +64,7 @@ class SubjecttagController extends Controller
 
         if($user->type === 'staff librarian') {
             if(request('search')) { 
-                $tags = Tag::where('book_barcode', 'like', '%' . request('search') . '%')
+                $subjecttags = subjecttag::where('book_barcode', 'like', '%' . request('search') . '%')
                 ->orwhere('department', 'like', '%' . request('search') . '%')
                 ->orwhere('suggest_book_subject', 'like', '%' . request('search') . '%')
                 ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
@@ -73,17 +73,38 @@ class SubjecttagController extends Controller
             else if(request('department')){
                 $department = $request->input('department');
         
-                $tags = Tag::where('department', $department)->paginate(10)->withQueryString();
+                $subjecttags = subjecttag::where('department', $department)->paginate(10)->withQueryString();
             }
 
             else{
-            $tags = Tag::paginate(10);
+            $subjecttags = subjecttag::paginate(10);
             $user = Auth::user();
             $users = User::all();
             }
         }  
 
-        return view('tags_layout.tags_list', ['tags'=>$tags, 'user'=>$user, 'users'=>$users, 'books'=>$books]);
+        if($user->type === 'teacher') {
+            if(request('search')) { 
+                $subjecttags = subjecttag::where('book_barcode', 'like', '%' . request('search') . '%')
+                ->orwhere('department', 'like', '%' . request('search') . '%')
+                ->orwhere('suggest_book_subject', 'like', '%' . request('search') . '%')
+                ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            }
+
+            else if(request('department')){
+                $department = $request->input('department');
+        
+                $subjecttags = subjecttag::where('department', $department)->paginate(10)->withQueryString();
+            }
+
+            else{
+            $subjecttags = subjecttag::paginate(10);
+            $user = Auth::user();
+            $users = User::all();
+            }
+        }  
+
+        return view('tags_layout.tags_list', ['subjecttags'=>$subjecttags, 'user'=>$user, 'users'=>$users, 'books'=>$books]);
     }
 
     /**

@@ -94,7 +94,7 @@
 
 @endforelse
 
-<!-- Department Representative -->
+<!-- Department Representative & Teacher -->
 @elseif($user->type == 'department representative' || $user->type == 'teacher')
 <table class="table table-bordered" style="width:100%">
 <thead class="thead-dark">
@@ -164,8 +164,8 @@
     </div>
 
     <div class="form-group">
-        <label>Subjects</label>
-        <select class="js-responsive" name="book_subject[]" id="book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+        <label>Current Subjects</label>
+        <select class="js-responsive" name="book_subject[]" id="book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" disabled>
             @foreach($subjects as $subject)
             <?php
                    $selected = in_array($subject->id, json_decode($book->book_subject, true));
@@ -175,11 +175,14 @@
                 </option>
             @endforeach
         </select>
+        
     </div>
+
+    
     
     <div class="form-group">
         <label>Suggested Subject</label>
-      <select class="js-responsive" name="suggest_book_subject" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+      <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
       <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
       @endforeach
@@ -290,8 +293,8 @@
         @enderror
     </div>
 
-<div class="two-col">
-    <div class="col1">
+
+    <div class="form-group">
         <label>Call Number</label>
         <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" minlength="4" maxlength="25" required>
         @error('book_callnumber')
@@ -300,7 +303,7 @@
     </div>
 
 
-<div class="col2">
+    <div class="form-group">
     <label>Barcode</label>
     <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
     @error('book_barcode')
@@ -348,8 +351,7 @@
             @enderror
     </div>
 
-<div class="two-col">
-    <div class="col1">
+    <div class="form-group">
         <label>Copyright Year</label>
             <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" required>
                 <option value="">--Select Year--</option>
@@ -359,16 +361,15 @@
             </select>
 </div>
 
-    <div class="col2">
+<div class="form-group">
         <label>Edition</label>
         <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition"  minlength="1" maxlength="10" >
         @error('book_edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-</div>
-    <br>
-    <div class="col2">
+
+    <div class="form-group">
     <label>Subject</label>
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
@@ -386,8 +387,7 @@
         @enderror
     </div>
 
-<div class="two-col">
-    <div class="col1">
+    <div class="form-group">
         <label>LCCN</label>
         <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13">
         @error('book_lccn')
@@ -395,7 +395,7 @@
         @enderror
     </div>
 
-    <div class="col2">
+    <div class="form-group">
         <label>ISBN</label>
         <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn"  minlength="10" maxlength="20" required>
         @error('book_isbn')
@@ -403,10 +403,10 @@
         @enderror
     </div>
     
-</div>
-<br>
+
+
 <div class="form-group">
-<div class="col2">
+
 <label>Keyword</label>
       <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
       @foreach($keywords as $keyword)
@@ -415,7 +415,7 @@
       </select>
     </div>
 </div>
-</div>
+
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
