@@ -52,6 +52,11 @@
         content: ' *';
         color: red;
       }
+
+.modal-dialog {
+        max-width: 80%;
+        margin: 1.75rem auto;
+}
 </style>
     
 

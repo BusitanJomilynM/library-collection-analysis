@@ -46,7 +46,7 @@
                             if( $word == $subject->id){
                             echo $subject->subject_name;
                             if ($key < $count - 1) {
-                                echo " ,";
+                                echo ", ";
                               } 
                             }
                         }
@@ -89,7 +89,7 @@
                                 if( $word == $keyword->id){
                                 echo $keyword->keyword;
                                 if ($key < $count - 1) {
-                                    echo " ,";
+                                    echo ", ";
                                   } 
                                 }
                             }
@@ -152,20 +152,25 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label class="required">Call Number</label>
         <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" value="{{$book->book_callnumber}}" minlength="4" maxlength="25" required>
         @error('book_callnumber')
             <span class="text-danger">{{$message}}</span>
         @enderror
-    </div>
-
-    <div class="form-group">
+        </div>
+        <div class="col-md-6"><div>
         <label class="required">Barcode</label>
         <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode}}" minlength="4" maxlength="25" required> 
         @error('book_barcode')
             <span class="text-danger">{{$message}}</span>
         @enderror
+        </div>
+    </div>
+
+    <div class="form-group">
+        
     </div>
 
     <div class="form-group">
@@ -176,7 +181,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label class="required">Purchase Date</label>
         <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{$book->book_purchasedwhen}}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
         @error('book_purchasedwhen')
@@ -184,14 +190,15 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6">
         <label>Volume</label>
         <input class="form-control @error('book_volume') is-invalid @enderror" type="text" name="book_volume" id="book_volume" value="{{$book->book_volume}}" minlength="2" maxlength="40">
         @error('book_volume')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+    </div>
+<br>
     <div class="form-group">
         <label class="required">Sublocation</label>
             <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" value="{{$book->book_sublocation}}" required>
@@ -247,21 +254,22 @@
         @enderror
     </div>
     
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label>LCCN</label>
         <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn" value="{{$book->book_lccn}}" minlength="4" maxlength="50" required>
         @error('book_lccn')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-    <div class="form-group">
+    <div class="col-md-6">
         <label class="required">ISBN</label>
         <input class="form-control" type="text" name="book_isbn" id="book_isbn" value="{{$book->book_isbn}}" required>
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+                    </div>
     <div class="form-group">
         <div class="col2">
         <label class="required">Keyword</label>
@@ -315,14 +323,14 @@
         <input type="hidden" name="book_title" value="{{ $book->book_title }}">
     </div>
 
-    <div class="two-col">
-        <div class="col1">
+    <div class="row">
+        <div class="col-md-6">
             <label>Book Callnumber</label>
             <input class="form-control" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_callnumber" value="{{ $book->book_callnumber }}">
         </div>
 
-        <div class="col2">
+        <div class="col-md-6">
         <label>Barcode</label>
             <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode', $barcode) }}"  minlength="2" maxlength="7" readonly>
             @error('book_barcode')
@@ -330,14 +338,15 @@
         @enderror
         </div>
     </div>
-
+    <br>
     <div class="form-group">
         <label>Author</label>
         <input class="form-control" type="text" name="book_author" id="book_author" value="{{ $book->book_author }}" minlength="1" maxlength="60" readonly>
         <input type="hidden" name="book_author" value="{{ $book->book_author }}">
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label>Purchase Date</label>
         <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ $book->book_purchasedwhen}}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
         @error('book_purchasedwhen')
@@ -345,12 +354,13 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6">
         <label>Volume</label>
         <input class="form-control" type="text" name="book_volume" id="book_volume" value="{{ $book->book_volume }}" minlength="1" maxlength="60" readonly>
         <input type="hidden" name="book_volume" value="{{ $book->book_volume }}">
     </div>
-
+    </div>
+<br>
     <div class="form-group">
         <label>Sublocation</label>
         <input class="form-control" type="text" name="book_sublocation" id="book_sublocation" value="{{ $book->book_sublocation }}" readonly>
@@ -365,14 +375,14 @@
             <input class="form-control" type="text" name="book_copyrightyear" id="book_copyrightyear" value="{{ $book->book_copyrightyear }}" readonly>
             <input type="hidden" name="book_copyrightyear" id="book_copyrightyear" value="{{ $book->book_copyrightyear }}">
         </div>
-
+        <br>
         <div class="col2">
             <label>Edition</label>
             <input class="form-control" type="text" name="book_edition" id="book_edition" value="{{ $book->book_edition }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_edition" value="{{ $book->book_edition }}">
         </div>
     </div>
-
+    <br>
     <div class="form-group">
         <label>Subjects</label>
         <select class="js-responsive2" name="book_subject[]" id="book_subject2" multiple="multiple" style="width: 100%" hidden >
@@ -406,19 +416,19 @@
             <input type="hidden" name="book_publisher" value="{{ $book->book_publisher }}">
     </div>
 
-    <div class="two-col">
-        <div class="col1">
+    <div class="row">
+        <div class="col-md-6">
             <label>LCCN</label>
             <input class="form-control" type="text" name="book_lccn" id="book_lccn" value="{{ $book->book_lccn }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_lccn" value="{{ $book->book_lccn }}">
         </div>
-        <div class="col2">
+        <div class="col-md-6">
             <label>ISBN</label>
             <input class="form-control" type="text" name="book_isbn" id="book_isbn" value="{{ $book->book_isbn }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_isbn" value="{{ $book->book_isbn }}">
         </div>
     </div>
-
+<br>
     <div class="form-group">
         <div class="col2">
         <label>Keyword</label>

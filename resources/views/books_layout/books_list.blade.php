@@ -190,7 +190,7 @@
     </div>
 
     <div class="form-group">
-        <label>Action</label>
+        <label class="required">Action</label>
             <select class="form-control" name="action" id="action" required>
             <option value="">--Select Action--</option>
             <option value=1>Append</option>
@@ -201,8 +201,11 @@
             <span class="text-danger">{{$message}}</span>
             @enderror
     </div>
+    <div class="form-group">
+   <i>Textboxes marked with an asterisk are required.</i>
+</div>
             </div>
-            Textboxes marked with an asterisk are required.
+          
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-danger">Submit</button>
@@ -294,7 +297,8 @@
     </div>
 
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label class="required">Call Number</label>
         <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" minlength="4" maxlength="25" required>
         @error('book_callnumber')
@@ -303,14 +307,20 @@
     </div>
 
 
-    <div class="form-group">
-    <label class="required">Barcode</label>
-    <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
-    @error('book_barcode')
-        <span class="text-danger">{{$message}}</span>
-    @enderror
-
-    <button class="btn btn-primary" type="button" id="generateBarcodeBtn" onclick="generateBarcode()">Generate Barcode</button>
+    <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-9">
+        <label class="required">Barcode</label>
+        <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
+        @error('book_barcode')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+        </div>
+        <div class="col-md-1">
+        <button class="btn btn-primary" type="button" id="generateBarcodeBtn" onclick="generateBarcode()">Generate Barcode</button>
+      </div>
+</div>
+</div>
 </div>
 
     <div class="form-group">
@@ -321,7 +331,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label class="required">Purchase Date</label>
         <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen"  pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
         @error('book_purchasedwhen')
@@ -329,14 +340,14 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6">
         <label>Volume</label>
         <input class="form-control @error('book_volume') is-invalid @enderror" type="number" name="book_volume" id="book_volume"  pattern="\d*" minlength="1" maxlength="60">
         @error('book_volume')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+</div>
 
     <div class="form-group">
         <label class="required">Sublocation</label>
@@ -387,7 +398,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label>LCCN</label>
         <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13">
         @error('book_lccn')
@@ -395,14 +407,14 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6">
         <label class="required">ISBN</label>
         <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn"  minlength="10" maxlength="20" required>
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-    
+</div>
 
 
 <div class="form-group">

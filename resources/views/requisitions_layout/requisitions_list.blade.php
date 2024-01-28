@@ -313,7 +313,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label class="required">Number of Copies</label>
         <input class="form-control @error('copies') is-invalid @enderror" type="text" pattern="\d*" minlength="1" maxlength="3" name="copies" id="copies" value="{{$requisition->copies}}" required>
         @error('copies')
@@ -321,12 +322,13 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6">
         <label class="required">Material Type</label>
         <input class="form-control @error('material_type') is-invalid @enderror" type="text" name="material_type" id="material_type" value="{{$requisition->material_type}}" required>
         @error('material_type')
             <span class="text-danger">{{$message}}</span>
         @enderror
+    </div>
     </div>
 
     <div class="form-group">
@@ -345,7 +347,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label class="required">Publisher</label>
         <input class="form-control @error('publisher')is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{$requisition->publisher}}" minlength="2" maxlength="25" required>
         @error('publisher')
@@ -353,14 +356,14 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6">
         <label class="required">Edition/Year</label>
         <input class="form-control @error('edition') is-invalid @enderror" type="text" name="edition" id="edition" value="{{$requisition->edition}}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+    </div>
     <div class="form-group">
         <label class="required">Source</label>
         <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{$requisition->source}}" minlength="2" maxlength="25" required>
@@ -538,7 +541,8 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+        <div class="row">
+        <div class="col-md-6">
                   <label class="required">Number of Copies</label>
                   <input class="form-control @error('copies') is-invalid @enderror"  type="number" pattern="\d*" minlength="1" maxlength="3" name="copies" id="copies" value="{{ old('copies') }}" required>
                   @error('copies')
@@ -547,7 +551,7 @@
             </div>
 
 
-    <div class="form-group">
+            <div class="col-md-6">
       <label class="required" for="material_type">Material Type</label>
         <select class="form-control @error('material_type') is-invalid @enderror" name="material_type" id="material_type" required>
           <option value="">--Select Material Type--</option>
@@ -557,7 +561,7 @@
           <option value="DVDVCD">DVD/VCD</option>
           <option value="MapsGlobes">Maps/Globes</option>
         </select>
-
+        </div>
     </div>
   
     <div class="form-group">
@@ -576,7 +580,8 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
         <label class="required">Publisher</label>
         <input class="form-control @error('publisher') is-invalid @enderror" type="text" name="publisher" id="publisher" value="{{ old('publisher') }}"  minlength="2" maxlength="25" >
         @error('publisher')
@@ -584,14 +589,14 @@
         @enderror
     </div>
 
-    <div class="form-group">
+    <div class="col-md-6">
         <label class="required">Edition/Year</label>
         <input class="form-control @error('edition') is-invalid @enderror" type="text" name="edition" id="edition" value="{{ old('edition') }}" required>
         @error('edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+    </div>
     <div class="form-group">
         <label class="required">Source</label>
         <input class="form-control @error('source') is-invalid @enderror" type="text" name="source" id="source" value="{{ old('source') }}"  minlength="2" maxlength="25">
