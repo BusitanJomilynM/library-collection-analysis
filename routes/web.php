@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TrequestController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -134,9 +135,16 @@ Route::middleware(['auth', 'user-access:department representative'])->group(func
 //teacher
 Route::middleware(['auth', 'user-access:teacher'])->group(function () {
     Route::get('/teacher/home', [HomeController::class, 'teacherHome'])->name('teacher.home');
+
+    //course
     Route::resource('/courses', CourseController::class);
     Route::get('/courses/delete/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
     Route::get('/courses/update/{course}', [CourseController::class, 'update'])->name('courses.update');
+
+    //subjects
+    Route::resource('/subjects', SubjectController::class);
+    Route::get('/subjects/delete/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+    Route::get('/subjects/update/{subject}', [SubjectController::class, 'update'])->name('subjects.update');
    
 
 });

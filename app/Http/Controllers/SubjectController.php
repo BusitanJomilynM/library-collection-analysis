@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Subject;
+use App\Models\Course;
 
 class SubjectController extends Controller
 {
@@ -18,7 +19,13 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        $courses = Course::paginate(10);
+        $subjects = Subject::paginate(10);
+
+        
+            
+
+        return view('subjects_layout.subjects_list', ['subjects'=>$subjects, 'courses'=>$courses]);
     }
 
     /**
@@ -28,7 +35,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('subjects_layout.subjects_list');
     }
 
     /**
@@ -39,7 +46,13 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $data['subject_course'] = json_encode($request->subject_course);
+    
+        Subject::create($data);
+
+        return redirect()->route('subjects.index');
     }
 
     /**
@@ -61,7 +74,7 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('subjects_layout.subjects_list', compact('course'));
     }
 
     /**
@@ -71,9 +84,11 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Subject $subject)
     {
-        //
+        $subject->update($request->all()); 
+
+        return redirect()->route('subjects.index')->with('success','Subject successfully updated!');
     }
 
     /**
@@ -82,8 +97,10 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Subject $subject )
     {
-        //
+        $subject->delete();
+
+        return redirect()->route('courses.index')->with('success', 'Subject deleted!');
     }
 }

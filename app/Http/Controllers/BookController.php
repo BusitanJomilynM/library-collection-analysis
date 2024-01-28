@@ -11,6 +11,7 @@ use App\Models\Book;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Keyword;
+use App\Models\Subject;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Pagination\Paginator;
 //  use Barryvdh\DomPDF\Facade\Pdf;
@@ -41,6 +42,7 @@ class BookController extends Controller
     $user = Auth::user();
     $books = Book::paginate(10);
     $keywords = Keyword::all();
+    $subjects = Subject::all();
 
  
     // $barcode = $this->generateUniqueBarcode();
@@ -61,11 +63,14 @@ class BookController extends Controller
         } 
     
         else{
-        $books = Book::orderBy('book_title','asc')->paginate(10);
+        $books = DB::table('books')
+                  
+                    ->select('*', 'books.id as bookId' )
+                    ->paginate(10)->withQueryString();
         }
 
         // return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode, 'bookBarcode'=>$bookBarcode]);
-        return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'keywords'=>$keywords]);
+        return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'keywords'=>$keywords, 'subjects'=>$subjects]);
     }
     /**
      * Show the form for creating a new resource.
@@ -132,6 +137,8 @@ class BookController extends Controller
         $data['book_author'] = implode(', ', $authors);
 
         $data['book_keyword'] = json_encode($request->book_keyword);
+
+        $data['book_subject'] = json_encode($request->book_subject);
     
         Book::create($data);
     
@@ -254,7 +261,11 @@ class BookController extends Controller
     {
         $barcode = $this->generateUniqueBarcode();
             $user = Auth::user();
-            return view('books_layout.view_bookdetails', compact('book','user','barcode'));
+
+            $keywords = Keyword::all();
+            $subjects = Subject::all();
+            
+            return view('books_layout.view_bookdetails', compact('book','user','barcode', 'keywords', 'subjects'));
 
     }
 

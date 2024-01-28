@@ -306,11 +306,12 @@
 <label>Keyword</label>
       <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
       @foreach($keywords as $keyword)
-      <option value="{{$keyword->keyword}}">{{$keyword->keyword}}</option>
+      <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
       @endforeach
       </select>
     </div>
 </div>
+
     <div class="form-group">
         <label>Author</label>
         <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="150" required>
@@ -369,13 +370,16 @@
     </div>
 </div>
     <br>
-    <div class="form-group">
-        <label>Subject</label>
-        <input class="form-control @error('book_subject') is-invalid @enderror" type="text" name="book_subject" id="book_subject"  minlength="4" maxlength="50" required>
-        @error('book_subject')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+    <br>
+    <div class="col2">
+    <label>Keyword</label>
+      <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
+      @foreach($subjects as $subject)
+      <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+      @endforeach
+      </select>
     </div>
+
 
     <div class="form-group">
         <label>Published By</label>
@@ -388,7 +392,7 @@
 <div class="two-col">
     <div class="col1">
         <label>LCCN</label>
-        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13"
+        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13">
         @error('book_lccn')
             <span class="text-danger">{{$message}}</span>
         @enderror

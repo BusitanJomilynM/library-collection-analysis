@@ -31,11 +31,30 @@
         <br>
         <div class="form"><h5>Volume: {{ $book->book_volume}}</h5></div>
         <br>
-        <div class="form"><h5>Subjects: <?php
-                        $t = $book->book_subject;
-                        $a = explode(" ", $t);
-                        echo implode(", ", $a);
-                        ?></h5></div> 
+        <div class="form"><h5>Subjects:
+                    <?php  
+                    $x = $book->book_subject;
+                    $charactersToRemove = ['"', "[", "]"];
+                    $s = str_replace($charactersToRemove, "", $x);
+
+                    $words = explode(',', $s);
+
+                    $count = count($words);
+
+                    foreach ($subjects as $subject){
+                        foreach ($words as  $key => $word) {
+                            if( $word == $subject->id){
+                            echo $subject->subject_name;
+                            if ($key < $count - 1) {
+                                echo " ,";
+                              } 
+                            }
+                        }
+                    }   
+                   
+                        ?>
+                        
+                    </h5></div> 
                        
         </td>
         
@@ -55,12 +74,29 @@
         <br>
         <div class="form"><h5>ISBN: {{ $book->book_isbn}}</h5></div> 
         <br>
-        <div class="form"><h5>Keyword:<?php  
+        <div class="form"><h5>Keyword:
+                        <?php  
                         $x = $book->book_keyword;
                         $charactersToRemove = ['"', "[", "]"];
                         $s = str_replace($charactersToRemove, "", $x);
-                        echo $s;
-                        ?></h5></div> 
+
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($keywords as $keyword){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $keyword->id){
+                                echo $keyword->keyword;
+                                if ($key < $count - 1) {
+                                    echo " ,";
+                                  } 
+                                }
+                            }
+                        }
+                   
+                        ?>
+                        </h5></div> 
         </td>
 
         <tr> <td colspan="2" class="center"> <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>

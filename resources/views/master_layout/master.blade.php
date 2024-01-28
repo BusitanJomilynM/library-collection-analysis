@@ -203,7 +203,11 @@
                         </li> 
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('tags.index')}}">Subjects</a>
+                            <a class="nav-link" href="{{route('subjects.index')}}">Subjects</a>
+                        </li>  
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('courses.index')}}">Course</a>
                         </li>  
 
                         @else 

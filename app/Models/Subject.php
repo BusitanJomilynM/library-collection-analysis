@@ -14,4 +14,6 @@ class Subject extends Model
         'subject_name',
         'subject_course'
     ];
+
+    protected $table = 'subject';
 }

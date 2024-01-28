@@ -31,8 +31,7 @@ class Book extends Model
     protected $attributes = [
         'status' => '0'
     ];
-      
-        
 
+   
        
 }
