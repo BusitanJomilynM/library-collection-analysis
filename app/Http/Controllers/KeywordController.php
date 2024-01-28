@@ -12,6 +12,13 @@ use App\Models\Keyword;
 
 class KeywordController extends Controller
 {
+
+    public function __construct() 
+    { 
+        $this->middleware('preventBackHistory'); 
+        $this->middleware('auth'); 
+    
+    }
     /**
      * Display a listing of the resource.
      *

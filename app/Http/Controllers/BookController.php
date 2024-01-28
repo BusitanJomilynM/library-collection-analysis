@@ -254,7 +254,9 @@ class BookController extends Controller
             return redirect()->back();
         }
 
-        return view('books_layout.archived_books', ['archives'=>$archives,'user'=>$user]);
+        $subjects = Subject::all();
+
+        return view('books_layout.archived_books', ['archives'=>$archives,'user'=>$user, 'subjects'=>$subjects]);
 
     }
     public function view_bookdetails(Book $book)

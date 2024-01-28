@@ -133,7 +133,7 @@
        
 <div>
 
-<!-- Book Modal -->
+<!-- Edit Book Modal -->
 <div class="modal fade" id="editBookModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editBookModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -224,11 +224,17 @@
 
 
     <div class="form-group">
-        <label>Tags</label>
-        <input class="form-control @error('book_subject') is-invalid @enderror" type="text" name="book_subject" id="book_subject" value="{{$book->book_subject}}" minlength="4" maxlength="50" required>
-        @error('book_subject')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+        <label>Subjects</label>
+        <select class="js-responsive" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
+            @foreach($subjects as $subject)
+            <?php
+                   $selected = in_array($subject->id, json_decode($book->book_subject, true));
+               ?>
+               <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                   {{ $subject->subject_name }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <!--extension  -->
@@ -254,6 +260,25 @@
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
+    </div>
+
+    <div class="form-group">
+        <div class="col2">
+        <label>Keyword</label>
+            <select class="js-responsive" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
+                
+                <option value="{{$keyword->id}}"></option>
+                @foreach($keywords as $keyword)
+                <?php
+                   $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
+               ?>
+               <option value="{{$keyword->id}}" {{ $selected ? 'selected' : '' }}>
+               {{$keyword->keyword}}
+                </option>
+            @endforeach
+            </select>
+            </div>
+        </div>
     </div>
 
           <div class="modal-footer">
@@ -342,9 +367,29 @@
     </div>
 
     <div class="form-group">
-        <label>Tags</label>
-        <input class="form-control" type="text" name="book_subject" id="book_subject" value="{{ $book->book_subject }}" minlength="1" maxlength="60" readonly>
-            <input type="hidden" name="book_subject" value="{{ $book->book_subject }}">
+        <label>Subjects</label>
+        <select class="js-responsive2" name="book_subject[]" id="book_subject2" multiple="multiple" style="width: 100%" hidden >
+            @foreach($subjects as $subject)
+            <?php
+                $selected = in_array($subject->id, json_decode($book->book_subject, true));
+            ?>
+               <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                   {{ $subject->subject_name }}
+                </option>
+            @endforeach
+        </select>
+
+        <select class="js-responsive2" name="book_subject[]" id="book_subject2" multiple="multiple" style="width: 100%" disabled >
+            @foreach($subjects as $subject)
+            <?php
+                $selected = in_array($subject->id, json_decode($book->book_subject, true));
+            ?>
+               <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                   {{ $subject->subject_name }}
+                </option>
+            @endforeach
+        </select>
+      
     </div>
 
     
@@ -366,6 +411,38 @@
             <input type="hidden" name="book_isbn" value="{{ $book->book_isbn }}">
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="col2">
+        <label>Keyword</label>
+            <select class="js-responsive2" name="book_keyword[]" id="book_keyword2" multiple="multiple" style="width: 100%" hidden> 
+                <option value="{{$keyword->id}}"></option>
+                @foreach($keywords as $keyword)
+                <?php
+                   $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
+               ?>
+               <option value="{{$keyword->id}}" {{ $selected ? 'selected' : '' }}>
+               {{$keyword->keyword}}
+                </option>
+            @endforeach
+            </select>
+            <select class="js-responsive2" name="book_keyword[]" id="book_keyword2" multiple="multiple" style="width: 100%" disabled >
+                
+                <option value="{{$keyword->id}}"></option>
+                @foreach($keywords as $keyword)
+                <?php
+                   $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
+               ?>
+               <option value="{{$keyword->id}}" {{ $selected ? 'selected' : '' }}>
+               {{$keyword->keyword}}
+                </option>
+            @endforeach
+            </select>
+
+            
+            </div>
+        </div>
+  
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -516,8 +593,7 @@
     </div>
     </table>
 
-
-    <style>
+<style>
     table {
       width: 100%;
       border-collapse: collapse;
@@ -537,5 +613,30 @@
     td.center {
       text-align: center;
     }
-  </style>
+</style>
+
+<script>
+
+var placeholder = "Select Keyword";
+$(".mySelect-for").select2({
+    placeholder: placeholder,
+    allowClear: false,
+    minimumResultsForSearch: 5
+});
+
+$(".js-responsive").select2({
+    
+});
+
+$(".js-responsive2").select2({
+    
+});
+
+
+
+
+
+</script>
+
+
 @endsection

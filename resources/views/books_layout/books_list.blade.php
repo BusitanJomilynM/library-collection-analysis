@@ -121,7 +121,7 @@
   </tr>
   </tbody>
 
-  <!-- Suggest Subject Modal -->
+<!-- Suggest Subject Modal -->
 <div class="modal fade" id="createTagModal_{{$book->book_barcode}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="dcreateTagModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -164,16 +164,26 @@
     </div>
 
     <div class="form-group">
-    <label>Current Tags</label>
-    <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="book_subject" id="book_subject" value="{{($book->book_subject) }}" readonly>
+        <label>Subjects</label>
+        <select class="js-responsive" name="book_subject[]" id="book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+            @foreach($subjects as $subject)
+            <?php
+                   $selected = in_array($subject->id, json_decode($book->book_subject, true));
+               ?>
+               <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                   {{ $subject->subject_name }}
+                </option>
+            @endforeach
+        </select>
     </div>
     
     <div class="form-group">
         <label>Suggested Subject</label>
-        <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="suggest_book_subject" id="suggest_book_subject" value="{{ old('suggest_book_subject') }}" minlength="1" maxlength="60" required>
-        @error('suggest_book_subject')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+      <select class="js-responsive" name="suggest_book_subject" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+      @foreach($subjects as $subject)
+      <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+      @endforeach
+      </select>
     </div>
 
     <div class="form-group">
@@ -300,18 +310,6 @@
     <button class="btn btn-primary" type="button" id="generateBarcodeBtn" onclick="generateBarcode()">Generate Barcode</button>
 </div>
 
-<br>
-<div class="form-group">
-<div class="col2">
-<label>Keyword</label>
-      <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
-      @foreach($keywords as $keyword)
-      <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
-      @endforeach
-      </select>
-    </div>
-</div>
-
     <div class="form-group">
         <label>Author</label>
         <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="150" required>
@@ -370,9 +368,8 @@
     </div>
 </div>
     <br>
-    <br>
     <div class="col2">
-    <label>Keyword</label>
+    <label>Subject</label>
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
       <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
@@ -405,8 +402,21 @@
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
+    
 </div>
-            </div>
+<br>
+<div class="form-group">
+<div class="col2">
+<label>Keyword</label>
+      <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
+      @foreach($keywords as $keyword)
+      <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+      @endforeach
+      </select>
+    </div>
+</div>
+</div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-danger">Submit</button>
@@ -434,6 +444,17 @@ $(".mySelect").select2({
     allowClear: false,
     minimumResultsForSearch: 5
 });
+
+
+$(".js-responsive").select2({
+
+    
+    
+});
+
+
+
+
 
 </script>
 

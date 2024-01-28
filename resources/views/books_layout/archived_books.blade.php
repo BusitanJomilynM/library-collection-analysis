@@ -35,9 +35,29 @@
     <td>{{$archive->book_author}}</td>
     <td>{{$archive->book_copyrightyear}}</td>
     <td>{{$archive->book_sublocation}}</td>
-    <td><?php $t = $archive->book_subject;
-            $a = explode(" ", $t );
-            echo implode(", ", $a ); ?>
+    <td><?php 
+            
+           
+                    $x = $archive->book_subject;
+                    $charactersToRemove = ['"', "[", "]"];
+                    $s = str_replace($charactersToRemove, "", $x);
+
+                    $words = explode(',', $s);
+
+                    $count = count($words);
+
+                    foreach ($subjects as $subject){
+                        foreach ($words as  $key => $word) {
+                            if( $word == $subject->id){
+                            echo $subject->subject_name;
+                            if ($key < $count - 1) {
+                                echo " ,";
+                              } 
+                            }
+                        }
+                    }   ?>
+                   
+                      
     </td>
     <td>
     @if($archive->archive_reason == 1)  

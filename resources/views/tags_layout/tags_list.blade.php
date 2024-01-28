@@ -154,7 +154,8 @@
     </td>
   </tr>
   </tbody>
-  <!-- Modal -->
+
+  <!-- delete Modal -->
 <div class="modal fade" id="deleteUserModal_{{$tag->id}}" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="deleteUserModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">

@@ -108,12 +108,17 @@
         </div>
 
         <div class="form-group">
-        <label>Keyword</label>
-          <select class="mySelect for" name="subject_course[]" id="subject_course" multiple="multiple" value="{{$subject->subject_course}}" style="width: 100%"  required>
-            @foreach($courses as $key => $course)
-            <option value="{{$course->id}}" >{{$course->course_name}}</option>
+        <label>Course</label>
+          <select class="js-example-responsive" name="subject_course[]" id="subject_course" multiple="multiple" style="width: 100%">
+          @foreach($courses as $course)
+            <?php
+                   $selected = in_array($course->id, json_decode($subject->subject_course, true));
+               ?>
+               <option value="{{ $course->id }}" {{ $selected ? 'selected' : '' }}>
+                   {{ $course->course_name }}
+                </option>
             @endforeach
-          </select>
+        </select>
         </div>
 
           </div>
@@ -150,8 +155,8 @@
         </div>
 
         <div class="form-group">
-        <label>Keyword</label>
-          <select class="mySelect for" name="subject_course[]" id="subject_course" multiple="multiple" style="width: 100%" required>
+        <label>Course</label>
+          <select class="mySelect" name="subject_course[]" id="subject_course" multiple="multiple" style="width: 100%" required>
             @foreach($courses as $course)
             <option value="{{$course->id}}">{{$course->course_name}}</option>
             @endforeach
@@ -179,6 +184,9 @@ $(".mySelect").select2({
     minimumResultsForSearch: 5
 });
 
+$(".js-example-responsive").select2({
+    width: 'resolve' // need to override the changed default
+});
 
 </script>
 
