@@ -11,7 +11,7 @@
 
 <div class="three-col">
     <div class="col1">
-        <label>First Name</label>
+        <label class="required">First Name</label>
         <input class="form-control @error('first_name') is-invalid @enderror" type="text" name="first_name" id="first_name" value="{{$user->first_name}}" minlength="2" maxlength="30" readonly> 
         @error('first_name')
             <span class="text-danger">{{$message}}</span>
@@ -24,7 +24,7 @@
         </div>
 
     <div class="col3">
-        <label>Last Name</label>
+        <label class="required">Last Name</label>
         <input class="form-control @error('last_name') is-invalid @enderror" type="text" name="last_name" id="last_name" value="{{$user->last_name}}" minlength="2" maxlength="30" readonly>
         @error('last_name')
             <span class="text-danger">{{$message}}</span>
@@ -34,7 +34,7 @@
 <br>
 <div class="two-col">
     <div class="col1">
-        <label>ID Number</label>
+        <label class="required">ID Number</label>
         <input class="form-control @error('school_id') is-invalid @enderror" name="school_id" id="school_id" value="{{$user->school_id}}" type="text" pattern="\d*" minlength="8" maxlength="8" readonly>
         @error('school_id')
             <span class="text-danger">{{$message}}</span>
@@ -42,15 +42,16 @@
     </div>
 
     <div class="col2">
-        <label>Email</label>
+        <label class="required">Email</label>
         <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" id="email" value="{{$user->email}}">
         @error('email')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
 </div>
+<br>
     <div class="form-group">
-        <label>Contact Number</label>
+        <label class="required">Contact Number</label>
         <input class="form-control @error('contact_number') is-invalid @enderror" type="text" name="contact_number" id="contact_number" value="{{$user->contact_number}}" pattern="\d*" minlength="12" maxlength="12" placeholder="639XX-XXX-XXXX">
         @error('contact_number')
             <span class="text-danger">{{$message}}</span>

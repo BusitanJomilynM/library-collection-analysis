@@ -13,7 +13,7 @@ class StoreCourseRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,20 @@ class StoreCourseRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'course_code'=>'required|unique:course',
+            'course_name'=>'required|unique:course',
+            'course_department'=>'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return[
+            'course_code.required'=>'Fill out book Course Code',
+            'course_name.required'=>'Fill out book Course Description',
+            'course_code.unique'=>'Course with that code already exist',
+            'course_name.unique'=>'Course of that name already exist',
+            'course_department'=>'Fill out Department'
         ];
     }
 }

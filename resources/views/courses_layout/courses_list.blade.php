@@ -91,17 +91,23 @@
           {{ csrf_field() }}
 
           <div class="form-group">
-        <label>Course Name</label>
-        <input class="form-control" type="text" name="course_name" id="course_name" value="{{$course->course_name}}"required>
+        <label class="required">Course Name</label>
+        <input class="form-control @error('course_name') is-invalid @enderror" type="text" name="course_name" id="course_name" value="{{$course->course_name}}"required>
+        @error('course_name')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
         </div>
 
         <div class="form-group">
-        <label>Course Code</label>
-        <input class="form-control" type="text" name="course_code" id="course_code" value="{{$course->course_code}}" required>
+        <label class="required">Course Code</label>
+        <input class="form-control @error('course_code') is-invalid @enderror" type="text" name="course_code" id="course_code" value="{{$course->course_code}}" required>
+        @error('course_code')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
         </div>
 
         <div class="form-group">
-        <label>Department</label>
+        <label class="required">Department</label>
             <select class="form-control" name="course_department" id="course_department" value="{{$course->course_department}}" required> 
             <option value="SBAA" {{ old('course_department') == "SBAA" || $course->course_department == "SBAA" ? 'selected' : '' }}>SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD" {{ old('course_department') == "SOD" || $course->course_department == "SOD" ? 'selected' : '' }}>SOD - School of Dentistry</option>
@@ -143,17 +149,23 @@
           {{ csrf_field() }}
 
         <div class="form-group">
-        <label>Course Name</label>
-        <input class="form-control" type="text" name="course_name" id="course_name" required>
+        <label class="required">Course Name</label>
+        <input class="form-control  @error('course_name') is-invalid @enderror" type="text" name="course_name" id="course_name" required>
+        @error('course_name')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
         </div>
 
         <div class="form-group">
-        <label>Course Code</label>
-        <input class="form-control" type="text" name="course_code" id="course_code" required>
+        <label class="required">Course Code</label>
+        <input class="form-control  @error('course_code') is-invalid @enderror" type="text" name="course_code" id="course_code" required>
+        @error('course_code')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
         </div>
 
         <div class="form-group">
-        <label>Department</label>
+        <label class="required">Department</label>
             <select class="form-control" name="course_department" id="course_department" required>
             <option value="">--Select Department--</option>
             <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>

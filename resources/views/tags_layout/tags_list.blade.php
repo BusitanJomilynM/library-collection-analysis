@@ -364,7 +364,7 @@
     </div>
 
     <div class="form-group">
-        <label>Department</label>
+        <label class="required">Department</label>
             <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" value="{{$tag->department}}" required>
             <option value="SBAA" {{ old('department') == "SBAA" || $tag->department == "SBAA" ? 'selected' : '' }}>SBAA - School of Business Administration & Accountancy</option>
             <option value="SOD" {{ old('department') == "SOD" || $tag->department == "SOD" ? 'selected' : '' }}>SOD - School of Dentistry</option>
@@ -389,7 +389,7 @@
     </div>
     
     <div class="form-group">
-        <label>Suggested Subject</label>
+        <label class="required">Suggested Subject</label>
         <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="suggest_book_subject" id="suggest_book_subject" value="{{($tag->suggest_book_subject) }}" minlength="1" maxlength="60" required>
         @error('suggest_book_subject')
             <span class="text-danger">{{$message}}</span>

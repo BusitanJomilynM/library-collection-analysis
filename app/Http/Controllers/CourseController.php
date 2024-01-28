@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Course;
+use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
+
 
 class CourseController extends Controller
 {
@@ -54,7 +57,7 @@ class CourseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCourseRequest $request)
     {
         Course::create($request->all());
         return redirect()->route('courses.index');
@@ -89,7 +92,7 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(UpdateCourseRequest $request, Course $course)
     {
         $course->update($request->all()); 
 

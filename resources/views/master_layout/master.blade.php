@@ -47,6 +47,11 @@
   background-position: center center;
   background-attachment: fixed;
 }
+
+.required::after {
+        content: ' *';
+        color: red;
+      }
 </style>
     
 

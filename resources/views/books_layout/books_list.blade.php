@@ -142,7 +142,7 @@
     <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode }}" readonly> 
 </div>
     <div class="form-group">
-        <label>Department</label>
+        <label class="required">Department</label>
             <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
             <option value="">--Select Department--</option>
             <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
@@ -178,13 +178,13 @@
         
     </div>
 
-    
-    
     <div class="form-group">
-        <label>Suggested Subject</label>
+        <label class="required">Suggested Subjects</label>
       <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
-      <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+      @if($subject->id != $book->book_subject)
+      <option value="{{$subject->id}}">{{$subject->subject_name}}</option>\
+      @endif
       @endforeach
       </select>
     </div>
@@ -195,14 +195,14 @@
             <option value="">--Select Action--</option>
             <option value=1>Append</option>
             <option value=2>Replace</option>
-          
-            
+
             </select>
             @error('department')
             <span class="text-danger">{{$message}}</span>
             @enderror
     </div>
             </div>
+            Textboxes marked with an asterisk are required.
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-danger">Submit</button>
@@ -286,7 +286,7 @@
           <div class="modal-body">
             {{ csrf_field() }}
             <div class="form-group">
-        <label>Book Title</label>
+        <label class="required">Book Title</label>
         <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title"  minlength="1" maxlength="60" required>
         @error('book_title')
             <span class="text-danger">{{$message}}</span>
@@ -295,7 +295,7 @@
 
 
     <div class="form-group">
-        <label>Call Number</label>
+        <label class="required">Call Number</label>
         <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" minlength="4" maxlength="25" required>
         @error('book_callnumber')
             <span class="text-danger">{{$message}}</span>
@@ -304,7 +304,7 @@
 
 
     <div class="form-group">
-    <label>Barcode</label>
+    <label class="required">Barcode</label>
     <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
     @error('book_barcode')
         <span class="text-danger">{{$message}}</span>
@@ -314,7 +314,7 @@
 </div>
 
     <div class="form-group">
-        <label>Author</label>
+        <label class="required">Author</label>
         <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="150" required>
         @error('book_author')
             <span class="text-danger">{{$message}}</span>
@@ -322,7 +322,7 @@
     </div>
 
     <div class="form-group">
-        <label>Purchase Date</label>
+        <label class="required">Purchase Date</label>
         <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen"  pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
         @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
@@ -339,7 +339,7 @@
 
 
     <div class="form-group">
-        <label>Sublocation</label>
+        <label class="required">Sublocation</label>
             <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" required>
             <option value="">--Select Sublocation--</option>
             <option value="A Building">A Building</option>
@@ -352,7 +352,7 @@
     </div>
 
     <div class="form-group">
-        <label>Copyright Year</label>
+        <label class="required">Copyright Year</label>
             <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" required>
                 <option value="">--Select Year--</option>
                 @for($x=1980 ; $x <= 2030 ; $x++)
@@ -370,7 +370,7 @@
     </div>
 
     <div class="form-group">
-    <label>Subject</label>
+    <label class="required">Subject</label>
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
       <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
@@ -380,7 +380,7 @@
 
 
     <div class="form-group">
-        <label>Published By</label>
+        <label class="required">Published By</label>
         <input class="form-control @error('book_publisher') is-invalid @enderror" type="text" name="book_publisher" id="book_publisher"minlength="4" maxlength="50" required>
         @error('book_publisher')
             <span class="text-danger">{{$message}}</span>
@@ -396,7 +396,7 @@
     </div>
 
     <div class="form-group">
-        <label>ISBN</label>
+        <label class="required">ISBN</label>
         <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn"  minlength="10" maxlength="20" required>
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
@@ -407,15 +407,18 @@
 
 <div class="form-group">
 
-<label>Keyword</label>
+<label class="required">Keyword</label>
       <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
       @foreach($keywords as $keyword)
       <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
       @endforeach
       </select>
     </div>
-</div>
 
+    <div class="form-group">
+   <i>Textboxes marked with an asterisk are required.</i>
+</div>
+</div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

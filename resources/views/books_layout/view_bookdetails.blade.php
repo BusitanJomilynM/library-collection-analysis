@@ -145,7 +145,7 @@
           @csrf
     @method('PUT')
     <div class="form-group">
-        <label>Book Name</label>
+        <label class="required">Book Name</label>
         <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title" value="{{$book->book_title}}" minlength="1" maxlength="60" required>
         @error('book_title')
             <span class="text-danger">{{$message}}</span>
@@ -153,7 +153,7 @@
     </div>
 
     <div class="form-group">
-        <label>Call Number</label>
+        <label class="required">Call Number</label>
         <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" value="{{$book->book_callnumber}}" minlength="4" maxlength="25" required>
         @error('book_callnumber')
             <span class="text-danger">{{$message}}</span>
@@ -161,7 +161,7 @@
     </div>
 
     <div class="form-group">
-        <label>Bar Code</label>
+        <label class="required">Barcode</label>
         <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode}}" minlength="4" maxlength="25" required> 
         @error('book_barcode')
             <span class="text-danger">{{$message}}</span>
@@ -169,7 +169,7 @@
     </div>
 
     <div class="form-group">
-        <label>Author</label>
+        <label class="required">Author</label>
         <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author" value="{{$book->book_author}}" minlength="2" maxlength="40" required>
         @error('book_author')
             <span class="text-danger">{{$message}}</span>
@@ -177,7 +177,7 @@
     </div>
 
     <div class="form-group">
-        <label>Purchase Date</label>
+        <label class="required">Purchase Date</label>
         <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{$book->book_purchasedwhen}}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
         @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
@@ -186,14 +186,14 @@
 
     <div class="form-group">
         <label>Volume</label>
-        <input class="form-control @error('book_volume') is-invalid @enderror" type="text" name="book_volume" id="book_volume" value="{{$book->book_volume}}" minlength="2" maxlength="40" required>
+        <input class="form-control @error('book_volume') is-invalid @enderror" type="text" name="book_volume" id="book_volume" value="{{$book->book_volume}}" minlength="2" maxlength="40">
         @error('book_volume')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
 
     <div class="form-group">
-        <label>Sublocation</label>
+        <label class="required">Sublocation</label>
             <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" value="{{$book->book_sublocation}}" required>
             <option value="A Building" {{ old('book_sublocation') == "A Building" || $book->book_sublocation == "A Building" ? 'selected' : '' }}>A Building</option>
             <option value="F Building" {{ old('book_sublocation') == "F Building" || $book->book_sublocation == "F Building" ? 'selected' : '' }}>F Building</option>
@@ -205,7 +205,7 @@
     </div>
 
     <div class="form-group">
-        <label>Copyright Year</label>
+        <label class="required">Copyright Year</label>
             <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" value="{{ old('book_copyrightyear') }}" required>
                 <option value="">--Select Year--</option>
                 @for($x=1980 ; $x <= 2030 ; $x++)
@@ -216,7 +216,7 @@
 
 <div class="form-group">
         <label>Edition</label>
-        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{$book->book_edition}}" minlength="4" maxlength="50" required>
+        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition" value="{{$book->book_edition}}" minlength="4" maxlength="50">
         @error('book_edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -224,7 +224,7 @@
 
 
     <div class="form-group">
-        <label>Subjects</label>
+        <label class="required">Subjects</label>
         <select class="js-responsive" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
             @foreach($subjects as $subject)
             <?php
@@ -240,7 +240,7 @@
     <!--extension  -->
 
     <div class="form-group">
-        <label>Published By</label>
+        <label class="required">Published By</label>
         <input class="form-control" type="text" name="book_publisher" id="book_publisher" value="{{$book->book_publisher}}" required>
         @error('book_publisher')
             <span class="text-danger">{{$message}}</span>
@@ -255,7 +255,7 @@
         @enderror
     </div>
     <div class="form-group">
-        <label>ISBN</label>
+        <label class="required">ISBN</label>
         <input class="form-control" type="text" name="book_isbn" id="book_isbn" value="{{$book->book_isbn}}" required>
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
@@ -264,7 +264,7 @@
 
     <div class="form-group">
         <div class="col2">
-        <label>Keyword</label>
+        <label class="required">Keyword</label>
             <select class="js-responsive" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
                 
                 <option value="{{$keyword->id}}"></option>
@@ -279,7 +279,14 @@
             </select>
             </div>
         </div>
+
+        <div class="form-group">
+        <i>Textboxes marked with an asterisk are required.</i>
+        </div>
     </div>
+
+    
+    
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
