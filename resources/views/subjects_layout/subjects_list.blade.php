@@ -99,12 +99,12 @@
         
           <div class="form-group">
         <label>Subject Description</label>
-        <input class="form-control" type="text" name="subject_name" id="subject_name" required>
+        <input class="form-control" type="text" name="subject_name" id="subject_name" value="{{$subject->subject_name}}" required>
         </div>
 
         <div class="form-group">
         <label>Subject Code</label>
-        <input class="form-control" type="text" name="subject_code" id="subject_code" required>
+        <input class="form-control" type="text" name="subject_code" id="subject_code" value="{{$subject->subject_code}}" required>
         </div>
 
         <div class="form-group">
