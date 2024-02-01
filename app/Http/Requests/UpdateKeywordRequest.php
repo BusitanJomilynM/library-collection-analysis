@@ -13,7 +13,7 @@ class UpdateKeywordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class UpdateKeywordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'keyword'=>'required|unique:keyword,keyword,'
+        ];
+    }
+
+    public function messages()
+    {
+        return[
+            'keyword.unique'=>'Keyword with that name already exist',
         ];
     }
 }
