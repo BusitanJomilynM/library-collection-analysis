@@ -87,7 +87,29 @@ class BookController extends Controller
             // return view('books_layout.books_list', ['barcode'=>$barcode]);
             $barcode = null;
 
-        
+            // $book_subject1 = is_array($request->input('book_subject')) ? implode(',', $request->input('book_subject')) : ($request->input('book_subject') ?? '');
+            // $book_keyword1 = is_array($request->input('book_keyword')) ? implode(',', $request->input('book_keyword')) : ($request->input('book_keyword') ?? '');            // Save to the database
+            // $book = new Book();
+            
+            // // Do not save individual arrays, save the comma-separated strings
+            // $book->book_subject = $book_subject1;
+            // $book->book_keyword = $book_keyword1;
+            
+            // $book->book_callnumber = $request->input('book_callnumber');
+            // $book->book_barcode = $request->input('book_barcode');
+            // $book->book_title = $request->input('book_title');
+            // $book->book_author = $request->input('book_author');
+            // $book->book_sublocation = $request->input('book_sublocation');
+            // $book->book_volume = $request->input('book_volume');
+            // $book->book_publisher = $request->input('book_publisher');
+            // $book->book_purchasedwhen = $request->input('book_purchasedwhen');
+            // $book->book_lccn = $request->input('book_lccn');
+            // $book->book_isbn = $request->input('book_isbn');
+            // $book->book_edition = $request->input('book_edition');
+
+
+
+            // $book->save();
             
             return view('books_layout.books_list', compact('barcode'));
         } else {
@@ -149,13 +171,8 @@ class BookController extends Controller
         // if (is_array($data['book_keyword'])) {
         //     $data['book_keyword'] = implode(', ', array_map('trim', $data['book_keyword']));
         // }
-
-        // $data['book_keyword'] = json_encode($request->book_keyword);
-
-        // $data['book_subject'] = json_encode($request->book_subject);
         $data['book_subject'] = implode(',', $request->book_subject);
         $data['book_keyword'] = implode(',', $request->book_keyword);
-
 
     
         Book::create($data);
@@ -322,9 +339,9 @@ class BookController extends Controller
         $course_name = $request->input('course');
         $subjectName = $request->input('subject');
         $subject_name = $request->input('subject_name');
-        $keyword = $request->input('keyword');
+        $keyword = $request->input('keyword', []);
         $callNumberPrefix = $request->input('callNumberPrefix');
-
+        $callNumberPrefixes = explode(',', $callNumberPrefix);
         // Retrieve course code based on the entered course name
         $course = Course::where('course_name', $course_name)->first();
         $course_code = $course ? $course->course_code : null;
@@ -332,33 +349,36 @@ class BookController extends Controller
         // Retrieve subject code based on the entered subject name
         $subject = Subject::where('subject_name', $subjectName)->first();
         $subject_code = $subject ? $subject->subject_code : null;
+        
 
-        $filteredBooks = $books->filter(function ($book) use ($subject_name, $keyword) {
-            // Assuming $book->book_subject and $book->book_keyword are JSON strings
-            $bookSubjectJson = $book->book_subject;
-            $bookKeywordJson = $book->book_keyword;
-        
-            // Convert JSON strings to PHP arrays
-            $bookSubjectArray = json_decode($bookSubjectJson, true);
-            $bookKeywordArray = json_decode($bookKeywordJson, true);
-        
-            // Extract values from arrays (assuming they have specific keys)
-            $bookSubject = isset($bookSubjectArray['subject_name']) ? $bookSubjectArray['subject_name'] : '';
-            $bookKeyword = isset($bookKeywordArray['keyword']) ? $bookKeywordArray['keyword'] : '';
+        $filteredBooks = $books->filter(function ($book) use ($subject_name, $keywords, $callNumberPrefixes) {
+            // Extract values directly (assuming they are strings)
+            $bookSubject = $book->book_subject;
+            $bookKeywords = $book->book_keyword;
+            $bookCallNumber = $book->book_callnumber;
+
         
             // Compare with user-input values
             $subjectMatch = $bookSubject === $subject_name;
-            $keywordMatch = $bookKeyword === $keyword;
         
-            // Return true if either subject or keyword match user-input values
-            return $subjectMatch || $keywordMatch;
+            // Convert the comma or space-separated keywords string to an array
+            $bookKeywordsArray = preg_split('/[\s,]+/', $bookKeywords);
+        
+            $callNumberMatch = false;
+            foreach ($callNumberPrefixes as $prefix) {
+                if (str_starts_with($bookCallNumber, $prefix)) {
+                    $callNumberMatch = true;
+                    break;
+                }
+            }
+            // Check if either subject or keyword matches user-input values
+            return ($subjectMatch || $bookKeywordsArray) && $callNumberMatch;
         });
-        
         
         
         $bookStats = [];
         
-        $anyBookMatches = false; // Flag to track if any book matches the criteria
+        $anyBookMatches = $filteredBooks->isNotEmpty(); // Flag to track if any book matches the criteria
         
         foreach ($filteredBooks as $book) {
             $callNumber = $book->book_callnumber;
@@ -366,7 +386,7 @@ class BookController extends Controller
             if (!isset($bookStats[$callNumber])) {
                 $bookStats[$callNumber] = [
                     'title' => $book->book_title,
-                    'call_number' => $book->book_callnumber,
+                    'call_number' => $book->book_callnumber,            
                     'author' => $book->book_author,
                     'totalCopies' => 1,
                     'totalVolumes' => $book->volumes,
@@ -462,10 +482,9 @@ class BookController extends Controller
                     return $book['volume'] > 0;
                 });
             }
-        
             $totalCopyCount = array_sum(array_column($resultData, 'copy_count'));
             $totalVolume = $showVolume ? array_sum(array_column($resultData, 'volume')) : null;
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'totalCopyCount', 'totalVolume','course_name','subjectName','course_code','subject_code','bookStats' ))->setPaper('a4', 'portrait');
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'totalCopyCount', 'totalVolume','course_name','subjectName','course_code','subject_code','bookStats', 'filteredBooks' ))->setPaper('a4', 'portrait');
             return $pdf->stream('book_report.pdf');
             
 }
