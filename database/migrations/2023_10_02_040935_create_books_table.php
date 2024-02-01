@@ -32,7 +32,9 @@ return new class extends Migration
             $table->string('book_edition')->nullable();
             $table->integer('status');
             $table->integer('archive_reason')->nullable();
-        });
+                    });
+
+        
     }
 
     /**

@@ -2,8 +2,6 @@
 
 @section('Title', 'Generate Booklist')
 @section('content')
-<h2 style="text-align: center;">Generate Booklist</h2>
-
 <div class="panel panel-default">
     @if (session('success'))
         <div class="alert alert-success alert-dismissible">
@@ -13,47 +11,110 @@
     @endif
 </div>
 
-<div class="row justify-content-center">
-            <div class="col-md-6" style="background-color: white; black: white; padding: 20px;">
 
+
+<div class="row justify-content-center">
+            <div class="col-md-6 bg-white p-4">
 <!-- booklist_pdf.blade.php -->
 <form method="GET" action="{{ route('booklist_pdf') }}">
     @csrf
-    <label for="pdfTitle">Title:</label>
-    <input type="text" id="pdfTitle" name="pdfTitle" placeholder="Enter PDF title">
-    <br>
-    <label for="courseCode">Course Code:</label>
-    <input type="text" id="courseCode" name="courseCode" placeholder="Enter course code">
-    <br>
-    <label for="courseDescription">Course Description:</label>
-    <textarea id="courseDescription" name="courseDescription" placeholder="Enter course description"></textarea>
-    <br>
+    <div class="form-group">
+        <label class="required">Course</label>
+        <input list="courseList" name="course" id="course" class="form-control" required>
+        <datalist id="courseList">
+            <option value="" selected disabled>Select Course</option>
+            @foreach($courses as $course)
+                <option value="{{$course->course_name}}">
+            @endforeach
+        </datalist>
+    </div>
+    <div class="form-group">
+    <label for="callNumberPrefix">Classifications</label>
+    <input list="callNumberPrefixList" name="callNumberPrefix" id="callNumberPrefix" class="form-control" style="font-size: 16px;">
+    <datalist id="callNumberPrefixList">
+        <option value="">-- Subject Header--</option>
+        <option value="COM">COM</option>
+        <option value="EDUC">EDUC</option>
+        <option value="ENG">ENG</option>
+        <option value="LAHS">LAHS</option>
+        <option value="GRAD">GRAD</option>
+        <option value="THES">THES</option>
+        <option value="CD">CD</option>
+        <option value="FIC">FIC</option>
+        <option value="LAW">LAW</option>
+        <option value="REL">REL</option>
+        <option value="AMS">AMS</option>
+        <option value="ARCH">ARCH</option>
+        <option value="FIL">FIL</option>
+        <option value="CRIM">CRIM</option>
+        <option value="ITHM">IHTM</option>
+        <option value="THES">THES</option>
+        <option value="PER">PER</option>
+        <option value="SEF">SEF</option>
+        <option value="SR">SR</option>
+    </datalist>
+</div>
 
-    <label for="booktitle">
-        <input type="checkbox" id="booktitle" name="booktitle"> Book Title
-    </label>
-    <br>
-    <label for="bookcallnumber">
-        <input type="checkbox" id="bookcallnumber" name="bookcallnumber"> Book Callnumber
-    </label>
-    <br>
-    <label for="bookauthor">
-        <input type="checkbox" id="bookauthor" name="bookauthor"> Author
-    </label>
-    <!-- <br>
-    <label for="bookcopyrightyear">
-        <input type="checkbox" id="bookcopyrightyear" name="bookcopyrightyear"> Copyright Year
-    </label> -->
-    <br>
-    <label for="copy">
-        <input type="checkbox" id="copy" name="copy"> Number of Copies
-    </label>
-    <br> 
-    <label for="volume">
-        <input type="checkbox" id="volume" name="volume"> Volume
-    </label>
-    <br>
-    <p>Filters:</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required">Subject</label>
+                        <input list="subjectList" name="subject" id="subject" class="form-control" required>
+                        <datalist id="subjectList">
+                            <option value="" selected disabled>Select Subject</option>
+                            @foreach($subjects as $subject)
+                                <option value="{{$subject->subject_name}}">
+                            @endforeach
+                        </datalist>
+                </div>
+            </div>
+            <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Keyword</label>
+                        <input list="keywordList" name="keyword" id="keyword" class="form-control"  multiple>
+                        <datalist id="keywordList">
+                            <option value="" selected disabled>Select Keyword</option>
+                            @foreach($keywords as $keyword)
+                                <option value="{{$keyword->keyword}}">
+                            @endforeach
+                        </datalist>
+                    </div>
+    </div>
+</div>
+
+
+
+    <!-- <div class="form-group">
+    <label>Fields to Include:</label>
+    <div class="form-check">
+        <input type="checkbox" id="booktitle" name="booktitle" class="form-check-input">
+        <label for="booktitle" class="form-check-label" style="font-size: 14px;"> Book Title</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" id="bookcallnumber" name="bookcallnumber" class="form-check-input">
+        <label for="bookcallnumber" class="form-check-label" style="font-size: 14px;"> Book Callnumber</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" id="bookauthor" name="bookauthor" class="form-check-input">
+        <label for="bookauthor" class="form-check-label" style="font-size: 14px;"> Author</label>
+    </div>
+
+    Add similar form-check elements for other checkboxes 
+
+    <div class="form-check">
+        <input type="checkbox" id="copy" name="copy" class="form-check-input">
+        <label for="copy" class="form-check-label" style="font-size: 14px;"> Number of Copies</label>
+    </div>
+
+    <div class="form-check">
+        <input type="checkbox" id="volume" name="volume" class="form-check-input">
+        <label for="volume" class="form-check-label" style="font-size: 14px;"> Volume</label>
+    </div>
+</div>  
+ -->
+    <!-- <p>Filters:</p>
     <label for="includeYearRange">
         <input type="checkbox" id="includeYearRange" name="includeYearRange"> Include Year Range
     </label>
@@ -67,35 +128,7 @@
         <input type="checkbox" id="subject" name="subject"> Subject
     </label>
     <input type="text" id="subjectText" name="subjectText" placeholder="Enter subject">
-    <br>
-
-
-    <label for="callNumberPrefix">
-        <select id="callNumberPrefix" name="callNumberPrefix">
-            <option value="">-- Filter by Subject Head --</option>
-            <option value="COM">COM</option>
-            <option value="EDUC">EDUC</option>
-            <option value="ENG">ENG</option>
-            <option value="LAHS">LAHS</option>
-            <option value="GRAD">GRAD</option>
-            <option value="THES">THES</option>
-            <option value="CD">CD</option>
-            <option value="FIC">FIC</option>
-            <option value="LAW">LAW</option>
-            <option value="REL">REL</option>
-            <option value="AMS">AMS</option>
-            <option value="ARCH">ARCH</option>
-            <option value="FIL">FIL</option>
-            <option value="CRIM">CRIM</option>
-            <option value="ITHM">IHTM</option>
-            <option value="THES">THES</option>
-            <option value="PER">PER</option>
-            <option value="SEF">SEF</option>
-            <option value="SR">SR</option>
-
-        </select>
-    </label>
-
+    <br> -->
 
 
     <div class="form-group text-center">

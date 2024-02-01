@@ -28,7 +28,7 @@
 <!-- <a class="btn btn-primary" href="{{ route('books.create') }}" ><span>&#43;</span> Add Book</a> -->
 
 <a data-toggle="modal" class="btn btn-primary" data-target="#createBookModal"><span>&#43;</span></i> Add New Book</a>
-<a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Collection Analysis</a>
+<!-- <a class="btn btn-danger" href="{{ route('booklist_pdf') }}">Collection Analysis</a> -->
 <!-- <a class="btn btn-danger" href="{{ route('collection_analysis') }}">Collection Analysis</a> -->
 
 <br><br>
@@ -384,7 +384,7 @@
     <label class="required">Subject</label>
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
-      <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+      <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
       @endforeach
       </select>
     </div>
@@ -422,7 +422,7 @@
 <label class="required">Keyword</label>
       <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
       @foreach($keywords as $keyword)
-      <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+      <option value="{{$keyword->keyword}}">{{$keyword->keyword}}</option>
       @endforeach
       </select>
     </div>

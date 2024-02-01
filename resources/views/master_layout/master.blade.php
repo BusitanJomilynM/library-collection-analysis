@@ -122,13 +122,17 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subejct Suggestions</a>
+                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
                                     </a>
                                 </div>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('keywords.index')}}">Keywords</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('booklist_pdf')}}">Reports</a>
                         </li>
 
                       

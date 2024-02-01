@@ -17,6 +17,7 @@ class Book extends Model
         'book_copyrightyear',
         'book_sublocation',
         'book_subject',
+        'book_keyword',
         'book_volume',
         'book_publisher',
         'book_purchasedwhen',
@@ -24,9 +25,8 @@ class Book extends Model
         'book_isbn',
         'book_edition',
         'status',
-        'archive_reason',
-        'book_keyword'
-    ];
+        'archive_reason'
+        ];
 
     protected $attributes = [
         'status' => '0'
