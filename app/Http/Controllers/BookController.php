@@ -150,11 +150,13 @@ class BookController extends Controller
         //     $data['book_keyword'] = implode(', ', array_map('trim', $data['book_keyword']));
         // }
 
-        $data['book_keyword'] = json_encode($request->book_keyword);
+        // $data['book_keyword'] = json_encode($request->book_keyword);
 
-        $data['book_subject'] = json_encode($request->book_subject);
+        // $data['book_subject'] = json_encode($request->book_subject);
+        $data['book_subject'] = implode(',', $request->book_subject);
+        $data['book_keyword'] = implode(',', $request->book_keyword);
 
-       
+
     
         Book::create($data);
     
@@ -348,9 +350,10 @@ class BookController extends Controller
             $subjectMatch = $bookSubject === $subject_name;
             $keywordMatch = $bookKeyword === $keyword;
         
-            // Return true if both subject and keyword match user-input values
-            return $subjectMatch && $keywordMatch;
+            // Return true if either subject or keyword match user-input values
+            return $subjectMatch || $keywordMatch;
         });
+        
         
         
         $bookStats = [];
