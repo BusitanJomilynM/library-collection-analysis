@@ -13,7 +13,7 @@ class StoreKeywordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class StoreKeywordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'keyword'=>'keyword|unique:keyword',
+        ];
+    }
+
+    public function messages()
+    {
+        return[
+            'keyword.required'=>'Keyword is required'
         ];
     }
 }

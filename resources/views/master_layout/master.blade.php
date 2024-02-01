@@ -208,7 +208,7 @@
                         <!-- teacher -->
                         @elseif(Auth::user()->type == 'teacher')
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('representative.home')}}">Home</a>
+                            <a class="nav-link" href="{{route('teacher.home')}}">Home</a>
                         </li>
 
                         <li class="nav-item">

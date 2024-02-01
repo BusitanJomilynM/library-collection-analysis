@@ -24,8 +24,8 @@ class UpdateCourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'course_code'=>'required|unique:course',
-            'course_name'=>'required|unique:course',
+            'course_code'=>'required|unique:course,course_code,'.$this->course->id,
+            'course_name'=>'required|unique:course,course_name,'.$this->course->id,
             'course_department'=>'required'
         ];
     }

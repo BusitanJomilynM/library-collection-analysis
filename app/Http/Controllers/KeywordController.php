@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB; 
 use App\Models\Keyword;
-
+use App\Http\Requests\StoreKeywordRequest;
+use App\Http\Requests\UpdateKeywordRequest;
 
 class KeywordController extends Controller
 {
@@ -53,7 +54,7 @@ class KeywordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreKeywordRequest $request)
     {
         Keyword::create($request->all());
         return redirect()->route('keywords.index');
@@ -76,7 +77,7 @@ class KeywordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Keyword $keyword)
     {
         return view('keywords_layout.keywords_list', compact('keyword'));
     }
@@ -88,7 +89,7 @@ class KeywordController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Keyword $keyword)
+    public function update(UpdateKeywordRequest $request, Keyword $keyword)
     {
         $keyword->update($request->all()); 
 

@@ -29,8 +29,15 @@ class Book extends Model
         ];
 
     protected $attributes = [
-        'status' => '0'
+        'status' => '0',
+    
+    
     ];
+
+    // Mutator method to set the value
+    
+
+   
 
    
        

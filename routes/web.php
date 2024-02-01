@@ -140,11 +140,13 @@ Route::middleware(['auth', 'user-access:teacher'])->group(function () {
     Route::resource('/courses', CourseController::class);
     Route::get('/courses/delete/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
     Route::get('/courses/update/{course}', [CourseController::class, 'update'])->name('courses.update');
+    Route::get('courses/edit/{course}', [CourseController::class, 'edit'])->name('courses.edit');
 
     //subjects
     Route::resource('/subjects', SubjectController::class);
     Route::get('/subjects/delete/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
     Route::get('/subjects/update/{subject}', [SubjectController::class, 'update'])->name('subjects.update');
+    Route::get('subjects/edit/{subject}', [SubjectController::class, 'edit'])->name('subjects.edit');
    
 
 });

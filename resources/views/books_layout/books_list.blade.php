@@ -131,11 +131,11 @@
       <form action="{{ route('tags.store') }}" method="POST">
           <div class="modal-body">
           @csrf
-          <div class="form-group">
-        <label>Requested By</label>
+   
+       
         <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
-        <input class="form-control" type="string" value="{{$user->first_name}} {{$user->middle_name}} {{$user->last_name}}" readonly>
-    </div>
+ 
+ 
 
 <div class="form-group">
     <label>Barcode</label>
@@ -182,9 +182,14 @@
         <label class="required">Suggested Subjects</label>
       <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
-      @if($subject->id != $book->book_subject)
-      <option value="{{$subject->id}}">{{$subject->subject_name}}</option>\
-      @endif
+      <?php $subjs = json_decode($book->book_subject, true);
+      if ($subjs !== null) {
+        foreach ($subjs as $subj) {
+          if ($subj != $subject->id){
+            echo '<option value="'.$subject->id.'">'.$subject->subject_name.'</option>'; 
+        }
+    }  } ?>
+
       @endforeach
       </select>
     </div>
@@ -353,9 +358,9 @@
         <label class="required">Sublocation</label>
             <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" required>
             <option value="">--Select Sublocation--</option>
-            <option value="A Building">A Building</option>
-            <option value="F Building">F Building</option>
-            <option value="H Building">H Building</option>
+            <option value="A Building">Main Library - A Building</option>
+            <option value="F Building">Centennial Library - F Building</option>
+            <option value="H Building">FGB Library - H Building</option>
             </select>
             @error('book_sublocation')
             <span class="text-danger">{{$message}}</span>
@@ -381,8 +386,9 @@
     </div>
 
     <div class="form-group">
-    <label class="required">Subject</label>
+    <label>Subject</label>
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
+      <option value="0">--NO SUBJECT--</option>
       @foreach($subjects as $subject)
       <option value="{{$subject->subject_name}}">{{$subject->subject_name}}</option>
       @endforeach

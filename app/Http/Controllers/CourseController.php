@@ -80,7 +80,7 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Course $course)
     {
         return view('courses_layout.courses_list', compact('course'));
     }

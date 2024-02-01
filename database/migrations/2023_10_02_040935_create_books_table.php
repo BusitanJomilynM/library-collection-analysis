@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('book_author');
             $table->integer('book_copyrightyear');
             $table->string('book_sublocation');
-            $table->string('book_subject');
+            $table->string('book_subject')->nullable();
             $table->string('book_keyword');
             $table->string('book_publisher');
             $table->date('book_purchasedwhen');

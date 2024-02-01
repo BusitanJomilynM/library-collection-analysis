@@ -87,29 +87,7 @@ class BookController extends Controller
             // return view('books_layout.books_list', ['barcode'=>$barcode]);
             $barcode = null;
 
-            // $book_subject1 = is_array($request->input('book_subject')) ? implode(',', $request->input('book_subject')) : ($request->input('book_subject') ?? '');
-            // $book_keyword1 = is_array($request->input('book_keyword')) ? implode(',', $request->input('book_keyword')) : ($request->input('book_keyword') ?? '');            // Save to the database
-            // $book = new Book();
-            
-            // // Do not save individual arrays, save the comma-separated strings
-            // $book->book_subject = $book_subject1;
-            // $book->book_keyword = $book_keyword1;
-            
-            // $book->book_callnumber = $request->input('book_callnumber');
-            // $book->book_barcode = $request->input('book_barcode');
-            // $book->book_title = $request->input('book_title');
-            // $book->book_author = $request->input('book_author');
-            // $book->book_sublocation = $request->input('book_sublocation');
-            // $book->book_volume = $request->input('book_volume');
-            // $book->book_publisher = $request->input('book_publisher');
-            // $book->book_purchasedwhen = $request->input('book_purchasedwhen');
-            // $book->book_lccn = $request->input('book_lccn');
-            // $book->book_isbn = $request->input('book_isbn');
-            // $book->book_edition = $request->input('book_edition');
-
-
-
-            // $book->save();
+        
             
             return view('books_layout.books_list', compact('barcode'));
         } else {
@@ -175,6 +153,8 @@ class BookController extends Controller
         $data['book_keyword'] = json_encode($request->book_keyword);
 
         $data['book_subject'] = json_encode($request->book_subject);
+
+       
     
         Book::create($data);
     
