@@ -16,7 +16,8 @@
 <div class="row justify-content-center">
             <div class="col-md-6 bg-white p-4">
 <!-- booklist_pdf.blade.php -->
-<form method="GET" action="{{ route('booklist_pdf') }}">
+<!-- <form method="GET" action="{{ route('booklist_pdf') }}"> -->
+    <form method="GET" action="{{ route('process_form')}}">
     @csrf
     <div class="form-group">
         <label class="required">Course</label>
@@ -82,58 +83,64 @@
     </div>
 </div>
 
+ <!-- Add button to dynamically add subject and keyword fields -->
+ <!-- <div class="form-group text-center">
+                <button type="button" class="btn btn-success" onclick="addFields()">Add</button>
+            </div>
+
+            <div id="dynamicFieldsContainer"></div>
 
 
-    <!-- <div class="form-group">
-    <label>Fields to Include:</label>
-    <div class="form-check">
-        <input type="checkbox" id="booktitle" name="booktitle" class="form-check-input">
-        <label for="booktitle" class="form-check-label" style="font-size: 14px;"> Book Title</label>
+        </form>
     </div>
+</div>
 
-    <div class="form-check">
-        <input type="checkbox" id="bookcallnumber" name="bookcallnumber" class="form-check-input">
-        <label for="bookcallnumber" class="form-check-label" style="font-size: 14px;"> Book Callnumber</label>
-    </div>
+<script>
+    function addFields() {
+        var container = document.getElementById("dynamicFieldsContainer");
 
-    <div class="form-check">
-        <input type="checkbox" id="bookauthor" name="bookauthor" class="form-check-input">
-        <label for="bookauthor" class="form-check-label" style="font-size: 14px;"> Author</label>
-    </div>
+        var newRow = document.createElement("div");
+        newRow.className = "row";
 
-    Add similar form-check elements for other checkboxes 
+        var newSubjectCol = document.createElement("div");
+        newSubjectCol.className = "col-md-6";
+        var newSubjectGroup = document.createElement("div");
+        newSubjectGroup.className = "form-group";
+        var newSubjectInput = document.createElement("input");
+        newSubjectInput.type = "text";
+        newSubjectInput.name = "dynamic_subject[]"; // Use an array for dynamic subjects
+        newSubjectInput.placeholder = "Enter subject";
+        newSubjectInput.className = "form-control";
+        newSubjectGroup.appendChild(newSubjectInput);
+        newSubjectCol.appendChild(newSubjectGroup);
+        newRow.appendChild(newSubjectCol);
 
-    <div class="form-check">
-        <input type="checkbox" id="copy" name="copy" class="form-check-input">
-        <label for="copy" class="form-check-label" style="font-size: 14px;"> Number of Copies</label>
-    </div>
+        var newKeywordCol = document.createElement("div");
+        newKeywordCol.className = "col-md-6";
+        var newKeywordGroup = document.createElement("div");
+        newKeywordGroup.className = "form-group";
+        var newKeywordInput = document.createElement("input");
+        newKeywordInput.type = "text";
+        newKeywordInput.name = "dynamic_keyword[]"; // Use an array for dynamic keywords
+        newKeywordInput.placeholder = "Enter keyword";
+        newKeywordInput.className = "form-control";
+        newKeywordGroup.appendChild(newKeywordInput);
+        newKeywordCol.appendChild(newKeywordGroup);
+        newRow.appendChild(newKeywordCol);
 
-    <div class="form-check">
-        <input type="checkbox" id="volume" name="volume" class="form-check-input">
-        <label for="volume" class="form-check-label" style="font-size: 14px;"> Volume</label>
-    </div>
-</div>  
+        container.appendChild(newRow);
+    }
+</script>
+
  -->
-    <!-- <p>Filters:</p>
-    <label for="includeYearRange">
-        <input type="checkbox" id="includeYearRange" name="includeYearRange"> Include Year Range
-    </label>
-    <label for="startYear">Start Year:</label>
-    <input type="text" id="startYear" name="startYear" placeholder="Enter start year">
-
-    <label for="endYear">End Year:</label>
-    <input type="text" id="endYear" name="endYear" placeholder="Enter end year">
-    <br>
-    <label for="subject">
-        <input type="checkbox" id="subject" name="subject"> Subject
-    </label>
-    <input type="text" id="subjectText" name="subjectText" placeholder="Enter subject">
-    <br> -->
 
 
-    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary">Generate Booklist</button>
-                    </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary" name="action" value="booklist_pdf">Generate Booklist PDF</button>
+                    <button type="submit" class="btn btn-primary" name="action" value="collection_analysis">Generate Collection Analysis</button>
+                </div>                    
+            </div>
                 </form>
             </div>
         </div>
