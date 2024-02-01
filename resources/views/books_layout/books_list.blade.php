@@ -182,18 +182,14 @@
         <label class="required">Suggested Subjects</label>
       <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
       @foreach($subjects as $subject)
-      <?php $numbers = json_decode($book->book_subject, true);
-      if ($numbers !== null) {
-        foreach ($numbers as $number) {
-          if ($number != $subject->id){
+      <?php $subjs = json_decode($book->book_subject, true);
+      if ($subjs !== null) {
+        foreach ($subjs as $subj) {
+          if ($subj != $subject->id){
             echo '<option value="'.$subject->id.'">'.$subject->subject_name.'</option>'; 
         }
     }  } ?>
-      
-    
-        
 
-  
       @endforeach
       </select>
     </div>
@@ -362,9 +358,9 @@
         <label class="required">Sublocation</label>
             <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" required>
             <option value="">--Select Sublocation--</option>
-            <option value="A Building">A Building</option>
-            <option value="F Building">F Building</option>
-            <option value="H Building">H Building</option>
+            <option value="A Building">Main Library - A Building</option>
+            <option value="F Building">Centennial Library - F Building</option>
+            <option value="H Building">FGB Library - H Building</option>
             </select>
             @error('book_sublocation')
             <span class="text-danger">{{$message}}</span>
@@ -392,7 +388,7 @@
     <div class="form-group">
     <label>Subject</label>
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
-      <option value='["0"]'>--NO SUBJECT--</option>
+      <option value="0">--NO SUBJECT--</option>
       @foreach($subjects as $subject)
       <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
       @endforeach
