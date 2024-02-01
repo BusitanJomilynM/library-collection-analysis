@@ -84,6 +84,8 @@ class BookController extends Controller
             // $barcode = $this->generateUniqueBarcode();
             // return view('books_layout.books_list', ['barcode'=>$barcode]);
             $barcode = null;
+
+        
             
             return view('books_layout.books_list', compact('barcode'));
         } else {
@@ -139,6 +141,8 @@ class BookController extends Controller
         $data['book_keyword'] = json_encode($request->book_keyword);
 
         $data['book_subject'] = json_encode($request->book_subject);
+
+       
     
         Book::create($data);
     

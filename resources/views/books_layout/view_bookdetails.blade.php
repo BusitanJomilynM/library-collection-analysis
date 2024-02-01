@@ -234,9 +234,9 @@
         <label class="required">Subjects</label>
         <select class="js-responsive" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
             @foreach($subjects as $subject)
-            <?php
+                <?php
                    $selected = in_array($subject->id, json_decode($book->book_subject, true));
-               ?>
+                ?>
                <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
                    {{ $subject->subject_name }}
                 </option>

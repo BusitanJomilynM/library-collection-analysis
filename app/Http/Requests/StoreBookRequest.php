@@ -30,7 +30,7 @@ class StoreBookRequest extends FormRequest
             'book_author'=>'required',
             'book_copyrightyear'=>'required',
             'book_sublocation'=>'required',
-            'book_subject'=>'required',
+            // 'book_subject'=>'required',
             // 'book_edition'=>'required',
             // 'book_volume'=>'required',
             'book_purchasedwhen'=>'required',
