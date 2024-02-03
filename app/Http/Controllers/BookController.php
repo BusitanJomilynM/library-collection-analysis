@@ -988,7 +988,7 @@ class BookController extends Controller
                     }
                     $totalCopyCount = array_sum(array_column($resultData, 'copy_count'));
                     $totalVolume = $showVolume ? array_sum(array_column($resultData, 'volume')) : null;
-                    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'totalCopyCount', 'totalVolume','course_name','subjectName','course_code','subject_code','bookStats', 'filteredBooks' ))->setPaper('a4', 'landscape');
+                    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.collection_analysis', compact('user', 'totalCopyCount', 'totalVolume','course_name','subjectName','course_code','subject_code','bookStats', 'filteredBooks' ))->setPaper('a4', 'landscape');
                     return $pdf->stream('book_report.pdf');
                     
         }

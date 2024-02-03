@@ -85,50 +85,81 @@
 <div style="margin: 20px auto; text-align: center;">
     <table border="1" cellspacing="0" cellpadding="5" align= center>
         <thead>
+        @php
+            $currentYear = now()->year;
+            $previousYear = $currentYear - 1;
+            $anpreviousYear = $previousYear - 1; 
+            $anopreviousYear = $anpreviousYear - 1; 
+            $anotpreviousYear = $anopreviousYear - 1; 
+            $anothpreviousYear = $anotpreviousYear - 1; 
+        @endphp
         <tr align="center">
-                <th colspan="1">{{$subject_code}}</th>
-                <th colspan="4">{{$subjectName}}</th>
+                <th style="font-size: 18px; width: 20px;" colspan="1">Subject Code</th>
+                <th style="font-size: 18px; width: 20px;" colspan="6">Subject Description</th>
+                <th style="font-size: 18px; width: 20px;" colspan="8">{{$currentYear}}</th>
+                <th style="font-size: 18px; width: 20px;" colspan="8">{{$previousYear}}</th>
+                <th style="font-size: 18px; width: 20px;" colspan="8">{{$anpreviousYear}}</th>
+                <th style="font-size: 18px; width: 20px;" colspan="8">{{$anopreviousYear}}</th>
+                <th style="font-size: 18px; width: 20px;" colspan="8">{{$anotpreviousYear}}</th>
+                <th style="font-size: 18px; width: 20px;" colspan="8">{{$anothpreviousYear}} & Below</th>
+                <th style="font-size: 18px; width: 20px;" colspan="8">Total</th>
             </tr>
             <tr align="center">
 
-                    <th>Title</th>
+                    <th></th>
                     @php
                         $headerColspan++;
                     @endphp
-                    <th>Call Number</th>
+                    <th></th>
                     @php
                         $headerColspan++;
                     @endphp
-                    <th>Author</th>
+                    <th></th>
                     @php
                         $headerColspan++;
                     @endphp
                     @php
                         $headerColspan++;
-                    @endphp
-                    <th>Total Copies</th>
-                    <th>Volume</th>
+                    @endphp 
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Cop.</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Vol.</th>                    
+                    @php
+                        $headerColspan++;
+                    @endphp 
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Cop.</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Vol.</th>                    
+                    @php
+                        $headerColspan++;
+                    @endphp 
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Cop.</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Vol.</th>                    
+                    @php
+                        $headerColspan++;
+                    @endphp 
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Cop.</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Vol.</th>                    
+                    @php
+                        $headerColspan++;
+                    @endphp 
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Cop.</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Vol.</th>                    
+                    @php
+                        $headerColspan++;
+                    @endphp 
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Cop.</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Vol.</th>                    
+                    @php
+                        $headerColspan++;
+                    @endphp 
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Cop.</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="{{ $headerColspan }}">Vol.</th>                    
             </tr>
         </thead>
         <tbody>
-        @php
-                $totalCopies1 = 0;
-                $totalVolume1 = 0;
-            @endphp
+
             @forelse($bookStats as $book)
                 <tr align="center">
-                        <td>{{$book['title']}}</td>
-                        <td>{{$book['call_number']}}</td>
-                        <td>{{$book['author']}}</td>
-                        <td>{{$book['totalCopies']}}</td>
-                        @php
-                        $totalCopies1 += $book['totalCopies'];
-                        @endphp
-                   
-                        <td>{{$book['totalVolumes']}}</td>
-                        @php
-                        $totalVolume1 += $book['totalVolumes'];
-                    @endphp
+
                     @php
                         $pageNumber++;
                     @endphp
@@ -139,11 +170,6 @@
                     <td colspan="{{ $headerColspan + 1 }}">No data available</td>
                 </tr>
             @endforelse
-            <tr align="center">
-                <td colspan="3">Total</td>
-                    <td>{{$totalCopies1}}</td>
-                    <td>{{$totalVolume1}}</td>
-            </tr>
         </tbody>
     </table> <br>
     <div style="text-align: left; margin-top: 10px;">
