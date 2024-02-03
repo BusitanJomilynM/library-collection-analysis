@@ -171,8 +171,11 @@ class BookController extends Controller
         // if (is_array($data['book_keyword'])) {
         //     $data['book_keyword'] = implode(', ', array_map('trim', $data['book_keyword']));
         // }
-        $data['book_subject'] = implode(',', $request->book_subject);
-        $data['book_keyword'] = implode(',', $request->book_keyword);
+        // $data['book_subject'] = implode(',', $request->book_subject);
+        // $data['book_keyword'] = implode(',', $request->book_keyword);
+
+        $data['book_subject'] = json_encode($request->book_subject);
+        $data['book_keyword'] = json_encode($request->book_keyword);
 
     
         Book::create($data);
