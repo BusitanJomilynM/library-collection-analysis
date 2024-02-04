@@ -101,7 +101,7 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::get('/keywords/delete/{keyword}', [KeywordController::class, 'destroy'])->name('keywords.destroy');
     Route::get('/keywords/update/{keyword}', [KeywordController::class, 'update'])->name('keywords.update');
     
-    Route::get('/process_form', [BookController::class, 'processForm'])->name('process_form');
+    // Route::get('/process_form', [BookController::class, 'processForm'])->name('process_form');
 // Route::get('/process_form', 'BookController@processForm')->name('process_form');
 
     

@@ -16,8 +16,7 @@
 <div class="row justify-content-center">
             <div class="col-md-6 bg-white p-4">
 <!-- booklist_pdf.blade.php -->
-<!-- <form method="GET" action="{{ route('booklist_pdf') }}"> -->
-    <form method="GET" action="{{ route('process_form')}}">
+ <form method="GET" action="{{ route('booklist_pdf') }}">
     @csrf
     <div class="form-group">
         <label class="required">Course</label>
@@ -137,9 +136,7 @@
 
 
                 <div class="form-group text-center">
-                    <button type="submit" class="btn btn-primary" name="action" value="booklist_pdf">Generate Booklist PDF</button>
-                    <button type="submit" class="btn btn-primary" name="action" value="collection_analysis">Generate Collection Analysis</button>
-                </div>                    
+                <button type="submit" class="btn btn-primary">Generate Booklist</button>                </div>                    
             </div>
                 </form>
             </div>
