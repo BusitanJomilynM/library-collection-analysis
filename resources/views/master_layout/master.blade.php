@@ -127,9 +127,9 @@
                                 </div>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="{{route('keywords.index')}}">Keywords</a>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('booklist_pdf')}}">Reports</a>

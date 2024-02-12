@@ -1,5 +1,5 @@
 @extends('master_layout.master')
-
+@section('scripts')
 @section('Title', 'Generate Booklist')
 @section('content')
 <div class="panel panel-default">
@@ -82,64 +82,53 @@
     </div>
 </div>
 
- <!-- Add button to dynamically add subject and keyword fields -->
- <!-- <div class="form-group text-center">
-                <button type="button" class="btn btn-success" onclick="addFields()">Add</button>
-            </div>
-
-            <div id="dynamicFieldsContainer"></div>
-
-
-        </form>
-    </div>
-</div>
+<div id="dynamicFieldsContainer"></div>
 
 <script>
     function addFields() {
-        var container = document.getElementById("dynamicFieldsContainer");
+        var container = document.getElementById('dynamicFieldsContainer');
+        var newFieldSet = document.createElement('div');
+        newFieldSet.className = 'row';
 
-        var newRow = document.createElement("div");
-        newRow.className = "row";
+        // Subject Field
+        var subjectField = document.createElement('div');
+        subjectField.className = 'col-md-6';
+        subjectField.innerHTML = '<div class="form-group">' +
+            '<label class="required">Subject</label>' +
+            '<input list="subjectList" name="subjects" class="form-control" required>' +
+            '<datalist id="subjectList">' +
+            '<option value="" selected disabled>Select Subject</option>' +
+            '@foreach($subjects as $subject)' +
+            '<option value="{{$subject->subject_name}}">' +
+            '@endforeach' +
+            '</datalist>' +
+            '</div>';
+        newFieldSet.appendChild(subjectField);
 
-        var newSubjectCol = document.createElement("div");
-        newSubjectCol.className = "col-md-6";
-        var newSubjectGroup = document.createElement("div");
-        newSubjectGroup.className = "form-group";
-        var newSubjectInput = document.createElement("input");
-        newSubjectInput.type = "text";
-        newSubjectInput.name = "dynamic_subject[]"; // Use an array for dynamic subjects
-        newSubjectInput.placeholder = "Enter subject";
-        newSubjectInput.className = "form-control";
-        newSubjectGroup.appendChild(newSubjectInput);
-        newSubjectCol.appendChild(newSubjectGroup);
-        newRow.appendChild(newSubjectCol);
+        // Keyword Field
+        var keywordField = document.createElement('div');
+        keywordField.className = 'col-md-6';
+        keywordField.innerHTML = '<div class="form-group">' +
+            '<label>Keyword</label>' +
+            '<input list="keywordList" name="keywords" class="form-control" multiple>' +
+            '<datalist id="keywordList">' +
+            '<option value="" selected disabled>Select Keyword</option>' +
+            '@foreach($keywords as $keyword)' +
+            '<option value="{{$keyword->keyword}}">' +
+            '@endforeach' +
+            '</datalist>' +
+            '</div>';
+        newFieldSet.appendChild(keywordField);
 
-        var newKeywordCol = document.createElement("div");
-        newKeywordCol.className = "col-md-6";
-        var newKeywordGroup = document.createElement("div");
-        newKeywordGroup.className = "form-group";
-        var newKeywordInput = document.createElement("input");
-        newKeywordInput.type = "text";
-        newKeywordInput.name = "dynamic_keyword[]"; // Use an array for dynamic keywords
-        newKeywordInput.placeholder = "Enter keyword";
-        newKeywordInput.className = "form-control";
-        newKeywordGroup.appendChild(newKeywordInput);
-        newKeywordCol.appendChild(newKeywordGroup);
-        newRow.appendChild(newKeywordCol);
-
-        container.appendChild(newRow);
+        container.appendChild(newFieldSet);
     }
-</script>
+</script>                    <div class="form-group text-center">
+                    <button type="button" class="btn btn-success" onclick="addFields()">Add</button>
 
- -->
-
-
-
-                <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Generate Booklist</button>                </div>                    
             </div>
                 </form>
             </div>
         </div>
     </div>
-@endsection
+@endsection 

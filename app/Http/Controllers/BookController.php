@@ -340,10 +340,13 @@ class BookController extends Controller
 
         $course_name = $request->input('course');
         $subjectName = $request->input('subject');
-        $subject_name = $request->input('subject_name');
         $keyword = $request->input('keyword');
         $callNumberPrefix = $request->input('callNumberPrefix');
+
         $callNumberPrefixes = explode(',', $callNumberPrefix);
+        $keywordss = preg_split('/[,\s]+/', $keyword);
+        //  dd($keywordss);
+
     
         // Retrieve course code based on the entered course name
         $course = Course::where('course_name', $course_name)->first();
@@ -353,22 +356,42 @@ class BookController extends Controller
         $subject = Subject::where('subject_name', $subjectName)->first();
         $subject_code = $subject ? $subject->subject_code : null;
 
-        $filteredBooks = $books->filter(function ($book) use ($subjectName, $keyword, $callNumberPrefixes) {
+        $filteredBooks = $books->filter(function ($book) use ($subjectName, $keywordss, $callNumberPrefixes) {
             $jsonSubject = $book->book_subject;
             $jsonKeyword = $book->book_keyword;
+        
             // Decode the JSON strings into arrays
             $subjectArray = json_decode($jsonSubject);
-
-            $decodedSubject = implode(', ', $subjectArray);
-
             $keywordArray = json_decode($jsonKeyword, true);
-
+        
+            $decodedSubject = implode(', ', $subjectArray);
             $decodedKeyword = implode(', ', $keywordArray);
-
+        
+            // Check if subject matches
             $subjectMatch = in_array($subjectName, $subjectArray);
-            $keywordMatch = in_array($keyword, $keywordArray);
-            return $subjectMatch || $keywordMatch;        
+        
+            // Check if any exploded keyword values match any keyword values in the book
+            $keywordMatch = false;
+            foreach ($keywordss as $word) {
+                if (in_array($word, $keywordArray)) {
+                    $keywordMatch = true;
+                    break;
+                }
+            }
+        
+            // Check if call number matches any prefixes
+            $callNumberMatch = false;
+            foreach ($callNumberPrefixes as $prefix) {
+                if (str_starts_with($book->book_callnumber, $prefix)) {
+                    $callNumberMatch = true;
+                    break;
+                }
+            }
+        
+            // Check if either subject or keyword matches user-input values
+            return ($subjectMatch || $keywordMatch) && $callNumberMatch;
         });
+        
                                 
         $bookStats = [];
 
@@ -390,8 +413,9 @@ class BookController extends Controller
                 $bookStats[$callNumber]['totalVolumes'] += $book->book_volume;
             }
         }
+        $subjectGroups = $filteredBooks->groupBy('book_subject');
     
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'subjectName', 'course_code', 'subject_code', 'bookStats', 'filteredBooks'))->setPaper('a4', 'portrait');
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'subjectName', 'course_code', 'subject_code', 'bookStats', 'filteredBooks','subjectGroups'))->setPaper('a4', 'portrait');
             return $pdf->stream('book_report.pdf');
     }
     else {

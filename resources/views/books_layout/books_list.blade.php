@@ -314,18 +314,18 @@
 
     <div class="col-md-6">
     <div class="row">
-      <div class="col-md-9">
-        <label class="required">Barcode</label>
-        <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
-        @error('book_barcode')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+        <div class="col-md-9">
+            <label class="required">Barcode</label>
+            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
+            @error('book_barcode')
+                <span class="text-danger">{{$message}}</span>
+            @enderror
         </div>
-        <div class="col-md-1">
-        <button class="btn btn-primary" type="button" id="generateBarcodeBtn" onclick="generateBarcode()">Generate Barcode</button>
-      </div>
-</div>
-</div>
+        <div class="col-md-3">
+            <!-- Button to generate a barcode -->
+            <button class="btn btn-primary" id="generateBarcodeButton">Generate Barcode</button>
+        </div>
+    </div>
 </div>
 
     <div class="form-group">
@@ -473,10 +473,27 @@ $(".js-responsive").select2({
     
 });
 
+</script>
 
+<script>
+    // Function to generate a random barcode
+    function generateBarcode() {
+        var barcode = 'T' + Math.floor(10000 + Math.random() * 90000); // Generate a random number between 10000 and 99999
 
+        // Check if the generated barcode already exists in the input field
+        var barcodeInput = document.getElementById("book_barcode");
+        while (barcodeInput.value === barcode) {
+            barcode = 'T' + Math.floor(10000 + Math.random() * 90000); // Regenerate barcode until it's unique
+        }
 
+        return barcode;
+    }
 
+    // Event listener for the button click
+    document.getElementById("generateBarcodeButton").addEventListener("click", function() {
+        var barcodeInput = document.getElementById("book_barcode");
+        barcodeInput.value = generateBarcode();
+    });
 </script>
 
 <style> 

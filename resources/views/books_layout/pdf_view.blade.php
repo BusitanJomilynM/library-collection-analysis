@@ -82,70 +82,70 @@
         <p class="another-another-another-paragraph">As of {{ \Carbon\Carbon::now()->format('F Y') }}</p>
     </div>
     
-<div style="margin: 20px auto; text-align: center;">
-    <table border="1" cellspacing="0" cellpadding="5" align= center>
-        <thead>
-        <tr align="center">
-                <th colspan="1">{{$subject_code}}</th>
-                <th colspan="4">{{$subjectName}}</th>
-            </tr>
-            <tr align="center">
-
-                    <th>Title</th>
+    @if ($filteredBooks->isNotEmpty())
+    @foreach ($subjectGroups as $subject => $books)
+        <div style="margin: 20px auto; text-align: center;">
+            <table border="1" cellspacing="0" cellpadding="5" align="center">
+                <!-- Table header -->
+                <thead>
+                    <tr align="center">
+                        <th colspan="1">{{$subject_code}}</th>
+                        <th colspan="4">{{$subjectName}}</th>
+                    </tr>
+                    <tr align="center">
+                        <th>Title</th>
+                        <th>Call Number</th>
+                        <th>Author</th>
+                        <th>Total Copies</th>
+                        <th>Volume</th>
+                    </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
                     @php
-                        $headerColspan++;
+                        $totalCopies1 = 0;
+                        $totalVolume1 = 0;
                     @endphp
-                    <th>Call Number</th>
-                    @php
-                        $headerColspan++;
-                    @endphp
-                    <th>Author</th>
-                    @php
-                        $headerColspan++;
-                    @endphp
-                    @php
-                        $headerColspan++;
-                    @endphp
-                    <th>Total Copies</th>
-                    <th>Volume</th>
-            </tr>
-        </thead>
-        <tbody>
-        @php
-                $totalCopies1 = 0;
-                $totalVolume1 = 0;
-            @endphp
-            @forelse($bookStats as $book)
-                <tr align="center">
-                        <td>{{$book['title']}}</td>
-                        <td>{{$book['call_number']}}</td>
-                        <td>{{$book['author']}}</td>
-                        <td>{{$book['totalCopies']}}</td>
+                    @forelse ($bookStats as $book)
+                        <tr align="center">
+                            <td>{{$book['title']}}</td>
+                            <td>{{$book['call_number']}}</td>
+                            <td>{{$book['author']}}</td>
+                            <td>{{$book['totalCopies']}}</td>
+                            @php
+                                $totalCopies1 += $book['totalCopies'];
+                            @endphp
+                            <td>{{$book['totalVolumes']}}</td>
+                            @php
+                                $totalVolume1 += $book['totalVolumes'];
+                            @endphp
+                        </tr>
                         @php
-                        $totalCopies1 += $book['totalCopies'];
+                            $pageNumber++;
                         @endphp
-                   
-                        <td>{{$book['totalVolumes']}}</td>
-                        @php
-                        $totalVolume1 += $book['totalVolumes'];
-                    @endphp
-                    @php
-                        $pageNumber++;
-                    @endphp
+                    @empty
+                        <tr>
+                            <td colspan="5">No data available</td>
+                        </tr>
+                    @endforelse
+                    <!-- Total row -->
+                    <tr align="center">
+                        <td colspan="3">Total</td>
+                        <td>{{$totalCopies1}}</td>
+                        <td>{{$totalVolume1}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+        </div>
+    @endforeach
 
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="{{ $headerColspan + 1 }}">No data available</td>
-                </tr>
-            @endforelse
-            <tr align="center">
-                <td colspan="3">Total</td>
-                    <td>{{$totalCopies1}}</td>
-                    <td>{{$totalVolume1}}</td>
-            </tr>
-        </tbody>
-    </table> <br>
+    <!-- Add your second table here if needed -->
+@else
+    <p>No data available</p>
+@endif
+
+
     <div style="text-align: left; margin-top: 10px;">
     Prepared by: <br>
     {{$user->last_name}} {{$user->first_name}}  {{$user->middle_name}}<br>
