@@ -337,257 +337,98 @@ class BookController extends Controller
         $keywords = Keyword::all(); 
         $books = Book::all();    
         $user = Auth::user();
-
-
-        $course_name = $request->input('course');
-        $subjectName = $request->input('subject');
-        $keyword = $request->input('keyword');
-        $callNumberPrefix = $request->input('callNumberPrefix');
-         $subject_name = $request->input('subject_name');
-
-        $callNumberPrefixes = explode(',', $callNumberPrefix);
-        $keywordss = preg_split('/,/', $keyword);
-        //   dd($keywordss);
-
     
-        // Retrieve course code based on the entered course name
+        $course_name = $request->input('course');
+        $callNumberPrefixes = explode(',', $request->input('callNumberPrefix'));
+    
+        $subjectNamesList = [];
+        $subjectCodesList = []; 
+        $keywordsList = [];
+    
+        $setCount = 1;
+        while ($request->has("subject_$setCount") && $request->has("keyword_$setCount")) {
+            $subjectNames = $request->input("subject_$setCount");
+            
+            $subject = Subject::where('subject_name', $subjectNames)->first();
+            if ($subject) {
+                $subjectNamesList[] = $subjectNames;
+                $subjectCodesList[] = $subject->subject_code; // Store subject code
+                $keywordsList[] = $request->input("keyword_$setCount");
+            }
+            
+            $setCount++;
+        }
+    
         $course = Course::where('course_name', $course_name)->first();
         $course_code = $course ? $course->course_code : null;
     
-        // Retrieve subject code based on the entered subject name
-        $subject = Subject::where('subject_name', $subjectName)->first();
-        $subject_code = $subject ? $subject->subject_code : null;
-
-        $filteredBooks = $books->filter(function ($book) use ($subjectName, $keywordss, $callNumberPrefixes) {
+        $filteredBooks = collect();
+    
+        foreach ($books as $book) {
             $jsonSubject = $book->book_subject;
-            $jsonKeyword = $book->book_keyword;
-        
-            // Decode the JSON strings into arrays
             $subjectArray = json_decode($jsonSubject, true);
+            $jsonKeyword = $book->book_keyword;
             $keywordArray = json_decode($jsonKeyword, true);
-        // dd($keywordArray);
-            // Check if subject matches
-            $subjectMatch = in_array($subjectName, $subjectArray);
-        
-            // Check if any exploded keyword values match any keyword values in the book
-            $keywordMatch = false;
-            foreach ($keywordss as $word) {
-                if (in_array($word, $keywordArray)) {
-                    $keywordMatch = true;
-                    break;
+            
+            // Check if any subject name provided by the user matches any subject in the book
+            foreach ($subjectNamesList as $subjectNames) {
+                if (in_array($subjectNames, $subjectArray)) {
+                    $filteredBooks->push($book);
+                    break; // Once a match is found, break the loop for this book
                 }
             }
-        
-            // Check if call number matches any prefixes
-            $callNumberMatch = false;
-            foreach ($callNumberPrefixes as $prefix) {
-                if (str_starts_with($book->book_callnumber, $prefix)) {
-                    $callNumberMatch = true;
-                    break;
+            
+            // Check if any keyword provided by the user matches any keyword in the book
+            foreach ($keywordsList as $keywords) {
+                $keywords = preg_split('/,/', $keywords);
+                foreach ($keywords as $keyword) {
+                    if (in_array($keyword, $keywordArray)) {
+                        $filteredBooks->push($book);
+                        break 2; // Break both inner and outer loop once a match is found
+                    }
                 }
             }
+        }
         
-            // Check if either subject or keyword matches user-input values
-            return ($subjectMatch || $keywordMatch) && $callNumberMatch;
-        });
-                        
-                                
+        // Remove duplicates from filtered books
+        $filteredBooks = $filteredBooks->unique('id');
+    
         $bookStats = [];
-
-        
-        if ($filteredBooks->isNotEmpty()) {
+    
         foreach ($filteredBooks as $book) {
             $callNumber = $book->book_callnumber;
     
             if (!isset($bookStats[$callNumber])) {
                 $bookStats[$callNumber] = [
                     'title' => $book->book_title,
-                    'call_number' => $book->book_callnumber,            
+                    'call_number' => $book->book_callnumber,
                     'author' => $book->book_author,
                     'totalCopies' => 1,
-                    'totalVolumes' => $book->volumes,
+                    'totalVolumes' => $book->book_volume ? 1 : 0, 
                 ];
             } else {
                 $bookStats[$callNumber]['totalCopies'] += 1;
-                $bookStats[$callNumber]['totalVolumes'] += $book->book_volume;
+                if ($book->book_volume) {
+                    $bookStats[$callNumber]['totalVolumes'] += 1;
+                }
             }
         }
-        $subjectGroups = $filteredBooks->groupBy('book_subject');
     
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'subjectName', 'course_code', 'subject_code', 'bookStats', 'filteredBooks','subjectGroups'))->setPaper('a4', 'portrait');
+        // Group filtered books by subject
+        $subjectGroups = $filteredBooks->groupBy(function ($item) {
+            return $item->keyword_1 . '_' . $item->subject_1;
+        });
+        
+    
+        if ($filteredBooks->isNotEmpty()) {
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'course_code', 'bookStats', 'filteredBooks', 'subjectGroups', 'subjectCodesList'))->setPaper('a4', 'portrait');
             return $pdf->stream('book_report.pdf');
+        } else {
+            return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
+        }
     }
-    else {
-    }
-        return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
-    }
-
-
-//     public function collectionanalysisPdf(Request $request, Book $book)
-//     {
-//         $courses = Course::all();    
-//         $subjects = Subject::all();  
-//         $keywords = Keyword::all(); 
-//         $books = Book::all();    
-
-//         $course_name = $request->input('course');
-//         $subjectName = $request->input('subject');
-//         $subject_name = $request->input('subject_name');
-//         $keyword = $request->input('keyword', []);
-//         $callNumberPrefix = $request->input('callNumberPrefix');
-//         $callNumberPrefixes = explode(',', $callNumberPrefix);
-//         // Retrieve course code based on the entered course name
-//         $course = Course::where('course_name', $course_name)->first();
-//         $course_code = $course ? $course->course_code : null;
-
-//         // Retrieve subject code based on the entered subject name
-//         $subject = Subject::where('subject_name', $subjectName)->first();
-//         $subject_code = $subject ? $subject->subject_code : null;
-        
-
-//         $filteredBooks = $books->filter(function ($book) use ($subject_name, $keyword, $callNumberPrefixes) {
-//             // Extract values directly (assuming they are strings)
-//             $bookSubject = $book->book_subject;
-//             $bookKeywords = $book->book_keyword;
-//             $bookCallNumber = $book->book_callnumber;
-
-        
-//             // Compare with user-input values
-//             $subjectMatch = $bookSubject === $subject_name;
-//             $keywordMatch = $bookKeywords === $keyword;
-        
-//             // Convert the comma or space-separated keywords string to an array
-        
-//             $callNumberMatch = false;
-//             foreach ($callNumberPrefixes as $prefix) {
-//                 if (str_starts_with($bookCallNumber, $prefix)) {
-//                     $callNumberMatch = true;
-//                     break;
-//                 }
-//             }
-//             // Check if either subject or keyword matches user-input values
-//             return  $keywordMatch || $callNumberMatch;
-//         });
-        
-        
-//         $bookStats = [];
-        
-//         $anyBookMatches = $filteredBooks->isNotEmpty(); // Flag to track if any book matches the criteria
-        
-//         foreach ($filteredBooks as $book) {
-//             $callNumber = $book->book_callnumber;
-        
-//             if (!isset($bookStats[$callNumber])) {
-//                 $bookStats[$callNumber] = [
-//                     'title' => $book->book_title,
-//                     'call_number' => $book->book_callnumber,            
-//                     'author' => $book->book_author,
-//                     'totalCopies' => 1,
-//                     'totalVolumes' => $book->volumes,
-//                 ];
-//             } else {
-//                 $bookStats[$callNumber]['totalCopies'] += 1;
-//                 $bookStats[$callNumber]['totalVolumes'] += $book->book_volume;
-//             }
-        
-//             $anyBookMatches = true; // Set the flag to true if any book matches
-//         }
-        
-//         // If any book matches, include all books in the final result
-//         if ($anyBookMatches) {
-//             $filteredBooks = $books;
-//         }
-        
-
-//         $user = Auth::user();
-//         $showBookTitle = $request->has('booktitle');
-//         $showBookCallnumber = $request->has('bookcallnumber');
-//         $showBookAuthor = $request->has('bookauthor');
-//         $showBookCopyrightYear = $request->has('bookcopyrightyear');
-//         $showVolume = $request->has('volume');
-        
-//         // Check if the includeYearRange checkbox is checked
-//         $includeYearRange = $request->has('includeYearRange');
-        
-//         // Get the start and end years from the request
-//         $startYear = $request->input('startYear');
-//         $endYear = $request->input('endYear');
-        
-//         // New checkboxes for subject
-//         $showSubject = $request->has('subject');
-//         $subjectText = $request->input('subjectText');
     
-//         // Check if there is a space in the entered subject text
-//         $subjectTexts = (strpos($subjectText, ' ') !== false) ? explode(' ', $subjectText) : [$subjectText];
     
-//         // New select box for callNumberPrefix
-//         $callNumberPrefix = $request->input('callNumberPrefix');
-    
-//         if ($showBookTitle || $showBookCallnumber || $showBookAuthor || $showBookCopyrightYear || $showSubject || $callNumberPrefix) {
-//             $data = Book::query();
-    
-//             // Filter the books based on the year range if provided
-//             if ($includeYearRange && is_numeric($startYear) && is_numeric($endYear)) {
-//                 $data = $data->whereBetween('book_copyrightyear', [$startYear, $endYear]);
-//             }
-    
-//         // Filter books based on multiple subjects
-//         if ($showSubject && !empty($subjectTexts)) {
-//             $data = $data->where(function ($query) use ($subjectTexts) {
-//                 foreach ($subjectTexts as $subjectText) {
-//                     $query->orWhere('book_callnumber', 'like', $subjectText . '%');
-//                 }
-//             });
-//         }
-
-    
-//             // Filter books based on callNumberPrefix
-//             if ($callNumberPrefix) {
-//                 $data = $data->where('book_callnumber', 'like', $callNumberPrefix . '%');
-//             }
-    
-//             $data = $data->get();
-    
-//             $resultData = [];
-    
-//             foreach ($data as $book) {
-//                 if ($book->status != 1) { // Assuming status 1 represents archived books
-//                     $key = $book->book_callnumber;
-    
-//                     if (!isset($resultData[$key])) {
-//                         // If the book is not in the resultData array, add it with a copy count of 1
-//                         $resultData[$key] = [
-//                             'title' => $book->book_title,
-//                             'callnumber' => $book->book_callnumber,
-//                             'author' => $book->book_author,
-//                             'copyrightyear' => $book->book_copyrightyear,
-//                             'volume' => $book->book_volume ? 1 : 0,
-//                             'copy_count' => 1,
-//                         ];
-//                     } else {
-//                         // If the book is already in the resultData array, increment the copy count
-//                         $resultData[$key]['copy_count']++;
-//                     }
-//                 }
-//             }
-
-//             if (!$showVolume) {
-//                 $resultData = array_filter($resultData, function ($book) {
-//                     return $book['volume'] > 0;
-//                 });
-//             }
-//             $totalCopyCount = array_sum(array_column($resultData, 'copy_count'));
-//             $totalVolume = $showVolume ? array_sum(array_column($resultData, 'volume')) : null;
-//             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'totalCopyCount', 'totalVolume','course_name','subjectName','course_code','subject_code','bookStats', 'filteredBooks' ))->setPaper('a4', 'portrait');
-//             return $pdf->stream('book_report.pdf');
-            
-// }
-        
-//         // Default case (when no checkbox is selected)
-//         return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
-
-//     }
-    
-            // Rest of your controller logic...
-        
-    }   
+    }      
+      
+        //     return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
