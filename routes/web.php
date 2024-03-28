@@ -86,10 +86,12 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::post('/append/{tag}/{book}', [TagController::class, 'append'])->name('append');
     Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');
     
-    //reports
+    //booklist reports
     Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
-    Route::get('/collection_analysis', [BookController::class, 'collectionanalysisPdf'])->name('collection_analysis');
     Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
+
+    // collectionAnalysis reports
+    Route::get('/collection_analysis', [BookController::class, 'collectionAnalysis'])->name('collection_analysis');
     Route::get('/pdf_collection', [BookController::class, 'collectionanalysisPdf'])->name('pdf_collection');
     
     //user controls
