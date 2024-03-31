@@ -87,11 +87,11 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');
     
     //booklist reports
-    Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
+    Route::get('/generate-booklist', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
     Route::get('/pdf_view', [BookController::class, 'booklistPdf'])->name('pdf_view');
 
     // collectionAnalysis reports
-    Route::get('/booklis_pdf', [BookController::class, 'collectionAnalysis'])->name('booklis_pdf');
+    Route::get('/generate-collectionanalysis', [BookController::class, 'collectionAnalysis'])->name('booklis_pdf');
     Route::get('/pdf_collection', [BookController::class, 'collectionAnalysis'])->name('pdf_collection');
     
     //user controls

@@ -448,7 +448,7 @@ class BookController extends Controller
         
         if (!empty($filteredBooksSets)) {
             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets'))->setPaper('a4', 'portrait');
-            return $pdf->stream('book_report.pdf');
+            return $pdf->stream('booklist.pdf');
         } else {
             return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
         }
@@ -566,7 +566,7 @@ class BookController extends Controller
                 
                 if (!empty($filteredBooksSets)) {
                     $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_collection', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets'))->setPaper('a4', 'landscape');
-                    return $pdf->stream('book_report.pdf');
+                    return $pdf->stream('collectionanalysis.pdf');
                 } else {
                     return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
                 }
