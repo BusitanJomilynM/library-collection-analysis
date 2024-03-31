@@ -344,6 +344,8 @@ class BookController extends Controller
         $course = Course::where('course_name', $course_name)->first();
         $course_code = $course ? $course->course_code : null;
 
+        $prefix = strtoupper($request->input('callNumberPrefix'));
+
 
         $filteredBooksSets = []; // Array to hold filtered books from different sets
         $bookStatsSets = []; // Array to hold book stats for different sets
@@ -377,6 +379,11 @@ class BookController extends Controller
                 if ($book->archive_reason) {
                     continue; // Skip the book if it is archived
                 }
+
+                if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
+                    continue; // Skip the book if the prefix doesn't match
+                }
+
                 // Check if any subject name provided by the user matches any subject in the book
                 foreach ($subjectNamesList as $subjectName) {
                     if (in_array($subjectName, $subjectArray)) {
@@ -460,7 +467,8 @@ class BookController extends Controller
         
                 $course = Course::where('course_name', $course_name)->first();
                 $course_code = $course ? $course->course_code : null;
-        
+
+                $prefix = strtoupper($request->input('callNumberPrefix'));
         
                 $filteredBooksSets = []; // Array to hold filtered books from different sets
                 $bookStatsSets = []; // Array to hold book stats for different sets
@@ -493,6 +501,10 @@ class BookController extends Controller
 
                         if ($book->archive_reason) {
                             continue; // Skip the book if it is archived
+                        }
+
+                        if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
+                            continue; // Skip the book if the prefix doesn't match
                         }
                 
                         // Check if any subject name provided by the user matches any subject in the book

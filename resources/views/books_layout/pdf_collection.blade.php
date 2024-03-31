@@ -99,41 +99,41 @@
                         @endphp
 
                         <tr align="center">
-                            <th style="font-size: 12px; width: 20px;" colspan="1">Subject Code</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="4">Subject Description</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="2">{{$currentYear}}</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="2">{{$previousYear}}</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="2">{{$anpreviousYear}}</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="2">{{$anopreviousYear}}</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="2">{{$anotpreviousYear}}</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="2">{{$anothpreviousYear}} & Below</th>
-                            <th style="font-size: 12px; width: 20px;" colspan="2">Total</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="1">Subject Code</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="4">Subject Description</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="2">{{$currentYear}}</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="2">{{$previousYear}}</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="2">{{$anpreviousYear}}</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="2">{{$anopreviousYear}}</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="2">{{$anotpreviousYear}}</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="2">{{$anothpreviousYear}} & Below</th>
+                            <th style="font-size: 14px; width: 20px;" colspan="2">Total</th>
                         </tr>
                         
                         <tr align="center">
-                            <th style="font-size: 12px; text-align: center;" colspan="1"></th>
-                            <th style="font-size: 12px; text-align: center;" colspan="4"></th>                    
+                            <th style="font-size: 13px; text-align: center;" colspan="1"></th>
+                            <th style="font-size: 13px; text-align: center;" colspan="4"></th>                    
 
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Cop.</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Vol.</th>                    
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Titles</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th>                    
  
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Cop.</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Vol.</th>                    
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Titles</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th>                    
 
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Cop.</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Vol.</th>                    
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Titles</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th>                    
+ 
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Titles</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th> 
+                            
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Titles</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th>                    
+ 
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Titles</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th> 
 
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Cop.</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Vol.</th>                    
-
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Cop.</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Vol.</th>                    
-
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Cop.</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Vol.</th>                    
-
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Cop.</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Vol.</th>                    
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Titles</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th> 
                         </tr>
                     </thead>
                     <tbody>
