@@ -374,6 +374,9 @@ class BookController extends Controller
                 $jsonKeyword = $book->book_keyword;
                 $keywordArray = json_decode($jsonKeyword, true);
         
+                if ($book->archive_reason) {
+                    continue; // Skip the book if it is archived
+                }
                 // Check if any subject name provided by the user matches any subject in the book
                 foreach ($subjectNamesList as $subjectName) {
                     if (in_array($subjectName, $subjectArray)) {
@@ -487,6 +490,10 @@ class BookController extends Controller
                         $subjectArray = json_decode($jsonSubject, true);
                         $jsonKeyword = $book->book_keyword;
                         $keywordArray = json_decode($jsonKeyword, true);
+
+                        if ($book->archive_reason) {
+                            continue; // Skip the book if it is archived
+                        }
                 
                         // Check if any subject name provided by the user matches any subject in the book
                         foreach ($subjectNamesList as $subjectName) {
