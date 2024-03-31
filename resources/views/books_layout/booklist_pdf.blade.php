@@ -87,9 +87,9 @@
 
             <!-- Add and Submit Buttons -->
             <div class="form-group text-center">
-                <button type="button" class="btn btn-success" onclick="addFields()">Add</button>
-                <button type="submit" class="btn btn-primary"  formaction="{{ route('booklist_pdf') }}"> Booklist</button>
-                <button type="submit" class="btn btn-primary"  formaction="{{ route('booklis_pdf') }}"> Collection Analysis</button>                
+                <button type="button" class="btn btn-success" onclick="addFields()">Add New Set</button>
+                <button type="submit" class="btn btn-primary"  formaction="{{ route('booklist_pdf') }}">Generate Booklist</button>
+                <button type="submit" class="btn btn-primary"  formaction="{{ route('booklis_pdf') }}"> Generate Collection Analysis</button>                
                 
             </div>
         </form>
