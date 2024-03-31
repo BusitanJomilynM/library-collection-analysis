@@ -88,11 +88,11 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     
     //booklist reports
     Route::get('/booklist_pdf', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
-    Route::get('/pdf-view', [BookController::class, 'booklistPdf'])->name('pdf_view');
+    Route::get('/pdf_view', [BookController::class, 'booklistPdf'])->name('pdf_view');
 
     // collectionAnalysis reports
-    Route::get('/collection_analysis', [BookController::class, 'collectionAnalysis'])->name('collection_analysis');
-    Route::get('/pdf_collection', [BookController::class, 'collectionanalysisPdf'])->name('pdf_collection');
+    Route::get('/booklis_pdf', [BookController::class, 'collectionAnalysis'])->name('booklis_pdf');
+    Route::get('/pdf_collection', [BookController::class, 'collectionAnalysis'])->name('pdf_collection');
     
     //user controls
     Route::get('/users/userEdit/{user}', [UserController::class, 'userEdit'])->name('userEdit');

@@ -15,7 +15,7 @@
 
 <div class="row justify-content-center">
     <div class="col-md-6 bg-white p-4">
-        <form method="GET" action="{{ route('booklist_pdf') }}">
+        <form method="GET">
             @csrf
             <div class="form-group">
                 <label class="required">Course</label>
@@ -88,7 +88,9 @@
             <!-- Add and Submit Buttons -->
             <div class="form-group text-center">
                 <button type="button" class="btn btn-success" onclick="addFields()">Add</button>
-                <button type="submit" class="btn btn-primary">Generate Booklist</button>                
+                <button type="submit" class="btn btn-primary"  formaction="{{ route('booklist_pdf') }}"> Booklist</button>
+                <button type="submit" class="btn btn-primary"  formaction="{{ route('booklis_pdf') }}"> Collection Analysis</button>                
+                
             </div>
         </form>
     </div>

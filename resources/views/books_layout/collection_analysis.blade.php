@@ -68,7 +68,7 @@
     <div class="header">
         <img src="{{ public_path('..\public\images\ub.png') }}" alt="Header Image">
         <p class="main-paragraph">SCHOOL OF INFORMATION TECHNOLOGY</p>
-        <p class="another-paragraph">General Luna Road, Baguio City Philippines 2600</p>
+        <p class="another-paragraph">General Luna Road, Baguio City Philippines 26000000</p>
         <hr>
         <hr>
         <p class="another-another-paragraph">Telefax No.: (074) 442-3071&nbsp;&nbsp;&nbsp;&nbsp;Website: www.ubaguio.edu&nbsp;&nbsp;&nbsp;&nbsp;E-mail Address: sit@e.ubaguio.edu</p>

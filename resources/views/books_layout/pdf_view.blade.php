@@ -99,6 +99,14 @@
                             {{ isset($subjectNamesListSets[$setCount]) ? $subjectNamesListSets[$setCount][0] : '' }}
                         </th>
                     </tr>
+                    <tr align="center">
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Call Number</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Title</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Author</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Copies</th>
+                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th>
+                    
+                    </tr>
                     </thead>
                     <!-- Table body -->
                     <tbody>
@@ -108,11 +116,12 @@
                         @endphp
                         @foreach ($filteredBooks as $book)
                             <tr align="center">
-                                <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['title'] }}</td>
                                 <td>{{ $book->book_callnumber }}</td>
+                                <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['title'] }}</td>
                                 <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['author'] }}</td>
                                 <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['totalCopies'] }}</td>
                                 <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['totalVolumes'] }}</td>
+
                             </tr>
                             <!-- Update total copies and volumes for this set -->
                             @php
