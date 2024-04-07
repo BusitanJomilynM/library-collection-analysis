@@ -28,11 +28,20 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate(10);
-        $subjects = Subject::paginate(10);
-
+        if(request('search')) {
+            $courses = Course::paginate(10);
+            $subjects = Subject::paginate(10);
+            $subjects = Subject::where('subject_name', 'like', '%' . request('search') . '%')
+            ->orwhere('subject_code', 'like', '%' . request('search') . '%')
+            ->orwhere('subject_course', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+        } 
+    
+        else{
+            $courses = Course::paginate(10);
+            $subjects = Subject::paginate(10);
+        }
         
-            
+
 
         return view('subjects_layout.subjects_list', ['subjects'=>$subjects, 'courses'=>$courses]);
     }

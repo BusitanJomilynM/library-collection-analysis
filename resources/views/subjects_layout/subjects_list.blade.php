@@ -3,6 +3,15 @@
 @section('content')
 <h2 style="text-align: center;">Subjects</h2>
 
+<div style="display:flex; justify-content:center;">
+    <form style="max-width:300px; display:flex;">
+        <input type="text" class="form-control mr-sm-2" placeholder="Search Courses" name="search" value="{{ request('search') }}" style="flex: 1;">
+        <button type="submit" class="btn btn-danger" style="margin-left: 5px;">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+</div>
+
 <a data-toggle="modal" class="btn btn-primary" data-target="#createSubjectModal"><span>&#43;</span></i>Add New Subject</a>
 <br>
 <br>

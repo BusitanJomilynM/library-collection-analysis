@@ -42,7 +42,7 @@
 </form>
 </div>
 
-@if($user->type == 'technician librarian' || 'staff librarian')
+@if(Auth::user()->type == 'technician librarian' || Auth::user()->type == 'staff librarian')  
 <a class="btn btn-primary my-2 my-sm-0" href="{{ route('pendingTags') }}">Filter Pending Subject Request</a> 
 @endif
 
@@ -180,8 +180,6 @@
           </td>
       </div>
 
-
-           
     @else
     <div class="flex-parent jc-center">
             <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
@@ -225,15 +223,14 @@
 @elseif($user->type == 'department representative' || $user->type == 'teacher')
 <br>
 @forelse($tags as $tag)
-  @foreach($users as $user)
-    @if($tag->user_id == $user->id)
+  @if($tag->user_id == Auth::user()->id)
     <tr align="center">
       <td>{{$user->first_name}} {{$user->last_name}}</td>
       <td>{{$tag->department}}</td>
       <td>{{$tag->book_barcode}}</td>
       <td>
-@foreach($books as $book)
-@if($book->book_barcode == $tag->book_barcode)
+      @foreach($books as $book)
+        @if($book->book_barcode == $tag->book_barcode)
                         <?php  
                         $x = $book->book_subject;
                         $charactersToRemove = ['"', "[", "]"];
@@ -256,10 +253,10 @@
                         }
                    
                         ?>
-@endif
-@endforeach</td>
+        @endif
+      @endforeach</td>
     
-<td>
+      <td>
                         <?php  
                         $x = $tag->suggest_book_subject;
                         $charactersToRemove = ['"', "[", "]"];
@@ -282,15 +279,15 @@
                         }
                    
                         ?>
-</td>
-<td>
+      </td>
+      <td>
       @if($tag->action == 1)
       Append
       @elseif($tag->action == 2)
       Replace
       @endif
-    </td>
-    <td>@if($tag->status == 0)
+      </td>
+      <td>@if($tag->status == 0)
       Pending
       @elseif($tag->status == 1)
       Approved
@@ -300,24 +297,24 @@
       Cancelled 
       @endif</td>
 
-    <td>
-    @if($tag->status == 0)
-    <div class="flex-parent jc-center">
-      <!-- <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button"><span>&#9776;</span>Edit</a> -->
+      <td>
+      @if($tag->status == 0)
+      <div class="flex-parent jc-center">
+        <!-- <a class="btn btn-primary" href="{{ route('tags.edit', $tag->id) }}" role="button"><span>&#9776;</span>Edit</a> -->
 
-      <a data-toggle="modal" class="btn btn-primary" data-target="#editTagModal_{{$tag->id}}" data-action="{{ route('tags.edit', $tag->id) }}"><span>&#9776;</span> </a>
+        <a data-toggle="modal" class="btn btn-primary" data-target="#editTagModal_{{$tag->id}}" data-action="{{ route('tags.edit', $tag->id) }}"><span>&#9776;</span> </a>
 
+        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
+        data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
+      </div>
+
+      @else
+      <div class="flex-parent jc-center">
       <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-      data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
-    </div>
-
-    @else
-    <div class="flex-parent jc-center">
-    <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$tag->id}}"
-      data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
-    </div>
-    @endif
-  </td>
+        data-action="{{ route('tags.destroy', $tag->id) }}"><i class="fa fa-trash">Delete</a></td>
+      </div>
+      @endif
+    </td>
   </tr>
 
   <!-- Delete Modal -->
@@ -345,7 +342,7 @@
       </div>
     </div>
 
-    <!-- Edit Tag Modal -->
+<!-- Edit Tag Modal -->
 <div class="modal fade" id="editTagModal_{{$tag->id}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editTagModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -384,17 +381,38 @@
     </div>    
 
     <div class="form-group">
-    <label>Current Tags</label>
-    <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="book_subject" id="book_subject" value="{{($book->book_subject) }}" readonly>
-    </div>
+    <label>Current Subject/s</label>
+    <select class="js-responsive" name="book_subject[]" id="book_subject_{{$tag->book_barcode}}" multiple="multiple" style="width: 100%" disabled>
+    @foreach($books as $book)
+        @if($book->book_barcode == $tag->book_barcode)  
+      @foreach($subjects as $subject)
+            <?php
+                $selected = in_array($subject->id, json_decode($book->book_subject, true));
+            ?>
+            <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                {{ $subject->subject_name }}
+            </option>
+            @endforeach
+            @endif
+        @endforeach
+    </select>
+</div>
     
-    <div class="form-group">
-        <label class="required">Suggested Subject</label>
-        <input class="form-control @error('suggest_book_subject') is-invalid @enderror" type="text" name="suggest_book_subject" id="suggest_book_subject" value="{{($tag->suggest_book_subject) }}" minlength="1" maxlength="60" required>
-        @error('suggest_book_subject')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-    </div>
+<div class="form-group">
+    <label>Suggested Subject/s</label>
+    <select class="js-responsive2" name="suggest_book_subject[]" id="subject_{{$tag->book_barcode}}" multiple="multiple" style="width: 100%">
+             @foreach($subjects as $subject)
+            <?php
+                // Check if the current keyword ID exists in the selected keywords array of the book
+                $selected = in_array($subject->id, json_decode($tag->suggest_book_subject, true));
+            ?>
+            <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                {{ $subject->subject_name }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
             </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -405,11 +423,9 @@
   </div>
 </div>
   @endif 
-@endforeach
 
 @empty
 <tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
-  
 @endforelse
 
 
@@ -590,5 +606,19 @@ input[type=text]
   justify-content: center;
 }
 </style>
+
+<script>
+
+var placeholder = "Select Keyword";
+    $(".mySelect").select2({
+        placeholder: placeholder,
+        allowClear: false,
+        minimumResultsForSearch: 5
+    });
+
+    $(".js-responsive").select2({});
+    $(".js-responsive2").select2({});
+
+</script>
 
 @endsection

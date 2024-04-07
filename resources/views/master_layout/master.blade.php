@@ -115,7 +115,7 @@
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Subjects
+                                Suggestions
                              </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -124,12 +124,15 @@
 
                                     <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
                                     </a>
+
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
+                                    </a>
                                 </div>
                         </li>
 
-                        <!-- <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" href="{{route('keywords.index')}}">Keywords</a>
-                        </li> -->
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('booklist_pdf')}}">Reports</a>
@@ -171,16 +174,23 @@
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Subjects
+                                Suggestions
                              </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subejct Suggestions</a>
+                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
                                     </a>
                                 </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('keywords.index')}}">Keywords</a>
                         </li>
                         
                         <li class="nav-item">
@@ -201,9 +211,22 @@
                             <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
                         </li> 
                         
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{route('tags.index')}}">Subjects</a>
-                        </li>  
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Suggestions
+                             </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
+                                    </a>
+                                </div>
+                        </li> 
 
                         <!-- teacher -->
                         @elseif(Auth::user()->type == 'teacher')
@@ -214,6 +237,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('books.index')}}">Books</a>
                         </li>  
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Suggestions
+                             </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
+                                    </a>
+                                </div>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('requisitions.index')}}">Requisitions</a>
@@ -226,6 +266,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('courses.index')}}">Course</a>
                         </li>  
+
+                        
 
                         @else 
                         

@@ -10,6 +10,7 @@ use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\KeywordController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\KeywordSuggestController;
 use App\Http\Controllers\TrequestController;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -56,6 +57,19 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     Route::get('/users/changePassword/{id}', [UserController::class, 'changePassword'])->name('changePassword');
     Route::get('/users/updatePassword/{id}', [UserController::class, 'updatePassword'])->name('updatePassword');
     Route::resource('/users', UserController::class);
+    // Keyword suggestion
+    Route::resource('/keywords_suggestion', KeywordSuggestController::class);
+    Route::get('/keywords_suggestion', [KeywordSuggestController::class, 'index'])->name('keywordsuggest.index');
+    Route::get('/create', 'KeywordSuggestController@create')->name('keywordsuggest.create');
+    Route::post('/store', 'App\Http\Controllers\KeywordSuggestController@store')->name('keywordsuggest.store');
+    Route::post('/append/{keywordsuggest}/{book}', [KeywordSuggestController::class, 'appendkeyword'])->name('appendkeyword');
+    Route::post('/replace/{keywordsuggest}/{book}',  [TagController::class, 'replacekeyword'])->name('replacekeyword');
+    Route::get('/keywordsuggest/delete/{keywordsuggest}', [KeywordSuggestController::class, 'destroy'])->name('keywordsuggest.destroy');
+    Route::get('/keywordsuggest/decline/{keywordsuggest}', [KeywordSuggestController::class, 'declinekeyword'])->name('declinekeyword');
+    Route::get('/keywordsuggest/edit/{keywordsuggest}', [KeywordSuggestController::class, 'edit'])->name('keywordsuggest.edit');
+    Route::get('/keywordsuggest/update/{keywordsuggest}', [KeywordSuggestController::class, 'update'])->name('keywordsuggest.update');
+
+
 });
 
 //Shared routes for Technical and Staff Librarian
