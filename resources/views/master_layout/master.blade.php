@@ -122,9 +122,6 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
-                                    </a>
-
                                     <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
                                     </a>
                                 </div>
@@ -181,9 +178,6 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
-                                    </a>
-
                                     <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
                                     </a>
                                 </div>
@@ -220,9 +214,6 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
-                                    </a>
-
                                     <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
                                     </a>
                                 </div>
@@ -245,9 +236,6 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
-                                    </a>
-
-                                    <a class="dropdown-item" href="{{ route('pendingTags') }}">Pending Subject Suggestions</a>
                                     </a>
 
                                     <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>

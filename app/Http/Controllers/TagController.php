@@ -101,7 +101,8 @@ class TagController extends Controller
 
             else if(request('department')){
                 $department = $request->input('department');
-        
+                $user = Auth::user();
+                $users = User::all();
                 $tags = Tag::where('department', $department)->paginate(10)->withQueryString();
             }
 

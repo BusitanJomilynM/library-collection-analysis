@@ -3,6 +3,51 @@
 @section('content')
 <h2 style="text-align: center;">Keyword Suggest</h2>
 
+<div class="panel panel-default">
+@if (session('success'))
+<div class="alert alert-success alert-dismissible">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  {{ session('success') }}
+</div>
+@endif
+</div>
+
+<div style="margin:auto;max-width:300px">
+    <form class="form-inline">
+        <div class="input-group">
+            <input type="text" class="form-control mr-sm-2" placeholder="Search Books" name="search" value="{{ request('search') }}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<br>
+<div style="margin:auto;max-width:300px">
+<form class="form-inline">
+<div class="input-group">
+  <select class="form-control mr-sm-2" name="department" id="department" value="{{ request('department') }}">
+    <option value="">Filter By Department</option>
+            <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
+            <option value="SOD">SOD - School of Dentistry</option>
+            <option value="SIT">SIT - School of Information Technology</option>
+            <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
+            <option value="SEA">SEA - School of Engineering & Architecture</option>
+            <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
+            <option value="SOL">SOL - School of Law</option>
+            <option value="SNS">SNS - School of Natural Sciences</option>
+            <option value="SON">SON - School of Nursing</option>
+            <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
+            <option value="Graduate School">Graduate School</option>
+  </select>
+  <button type="submit" class="btn btn-danger">Filter</button>
+</div>
+</form>
+</div>
 
 <br>
 
@@ -407,6 +452,12 @@
 @endforelse
 @endif
 
+</table>
+<div class="d-flex">
+    <div class="mx-auto">
+      <?php echo $keywordsuggest->render(); ?>
+    </div>
+</div>
 
 <script>
 

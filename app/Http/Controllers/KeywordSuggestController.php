@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Keyword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class KeywordSuggestController extends Controller
 {
@@ -15,13 +16,46 @@ class KeywordSuggestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $keywordsuggest = KeywordSuggest::paginate(10);
-        $keywords = Keyword::all();
-        $user = Auth::user();
-        $users = User::all();
-        $books = Book::all();
+
+        if(request('search')) { 
+            $keywordsuggest = KeywordSuggest::where('book_barcode', 'like', '%' . request('search') . '%')
+            ->orwhere('department', 'like', '%' . request('search') . '%')
+            ->orwhere('suggest_book_keyword', 'like', '%' . request('search') . '%')
+            ->orwhere('book_barcode', 'like', '%' . request('search') . '%')
+            ->orwhere('status', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+
+            $department = $request->input('department');
+            $keywords = Keyword::all();
+            $user = Auth::user();
+            $users = User::all();
+            $books = Book::all();
+        }
+
+        else if(request('department')){
+            $department = $request->input('department');
+            $keywords = Keyword::all();
+            $user = Auth::user();
+            $users = User::all();
+            $books = Book::all();
+    
+            $keywordsuggest = KeywordSuggest::where('department', $department)->paginate(10)->withQueryString();
+        }
+
+        else{
+            $keywordsuggest = KeywordSuggest::paginate(10);
+            $keywords = Keyword::all();
+            $user = Auth::user();
+            $users = User::all();
+            $books = Book::all();
+        }
+
+        
+
+
+        Paginator::useBootstrap();
+        
 
         return view('keywordsuggest_layout.keywordsuggest_list', ['user'=>$user, 'users'=>$users, 'books'=>$books, 'keywords'=>$keywords, 'keywordsuggest'=>$keywordsuggest]);
     }
