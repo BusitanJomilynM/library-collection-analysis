@@ -358,12 +358,14 @@ class BookController extends Controller
         
             // Initialize subject-specific arrays for each set
             $subjectNamesList = [];
+            $subjectNamee = [];
             $subjectCodesList = [];
             $keywordsList = [];
         
-            $subject = Subject::where('subject_name', $subjectNames)->first();
+            $subject = Subject::where('id', $subjectNames)->first();
             if ($subject) {
                 $subjectNamesList[] = $subjectNames;
+                $subjectNamee[]=$subject->subject_name;
                 $subjectCodesList[] = $subject->subject_code; // Store subject code
                 $keywordsList[] = $request->input("keyword_$setCount");
             }
@@ -394,14 +396,22 @@ class BookController extends Controller
         
                 // Check if any keyword provided by the user matches any keyword in the book
                 foreach ($keywordsList as $keywords) {
-                    $keywords = preg_split('/,/', $keywords);
-                    foreach ($keywords as $keyword) {
+                    $keywordss = preg_split('/,/', $keywords);
+                    foreach ($keywordsList as $keyword) {
                         if (in_array($keyword, $keywordArray)) {
                             $filteredBooks->push($book);
                             break 2; // Break both inner and outer loop once a match is found
                         }
                     }
                 }
+                // foreach ($keywordsList as $keywords) {
+                //     foreach ($keywords as $keyword) {
+                //         if (in_array($keyword, $keywordArray)) {
+                //             $filteredBooks->push($book);
+                //             break 2; // Break both inner and outer loop once a match is found
+                //         }
+                //     }
+                // }
             }
         
             // Remove duplicates from filtered books
@@ -411,7 +421,7 @@ class BookController extends Controller
             $filteredBooksSets[$setCount] = $filteredBooks;
         
             // Store subject names and codes for the current set
-            $subjectNamesListSets[$setCount] = $subjectNamesList;
+            $subjectNamesListSets[$setCount] = $subjectNamee;
             $subjectCodesListSets[$setCount] = $subjectCodesList;
         
             // Calculate book stats for the current set
@@ -481,12 +491,14 @@ class BookController extends Controller
                 
                     // Initialize subject-specific arrays for each set
                     $subjectNamesList = [];
+                    $subjectNamee = [];
                     $subjectCodesList = [];
                     $keywordsList = [];
                 
-                    $subject = Subject::where('subject_name', $subjectNames)->first();
+                    $subject = Subject::where('id', $subjectNames)->first();
                     if ($subject) {
                         $subjectNamesList[] = $subjectNames;
+                        $subjectNamee[]=$subject->subject_name;
                         $subjectCodesList[] = $subject->subject_code; // Store subject code
                         $keywordsList[] = $request->input("keyword_$setCount");
                     }
@@ -534,7 +546,7 @@ class BookController extends Controller
                     $filteredBooksSets[$setCount] = $filteredBooks;
                 
                     // Store subject names and codes for the current set
-                    $subjectNamesListSets[$setCount] = $subjectNamesList;
+                    $subjectNamesListSets[$setCount] = $subjectNamee;
                     $subjectCodesListSets[$setCount] = $subjectCodesList;
                 
                     // Calculate book stats for the current set

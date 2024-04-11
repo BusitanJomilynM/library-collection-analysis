@@ -63,7 +63,7 @@
                         <datalist id="subjectList">
                             <option value="" selected disabled>Select Subject</option>
                             @foreach($subjects as $subject)
-                                <option value="{{$subject->subject_name}}">
+                                <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
                             @endforeach
                         </datalist>
                     </div>
@@ -71,11 +71,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Keyword</label>
+                              <!-- <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required> -->
+
                         <input list="keywordList" name="keyword_1" class="form-control" multiple>
                         <datalist id="keywordList">
                             <option value="" selected disabled>Select Keyword</option>
                             @foreach($keywords as $keyword)
-                                <option value="{{$keyword->keyword}}">
+                            <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
                             @endforeach
                         </datalist>
                     </div>
@@ -114,7 +116,7 @@
                 <datalist id="subjectList">
                     <option value="" selected disabled>Select Subject</option>
                     @foreach($subjects as $subject)
-                        <option value="{{$subject->subject_name}}">
+                    <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
                     @endforeach
                 </datalist>
             </div>`;
@@ -131,7 +133,7 @@ keywordField.innerHTML = `<div class="form-group">
     <datalist id="keywordList">
     <option value="" selected disabled>Select Keyword</option>
     @foreach($keywords as $keyword)
-    <option value="{{$keyword->keyword}}">
+    <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
     @endforeach
     </datalist>
     <div class="input-group-append">
@@ -154,6 +156,26 @@ newFieldSet.appendChild(keywordField);
         var container = button.closest('.row');
         container.remove();
     }
+</script>
+<script>
+
+var placeholder = "Select Keyword";
+$(".mySelect").select2({
+  
+    placeholder: placeholder,
+    allowClear: false,
+    minimumResultsForSearch: 5
+});
+
+
+$(".js-responsive").select2({
+  
+});
+
+$(".js-responsive2").select2({
+  
+});
+
 </script>
 <!-- <div class="form-group text-center">
                     <button type="button" class="btn btn-success" onclick="addFields()">Add</button>
