@@ -71,16 +71,20 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Keyword</label>
-                              <!-- <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required> -->
-
-                        <input list="keywordList" name="keyword_1" class="form-control" multiple>
-                        <datalist id="keywordList">
-                            <option value="" selected disabled>Select Keyword</option>
+                              <!-- <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
+                                @foreach($keywords as $keyword)
+                                <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+                                @endforeach
+                                </select>
+                                </div> -->
+                        <!-- <input list="keywordList" name="keyword_1" class="form-control" multiple> -->
+                        <select class="mySelect for" name="keyword_1[]" multiple="multiple" style="width: 100%" required>
                             @foreach($keywords as $keyword)
                             <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
                             @endforeach
-                        </datalist>
+                        </select>
                     </div>
+
                 </div>
             </div>
 

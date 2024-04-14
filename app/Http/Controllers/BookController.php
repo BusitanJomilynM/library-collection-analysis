@@ -395,23 +395,26 @@ class BookController extends Controller
                 }
         
                 // Check if any keyword provided by the user matches any keyword in the book
-                foreach ($keywordsList as $keywords) {
-                    $keywordss = preg_split('/,/', $keywords);
-                    foreach ($keywordsList as $keyword) {
-                        if (in_array($keyword, $keywordArray)) {
-                            $filteredBooks->push($book);
-                            break 2; // Break both inner and outer loop once a match is found
-                        }
-                    }
-                }
                 // foreach ($keywordsList as $keywords) {
-                //     foreach ($keywords as $keyword) {
+                //     $keywordss = preg_split('/,/', $keywords);
+                //     foreach ($keywordsList as $keyword) {
                 //         if (in_array($keyword, $keywordArray)) {
                 //             $filteredBooks->push($book);
                 //             break 2; // Break both inner and outer loop once a match is found
                 //         }
                 //     }
                 // }
+                foreach ($keywordsList as $keywordsString) {
+                    foreach ($keywordsString as $keyword) {
+                        // Now you can process each individual keyword
+                        if (in_array($keyword, $keywordArray)) {
+                            $filteredBooks->push($book);
+                            break 2; // Break both inner and outer loop once a match is found
+                        }
+                    }
+                }
+                
+                
             }
         
             // Remove duplicates from filtered books
