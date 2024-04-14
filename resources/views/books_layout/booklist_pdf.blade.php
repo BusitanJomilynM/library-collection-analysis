@@ -60,31 +60,32 @@
                     <div class="form-group">
                         <label class="required">Subject</label>
                         <input list="subjectList" name="subject_1" class="form-control" required>
-                        <datalist id="subjectList">
-                            <option value="" selected disabled>Select Subject</option>
-                            @foreach($subjects as $subject)
-                                <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
-                            @endforeach
-                        </datalist>
+                            <datalist id="subjectList">
+                                <option value="" selected disabled>Select Subject</option>
+                                @foreach($subjects as $subject)
+                                    <option value="{{$subject->id . $subject->subject_name}}">{{$subject->subject_name}}</option>
+                                @endforeach
+                            </datalist>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Keyword</label>
-                              <!-- <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
-                                @foreach($keywords as $keyword)
-                                <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
-                                @endforeach
-                                </select>
-                                </div> -->
-                        <!-- <input list="keywordList" name="keyword_1" class="form-control" multiple> -->
-                        <select class="mySelect for" name="keyword_1[]" multiple="multiple" style="width: 100%" required>
+                              <!-- <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required> -->
+
+                        <!-- <input list="keywordList" name="keyword_1" class="form-control" multiple>
+                        <datalist id="keywordList">
+                            <option value="" selected disabled>Select Keyword</option>
+                            @foreach($keywords as $keyword)
+                            <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+                            @endforeach
+                        </datalist> -->
+                        <select class="mySelect" name="keyword_1[]" multiple="multiple" style="width: 100%" required>
                             @foreach($keywords as $keyword)
                             <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
                             @endforeach
                         </select>
                     </div>
-
                 </div>
             </div>
 
@@ -129,26 +130,25 @@
         // Keyword Field
 
         var keywordField = document.createElement('div');
-keywordField.className = 'col-md-6';
-keywordField.innerHTML = `<div class="form-group">
-    <label>Keyword</label>
-    <div class="input-group">
-    <input list="keywordList" name="keyword_${setCount}" class="form-control" multiple>
-    <datalist id="keywordList">
-    <option value="" selected disabled>Select Keyword</option>
-    @foreach($keywords as $keyword)
-    <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
-    @endforeach
-    </datalist>
-    <div class="input-group-append">
-    <button class="btn btn-danger" type="button" onclick="removeFields(this)">
-    <i class="fas fa-trash"></i>
-    </button>
-    </div> 
-    </div> 
-    </div>`; 
-newFieldSet.appendChild(keywordField);
-
+    keywordField.className = 'col-md-6';
+    keywordField.innerHTML = `
+    <div class="form-group">
+        <label>Keyword</label>
+        <div class="input-group">
+            <select class="mySelect form-control" name="keyword_${setCount}[]" required>
+                <option value="" selected disabled>Select Keyword</option>
+                @foreach($keywords as $keyword)
+                <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+                @endforeach
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-danger" type="button" onclick="removeFields(this)">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>`;
+    newFieldSet.appendChild(keywordField);
 
         // Increment the count
         setCount++;
