@@ -82,67 +82,64 @@
         <p class="another-another-another-paragraph">As of {{ \Carbon\Carbon::now()->format('F Y') }}</p>
     </div>
 
-   <!-- Check if filtered books exist -->
-   @if (!empty($filteredBooksSets))
-        <!-- Loop through each set of filtered books -->
-        @foreach ($filteredBooksSets as $setCount => $filteredBooks)
-            <div style="margin: 20px auto; text-align: center;">
-                <!-- Table for each set of filtered books -->
-                <table border="1" cellspacing="0" cellpadding="5" align="center">
-                    <!-- Table header -->
-                    <thead>
-                    <tr align="center">
-                        <th colspan="1">
-                            {{ isset($subjectCodesListSets[$setCount]) ? $subjectCodesListSets[$setCount][0] : '' }}
-                        </th>
-                        <th colspan="4">
-                            {{ isset($subjectNamesListSets[$setCount]) ? $subjectNamesListSets[$setCount][0] : '' }}
-                        </th>
-                    </tr>
-                    <tr align="center">
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Call Number</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Title</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Author</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Copies</th>
-                            <th style="font-size: 12px; text-align: center;" colspan="1">Volumes</th>
-                    
-                    </tr>
-                    </thead>
-                    <!-- Table body -->
-                    <tbody>
-                        @php
-                            $totalCopies = 0;
-                            $totalVolumes = 0;
-                        @endphp
-                        @foreach ($filteredBooks as $book)
+<!-- Check if filtered books exist -->
+@if (!empty($filteredBooksSets))
+    <!-- Loop through each set of filtered books -->
+    @foreach ($filteredBooksSets as $setCount => $filteredBooks)
+        <div style="margin: 20px auto; text-align: center;">
+            <!-- Table for each set of filtered books -->
+            <table border="1" cellspacing="0" cellpadding="5" align="center">
+                <!-- Table header -->
+                <thead>
+                <tr align="center">
+                    <th colspan="1">
+                        {{ isset($subjectCodesListSets[$setCount]) ? $subjectCodesListSets[$setCount][0] : '' }}
+                    </th>
+                    <th colspan="3">
+                        {{ isset($subjectNamesListSets[$setCount]) ? $subjectNamesListSets[$setCount][0] : '' }}
+                    </th>
+                </tr>
+                <tr align="center">
+                    <th style="font-size: 12px; text-align: center;" colspan="1">Call Number</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="1">Title</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="1">Author</th>
+                    <th style="font-size: 12px; text-align: center;" colspan="1">Copies</th>
+                </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                    @php
+                        $totalCopies = 0;
+                        $printedCallNumbers = [];
+                    @endphp
+                    @foreach ($filteredBooks as $book)
+                        @if (!in_array($book->book_callnumber, $printedCallNumbers))
                             <tr align="center">
                                 <td>{{ $book->book_callnumber }}</td>
                                 <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['title'] }}</td>
                                 <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['author'] }}</td>
                                 <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['totalCopies'] }}</td>
-                                <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['totalVolumes'] }}</td>
-
                             </tr>
-                            <!-- Update total copies and volumes for this set -->
+                            <!-- Update total copies for this set -->
                             @php
                                 $totalCopies += $bookStatsSets[$setCount][$book->book_callnumber]['totalCopies'];
-                                $totalVolumes += $bookStatsSets[$setCount][$book->book_callnumber]['totalVolumes'];
+                                $printedCallNumbers[] = $book->book_callnumber;
                             @endphp
-                        @endforeach     
-                        <!-- Total row -->
-                        <tr align="center">
-                            <td colspan="3">Total</td>
-                            <td>{{$totalCopies}}</td>
-                            <td>{{$totalVolumes}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-        @endforeach
-    @else
-        <p>No filtered books found.</p>
-    @endif
+                        @endif
+                    @endforeach     
+                    <!-- Total row -->
+                    <tr align="center">
+                        <td colspan="3">Total</td>
+                        <td >{{$totalCopies}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+        </div>
+    @endforeach
+@else
+    <p>No filtered books found.</p>
+@endif
 
 
     <div style="text-align: left; margin-top: 10px;">

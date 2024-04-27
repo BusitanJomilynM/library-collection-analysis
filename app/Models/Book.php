@@ -18,7 +18,6 @@ class Book extends Model
         'book_sublocation',
         'book_subject',
         'book_keyword',
-        'book_volume',
         'book_publisher',
         'book_purchasedwhen',
         'book_lccn',

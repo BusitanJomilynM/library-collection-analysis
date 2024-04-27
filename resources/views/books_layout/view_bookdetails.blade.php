@@ -29,8 +29,8 @@
         <br>
         <div class="form"><h5>Sublocation: {{ $book->book_sublocation}}</h5></div> 
         <br>
-        <div class="form"><h5>Volume: {{ $book->book_volume}}</h5></div>
-        <br>
+        <!-- <div class="form"><h5>Volume: {{ $book->book_volume}}</h5></div>
+        <br> -->
         <div class="form"><h5>Subjects:
                     <?php  
                     $x = $book->book_subject;
@@ -160,14 +160,24 @@
             <span class="text-danger">{{$message}}</span>
         @enderror
         </div>
-        <div class="col-md-6"><div>
-        <label class="required">Barcode</label>
-        <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode}}" minlength="4" maxlength="25" required> 
-        @error('book_barcode')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
+
+<div class="col-md-6">
+    <div class="row">
+        <div class="col-md-8">
+            <label class="required">Barcode</label>
+            <div class="input-group">
+                <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" value="{{$book->book_barcode}}" required>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="generateBarcodeButton">Generate Barcode</button>
+                </div>
+            </div>
+            @error('book_barcode')
+                <span class="text-danger">{{$message}}</span>
+            @enderror
         </div>
     </div>
+</div>
+
 
     <div class="form-group">
         
@@ -181,8 +191,7 @@
         @enderror
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="form-group">
         <label class="required">Purchase Date</label>
         <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{$book->book_purchasedwhen}}" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
         @error('book_purchasedwhen')
@@ -190,14 +199,13 @@
         @enderror
     </div>
 
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <label>Volume</label>
         <input class="form-control @error('book_volume') is-invalid @enderror" type="text" name="book_volume" id="book_volume" value="{{$book->book_volume}}" minlength="2" maxlength="40">
         @error('book_volume')
             <span class="text-danger">{{$message}}</span>
         @enderror
-    </div>
-    </div>
+    </div> -->
 <br>
     <div class="form-group">
         <label class="required">Sublocation</label>
@@ -329,7 +337,10 @@
 
         <div class="col-md-6">
         <label>Barcode</label>
-            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{ old('book_barcode', $barcode) }}"  minlength="2" maxlength="7" readonly>
+            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode}}"  minlength="2" maxlength="7" required>
+            <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="generateBarcodeButton">Generate Barcode</button>
+                </div>
             @error('book_barcode')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -342,21 +353,19 @@
         <input type="hidden" name="book_author" value="{{ $book->book_author }}">
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="form-group">
         <label>Purchase Date</label>
         <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen" value="{{ $book->book_purchasedwhen}}" pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
         @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
+<!-- 
     <div class="col-md-6">
         <label>Volume</label>
         <input class="form-control" type="text" name="book_volume" id="book_volume" value="{{ $book->book_volume }}" minlength="1" maxlength="60" readonly>
         <input type="hidden" name="book_volume" value="{{ $book->book_volume }}">
-    </div>
-    </div>
+    </div> -->
 <br>
     <div class="form-group">
         <label>Sublocation</label>
@@ -646,11 +655,37 @@ $(".js-responsive2").select2({
     
 });
 
-
-
-
-
 </script>
 
 
+<style> 
+form { 
+  display: flex; 
+}
+input[type=text] 
+{ flex-grow: 1; 
+}
+</style>
+
+
+<script>
+    // Function to generate a random barcode
+    function generateBarcode() {
+        var barcode = 'T' + Math.floor(10000 + Math.random() * 90000); // Generate a random number between 10000 and 99999
+
+        // Check if the generated barcode already exists in the input field
+        var barcodeInput = document.getElementById("book_barcode");
+        while (barcodeInput.value === barcode) {
+            barcode = 'T' + Math.floor(10000 + Math.random() * 90000); // Regenerate barcode until it's unique
+        }
+
+        return barcode;
+    }
+
+    // Event listener for the button click
+    document.getElementById("generateBarcodeButton").addEventListener("click", function() {
+        var barcodeInput = document.getElementById("book_barcode");
+        barcodeInput.value = generateBarcode();
+    });
+</script>
 @endsection

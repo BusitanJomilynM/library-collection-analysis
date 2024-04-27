@@ -23,14 +23,15 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use App\Models\archiveUpdate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\View\View;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 
-class BookController extends Controller
-{
+class BookController extends Controller{
 
-    public function __construct() 
-    { 
+    public function __construct() {
         $this->middleware('preventBackHistory'); 
         $this->middleware('auth'); 
     
@@ -40,77 +41,44 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-    $user = Auth::user();
-    $books = Book::paginate(10);
-    $keywords = Keyword::all();
-    $subjects = Subject::all();
-
- 
-    // $barcode = $this->generateUniqueBarcode();
-    // $bookBarcode = $request->input('book_barcode'); // Retrieve the book_barcode from the query parameter
+    public function index(Request $request): \Illuminate\Contracts\View\View    {
+        $user = Auth::user();
+        $books = Book::paginate(10);
+        $keywords = Keyword::all();
+        $subjects = Subject::all();
     
-    Paginator::useBootstrap();
-    
-
-        if(request('search')) {
+        Paginator::useBootstrap();
+        
+        if (request('search')) {
             $books = Book::where('book_title', 'like', '%' . request('search') . '%')
-            ->orwhere('book_callnumber', 'like', '%' . request('search') . '%')
-            ->orwhere('book_barcode', 'like', '%' . request('search') . '%')
-            ->orwhere('book_author', 'like', '%' . request('search') . '%')
-            ->orwhere('book_copyrightyear', 'like', '%' . request('search') . '%')
-            ->orwhere('book_sublocation', 'like', '%' . request('search') . '%')
-            ->orwhere('book_keyword', 'like', '%' . request('search') . '%')
-            ->orwhere('book_subject', 'like', '%' . request('search') . '%')->orderBy('book_title','asc')->paginate(10)->withQueryString();
-        } 
-    
-        else{
-        $books = DB::table('books')
-                  
-                    ->select('*', 'books.id as bookId' )
-                    ->paginate(10)->withQueryString();
+                ->orWhere('book_callnumber', 'like', '%' . request('search') . '%')
+                ->orWhere('book_barcode', 'like', '%' . request('search') . '%')
+                ->orWhere('book_author', 'like', '%' . request('search') . '%')
+                ->orWhere('book_copyrightyear', 'like', '%' . request('search') . '%')
+                ->orWhere('book_sublocation', 'like', '%' . request('search') . '%')
+                ->orWhere('book_keyword', 'like', '%' . request('search') . '%')
+                ->orWhere('book_subject', 'like', '%' . request('search') . '%')
+                ->orderBy('book_title', 'asc')
+                ->paginate(10);
+            
+            $books->appends(['search' => request('search')]); // Add search query parameter to pagination links
+        } else {
+            $books = DB::table('books')
+                ->select('*', 'books.id as bookId')
+                ->paginate(10);
         }
-
-        // return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'barcode'=>$barcode, 'bookBarcode'=>$bookBarcode]);
+    
         return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'keywords'=>$keywords, 'subjects'=>$subjects]);
-    }
-    /**
+    }    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
         $user = Auth::user();
         if ($user->type === 'technician librarian') {
-            // $barcode = $this->generateUniqueBarcode();
-            // return view('books_layout.books_list', ['barcode'=>$barcode]);
-            $barcode = null;
-
-            // $book_subject1 = is_array($request->input('book_subject')) ? implode(',', $request->input('book_subject')) : ($request->input('book_subject') ?? '');
-            // $book_keyword1 = is_array($request->input('book_keyword')) ? implode(',', $request->input('book_keyword')) : ($request->input('book_keyword') ?? '');            // Save to the database
-            // $book = new Book();
-            
-            // // Do not save individual arrays, save the comma-separated strings
-            // $book->book_subject = $book_subject1;
-            // $book->book_keyword = $book_keyword1;
-            
-            // $book->book_callnumber = $request->input('book_callnumber');
-            // $book->book_barcode = $request->input('book_barcode');
-            // $book->book_title = $request->input('book_title');
-            // $book->book_author = $request->input('book_author');
-            // $book->book_sublocation = $request->input('book_sublocation');
-            // $book->book_volume = $request->input('book_volume');
-            // $book->book_publisher = $request->input('book_publisher');
-            // $book->book_purchasedwhen = $request->input('book_purchasedwhen');
-            // $book->book_lccn = $request->input('book_lccn');
-            // $book->book_isbn = $request->input('book_isbn');
-            // $book->book_edition = $request->input('book_edition');
-
-
-
-            // $book->save();
+            // Assuming you have some logic to generate the barcode
             
             return view('books_layout.books_list', compact('barcode'));
         } else {
@@ -147,10 +115,16 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBookRequest $request)
-    {
+    public function store(StoreBookRequest $request): \Illuminate\Http\RedirectResponse    {
         // Book::create($request->all());
         // return redirect()->route('books.index');
+        // $barcode = $this->generateUniqueBarcode();
+
+
+        $bookBarcode = $request->input('book_barcode');
+        $existingBook = Book::where('book_barcode', $bookBarcode)->first();
+
+        
         $data = $request->all();
 
         // Split authors by comma and trim any extra whitespaces
@@ -177,10 +151,16 @@ class BookController extends Controller
         $data['book_keyword'] = json_encode($request->book_keyword);
 
     
-        Book::create($data);
-    
-        return redirect()->route('books.index');
-    }
+            // Store the input data in the session
+            $request->session()->put('book_data', $data);
+
+            Book::create($data);
+
+            if ($existingBook) {
+                return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that barcode is already registered.');
+            } else {
+                return redirect()->route('books.index');
+            }            }
 
     /**
      * Display the specified resource.
@@ -188,9 +168,12 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): Response
     {
-        //
+        $book = Book::findOrFail($id);
+    
+        // Assuming you have a view called 'books.show' to display the book details
+        return response()->view('books.show', ['book' => $book]);
     }
 
     /**
@@ -199,13 +182,12 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Book $book)
+    public function edit(Book $book): View
     {
         $user = Auth::user();
-        if($user->type === 'technician librarian') {
+        if ($user->type === 'technician librarian') {
             return view('books_layout.view_bookdetails', compact('book'));
-        }
-        else{
+        } else {
             return redirect()->back();
         }
     }
@@ -216,13 +198,13 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateBookRequest $request, Book $book)
-    {
-        $book->update($request->all()); 
+     * 
+     */public function update(UpdateBookRequest $request, Book $book): \Illuminate\Http\RedirectResponse
+{
+    $book->update($request->all()); 
 
-        return redirect()->route('books.index')->with('success','Book successfully updated!');
-    }
+    return redirect()->route('books.index')->with('success','Book successfully updated!');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -230,17 +212,17 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy(Book $book): \Illuminate\Http\RedirectResponse
     {
         $user = Auth::user();
-        if($user->type === 'technician librarian') {
-        $book->delete();
-            return redirect()->route('archive')->with('success', 'User Deleted');
-        }
-        else{
+        if ($user->type === 'technician librarian') {
+            $book->delete();
+            return redirect()->route('archive')->with('success', 'Book Deleted');
+        } else {
             return redirect()->back();
         }
     }
+    
 
         
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
@@ -298,14 +280,17 @@ class BookController extends Controller
     }
     public function view_bookdetails(Book $book)
     {
-        $barcode = $this->generateUniqueBarcode();
+
             $user = Auth::user();
-
-            $keywords = Keyword::all();
-            $subjects = Subject::all();
-            
-            return view('books_layout.view_bookdetails', compact('book','user','barcode', 'keywords', 'subjects'));
-
+            if ($user->type === 'technician librarian') {
+                $keywords = Keyword::all();
+                $subjects = Subject::all();
+                $barcode = $book->book_barcode;
+                
+                return view('books_layout.view_bookdetails', compact('book','user','barcode', 'keywords', 'subjects'));
+                } else {
+                return redirect()->back();
+            }
     }
 
     
@@ -354,70 +339,74 @@ class BookController extends Controller
         
         $setCount = 1;
         while ($request->has("subject_$setCount") && $request->has("keyword_$setCount")) {
-            $subjectNames = $request->input("subject_$setCount");
-        
             // Initialize subject-specific arrays for each set
             $subjectNamesList = [];
             $subjectNamee = [];
             $subjectCodesList = [];
             $keywordsList = [];
+            $subjectIDList = []; // Reset subject ID list for each set
         
+            $filteredBooks = collect(); // Reset filtered books collection for each set
+        
+            $subjectNames = $request->input("subject_$setCount");
             $subject = Subject::where('id', $subjectNames)->first();
             if ($subject) {
+                $subjectIDList[] = $subject->id;
                 $subjectNamesList[] = $subjectNames;
-                $subjectNamee[]=$subject->subject_name;
+                $subjectNamee[] = $subject->subject_name;
                 $subjectCodesList[] = $subject->subject_code; // Store subject code
                 $keywordsList[] = $request->input("keyword_$setCount");
+                $keywordIds = $request->input("keyword_$setCount");
+                $keywordsListt = Keyword::whereIn('id', $keywordIds)->pluck('keyword')->toArray();
+
             }
         
-            // Filter books for the current set
-            $filteredBooks = collect();
-            foreach ($books as $book) {
-                $jsonSubject = $book->book_subject;
-                $subjectArray = json_decode($jsonSubject, true);
-                $jsonKeyword = $book->book_keyword;
-                $keywordArray = json_decode($jsonKeyword, true);
-        
-                if ($book->archive_reason) {
-                    continue; // Skip the book if it is archived
-                }
 
-                if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
-                    continue; // Skip the book if the prefix doesn't match
-                }
+                foreach ($books as $book) {
+                    $jsonSubject = $book->book_subject;
+                    $subjectArray = json_decode($jsonSubject, true);
+                    $jsonKeyword = $book->book_keyword;
+                    $keywordArray = json_decode($jsonKeyword, true);
+                    $titleWords = explode(' ', strtolower($book->book_title));
 
-                // Check if any subject name provided by the user matches any subject in the book
-                foreach ($subjectNamesList as $subjectName) {
-                    if (in_array($subjectName, $subjectArray)) {
-                        $filteredBooks->push($book);
-                        break; // Once a match is found, break the loop for this book
+                    if ($book->archive_reason) {
+                        continue; // Skip the book if it is archived
                     }
-                }
-        
-                // Check if any keyword provided by the user matches any keyword in the book
-                // foreach ($keywordsList as $keywords) {
-                //     $keywordss = preg_split('/,/', $keywords);
-                //     foreach ($keywordsList as $keyword) {
-                //         if (in_array($keyword, $keywordArray)) {
-                //             $filteredBooks->push($book);
-                //             break 2; // Break both inner and outer loop once a match is found
-                //         }
-                //     }
-                // }
-                foreach ($keywordsList as $keywordsString) {
-                    foreach ($keywordsString as $keyword) {
-                        // Now you can process each individual keyword
-                        if (in_array($keyword, $keywordArray)) {
+
+                    if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
+                        continue; // Skip the book if the prefix doesn't match
+                    }
+
+                    // Check if any subject name provided by the user matches any subject in the book
+                    foreach ($subjectIDList as $subjectid) {
+                        if (in_array($subjectid, $subjectArray)) {
                             $filteredBooks->push($book);
-                            break 2; // Break both inner and outer loop once a match is found
+                            break; // Once a match is found, break the loop for this book
+                        }
+                    }
+
+                    // Check if any keyword provided by the user matches any keyword in the book
+                    foreach ($keywordsList as $keywordsString) {
+                        foreach ($keywordsString as $keyword) {
+                            // Now you can process each individual keyword
+                            if (in_array($keyword, $keywordArray)) {
+                                $filteredBooks->push($book);
+                                break 2; // Break both inner and outer loop once a match is found
+                            }
+                        }
+                    }
+
+                    // Check if any word in the title matches any keyword
+                    foreach ($titleWords as $titleWord) {
+                        foreach ($keywordsListt as $keyword) {
+                            if (strtolower($keyword) === strtolower($titleWord)) {
+                                $filteredBooks->push($book);
+                                continue 3; // Continue with the next book once a match is found
+                            }
                         }
                     }
                 }
-                
-                
-            }
-        
-            // Remove duplicates from filtered books
+            // Remove duplicate books based on ID
             $filteredBooks = $filteredBooks->unique('id');
         
             // Store filtered books for the current set
@@ -438,23 +427,18 @@ class BookController extends Controller
                         'call_number' => $book->book_callnumber,
                         'author' => $book->book_author,
                         'totalCopies' => 1,
-                        'totalVolumes' => $book->book_volume ? 1 : 0,
                         'copyright' => $book->book_copyrightyear,
-
                     ];
                 } else {
                     $bookStats[$callNumber]['totalCopies'] += 1;
-                    if ($book->book_volume) {
-                        $bookStats[$callNumber]['totalVolumes'] += 1;
-                    }
                 }
             }
         
             // Store book stats for the current set
             $bookStatsSets[$setCount] = $bookStats;
-        
             $setCount++;
         }
+        
         
         // Now you have filtered books, book stats, subject names, and subject codes for each set
         // You can use $filteredBooksSets, $bookStatsSets, $subjectNamesListSets, and $subjectCodesListSets to pass to the PDF view
@@ -487,56 +471,70 @@ class BookController extends Controller
                 $bookStatsSets = []; // Array to hold book stats for different sets
                 $subjectNamesListSets = []; // Array to hold subject names for different sets
                 $subjectCodesListSets = []; // Array to hold subject codes for different sets
-                
-                $setCount = 1;
+                $setCount = 1; // Reset $setCount for each iteration
                 while ($request->has("subject_$setCount") && $request->has("keyword_$setCount")) {
-                    $subjectNames = $request->input("subject_$setCount");
-                
-                    // Initialize subject-specific arrays for each set
+                    // Reset variables for each iteration
                     $subjectNamesList = [];
                     $subjectNamee = [];
                     $subjectCodesList = [];
                     $keywordsList = [];
+                    $subjectIDList = [];
+                    $filteredBooks = collect();
                 
+                    $subjectNames = $request->input("subject_$setCount");
                     $subject = Subject::where('id', $subjectNames)->first();
                     if ($subject) {
+                        $subjectIDList[] = $subject->id;
                         $subjectNamesList[] = $subjectNames;
-                        $subjectNamee[]=$subject->subject_name;
+                        $subjectNamee[] = $subject->subject_name;
                         $subjectCodesList[] = $subject->subject_code; // Store subject code
                         $keywordsList[] = $request->input("keyword_$setCount");
+                        $keywordIds = $request->input("keyword_$setCount");
+                        $keywordsListt = Keyword::whereIn('id', $keywordIds)->pluck('keyword')->toArray();
+        
                     }
                 
                     // Filter books for the current set
-                    $filteredBooks = collect();
                     foreach ($books as $book) {
                         $jsonSubject = $book->book_subject;
                         $subjectArray = json_decode($jsonSubject, true);
                         $jsonKeyword = $book->book_keyword;
                         $keywordArray = json_decode($jsonKeyword, true);
+                        $titleWords = explode(' ', strtolower($book->book_title));
 
+                
                         if ($book->archive_reason) {
                             continue; // Skip the book if it is archived
                         }
-
+                
                         if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
                             continue; // Skip the book if the prefix doesn't match
                         }
                 
                         // Check if any subject name provided by the user matches any subject in the book
-                        foreach ($subjectNamesList as $subjectName) {
-                            if (in_array($subjectName, $subjectArray)) {
+                        foreach ($subjectIDList as $subjectid) {
+                            if (in_array($subjectid, $subjectArray)) {
                                 $filteredBooks->push($book);
                                 break; // Once a match is found, break the loop for this book
                             }
                         }
                 
                         // Check if any keyword provided by the user matches any keyword in the book
-                        foreach ($keywordsList as $keywords) {
-                            $keywords = preg_split('/,/', $keywords);
-                            foreach ($keywords as $keyword) {
+                        foreach ($keywordsList as $keywordsString) {
+                            foreach ($keywordsString as $keyword) {
+                                // Now you can process each individual keyword
                                 if (in_array($keyword, $keywordArray)) {
                                     $filteredBooks->push($book);
                                     break 2; // Break both inner and outer loop once a match is found
+                                }
+                            }
+                        }
+
+                        foreach ($titleWords as $titleWord) {
+                            foreach ($keywordsListt as $keyword) {
+                                if (strtolower($keyword) === strtolower($titleWord)) {
+                                    $filteredBooks->push($book);
+                                    continue 3; // Continue with the next book once a match is found
                                 }
                             }
                         }
@@ -559,26 +557,21 @@ class BookController extends Controller
                 
                         if (!isset($bookStats[$callNumber])) {
                             $bookStats[$callNumber] = [
-                                'totalVolumes' => $book->book_volume ? 1 : 0,
+                                'totalCopies' => 1,
                                 'copyright' => $book->book_copyrightyear,
                             ];
                         } else {
                             $bookStats[$callNumber]['totalCopies'] += 1;
-                            if ($book->book_volume) {
-                                $bookStats[$callNumber]['totalVolumes'] += 1;
-                            }
+
                         }
                     }
                 
                     // Store book stats for the current set
                     $bookStatsSets[$setCount] = $bookStats;
                 
-                    $setCount++;
+                    $setCount++; // Increment set count for next iteration
                 }
-                
-                // Now you have filtered books, book stats, subject names, and subject codes for each set
-                // You can use $filteredBooksSets, $bookStatsSets, $subjectNamesListSets, and $subjectCodesListSets to pass to the PDF view
-                
+                                
                 if (!empty($filteredBooksSets)) {
                     $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_collection', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets'))->setPaper('a4', 'landscape');
                     return $pdf->stream('collectionanalysis.pdf');

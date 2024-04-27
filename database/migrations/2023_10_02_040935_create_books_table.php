@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('book_title');
             $table->string('book_callnumber');
             $table->string('book_barcode')->unique()->nullable();
-            $table->string('book_volume')->nullable();
             $table->string('book_author');
             $table->integer('book_copyrightyear');
             $table->string('book_sublocation');
@@ -28,7 +27,7 @@ return new class extends Migration
             $table->string('book_publisher');
             $table->date('book_purchasedwhen');
             $table->string('book_lccn')->nullable();
-            $table->string('book_isbn');
+            $table->string('book_isbn')->nullable();
             $table->string('book_edition')->nullable();
             $table->integer('status');
             $table->integer('archive_reason')->nullable();

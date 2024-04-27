@@ -153,17 +153,7 @@
           <div class="modal-body">
           {{ csrf_field() }}
 
-        <div class="form-group">
-        <label>Subject Description</label>
-        <input class="form-control" type="text" name="subject_name" id="subject_name" required>
-        </div>
-
-        <div class="form-group">
-        <label>Subject Code</label>
-        <input class="form-control" type="text" name="subject_code" id="subject_code" required>
-        </div>
-
-        <div class="form-group">
+          <div class="form-group">
         <label>Course</label>
           <select class="mySelect" name="subject_course[]" id="subject_course" multiple="multiple" style="width: 100%" required>
             @foreach($courses as $course)
@@ -172,6 +162,15 @@
           </select>
         </div>
 
+          <div class="form-group">
+        <label>Subject Code</label>
+        <input class="form-control" type="text" name="subject_code" id="subject_code" required>
+        </div>
+
+        <div class="form-group">
+        <label>Subject Description</label>
+        <input class="form-control" type="text" name="subject_name" id="subject_name" required>
+        </div>
 
           </div>
           <div class="modal-footer">

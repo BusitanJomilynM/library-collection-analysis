@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreKeywordRequest extends FormRequest
 {
@@ -24,14 +25,24 @@ class StoreKeywordRequest extends FormRequest
     public function rules()
     {
         return [
-            'keyword'=>'keyword|unique:keyword',
+            'keyword' => [
+                'required',
+                Rule::unique('keyword', 'keyword') // 'keywords' should be the table name where keywords are stored
+            ],
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
     public function messages()
     {
-        return[
-            'keyword.required'=>'Keyword is required'
+        return [
+            'keyword.required' => 'Keyword is required.',
+            'keyword.unique' => 'Keyword must be unique.',
         ];
     }
 }
+

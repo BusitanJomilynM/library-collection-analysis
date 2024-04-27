@@ -91,22 +91,6 @@
           {{ csrf_field() }}
 
           <div class="form-group">
-        <label class="required">Course Name</label>
-        <input class="form-control @error('course_name') is-invalid @enderror" type="text" name="course_name" id="course_name" value="{{$course->course_name}}"required>
-        @error('course_name')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
-
-        <div class="form-group">
-        <label class="required">Course Code</label>
-        <input class="form-control @error('course_code') is-invalid @enderror" type="text" name="course_code" id="course_code" value="{{$course->course_code}}" required>
-        @error('course_code')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
-
-        <div class="form-group">
         <label class="required">Department</label>
             <select class="form-control" name="course_department" id="course_department" value="{{$course->course_department}}" required> 
             <option value="SBAA" {{ old('course_department') == "SBAA" || $course->course_department == "SBAA" ? 'selected' : '' }}>SBAA - School of Business Administration & Accountancy</option>
@@ -122,6 +106,25 @@
             <option value="Graduate School" {{ old('course_department') == "Graduate School" || $course->course_department == "Graduate School" ? 'selected' : '' }}>Graduate School</option>
             </select>   
     </div>
+
+    <div class="form-group">
+        <label class="required">Course Code</label>
+        <input class="form-control @error('course_code') is-invalid @enderror" type="text" name="course_code" id="course_code" value="{{$course->course_code}}" required>
+        @error('course_code')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+        </div>
+
+
+          <div class="form-group">
+        <label class="required">Course Name</label>
+        <input class="form-control @error('course_name') is-invalid @enderror" type="text" name="course_name" id="course_name" value="{{$course->course_name}}"required>
+        @error('course_name')
+            <span class="text-danger">{{$message}}</span>
+        @enderror
+        </div>
+
+
 
           </div>
           <div class="modal-footer">
@@ -141,56 +144,66 @@
 <div class="modal fade" id="createCourseModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createCourseModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+
       <div class="modal-header">
         <h5 class="modal-title" id="deleteUserModalLabel">Add New Course</h5>
       </div>
+
+
         <form action="{{ route('courses.store') }}" method="POST">
           <div class="modal-body">
           {{ csrf_field() }}
+          <div id="initialFields" class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                  <label class="required">Department</label>
+                        <select class="form-control" name="course_department" id="course_department" required>
+                        <option value="">--Select Department--</option>
+                        <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
+                        <option value="SOD">SOD - School of Dentistry</option>
+                        <option value="SIT">SIT - School of Information Technology</option>
+                        <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
+                        <option value="SEA">SEA - School of Engineering & Architecture</option>
+                        <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
+                        <option value="SOL">SOL - School of Law</option>
+                        <option value="SNS">SNS - School of Natural Sciences</option>
+                        <option value="SON">SON - School of Nursing</option>
+                        <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
+                        <option value="Graduate School">Graduate School</option>
+                      </select>
+                </div>
+              </div>
 
-        <div class="form-group">
-        <label class="required">Course Name</label>
-        <input class="form-control  @error('course_name') is-invalid @enderror" type="text" name="course_name" id="course_name" required>
-        @error('course_name')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label class="required">Course Code</label>
+                    <input class="form-control  @error('course_code') is-invalid @enderror" type="text" name="course_code" id="course_code" required>
+                    @error('course_code')
+                        <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+              </div>
 
-        <div class="form-group">
-        <label class="required">Course Code</label>
-        <input class="form-control  @error('course_code') is-invalid @enderror" type="text" name="course_code" id="course_code" required>
-        @error('course_code')
-            <span class="text-danger">{{$message}}</span>
-        @enderror
-        </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="required">Course Name</label>
+                    <input class="form-control  @error('course_name') is-invalid @enderror" type="text" name="course_name" id="course_name" required>
+                    @error('course_name')
+                        <span class="text-danger">{{$message}}</span>
+                    @enderror
+                  </div>
+              </div>
 
-        <div class="form-group">
-        <label class="required">Department</label>
-            <select class="form-control" name="course_department" id="course_department" required>
-            <option value="">--Select Department--</option>
-            <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
-            <option value="SOD">SOD - School of Dentistry</option>
-            <option value="SIT">SIT - School of Information Technology</option>
-            <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
-            <option value="SEA">SEA - School of Engineering & Architecture</option>
-            <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
-            <option value="SOL">SOL - School of Law</option>
-            <option value="SNS">SNS - School of Natural Sciences</option>
-            <option value="SON">SON - School of Nursing</option>
-            <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
-            <option value="Graduate School">Graduate School</option>
-            
-            </select>
-    </div>
+            </div> <!-- dont delete -->
+          </div> <!-- dont delete -->
 
-          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-danger">Submit</button>
           </div>
         </form>
 
-        
+        </div>
     </div>
   </div>
 </div>

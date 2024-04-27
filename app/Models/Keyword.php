@@ -17,6 +17,5 @@ class Keyword extends Model
       protected $table = 'keyword';
 
     
-
       
 }

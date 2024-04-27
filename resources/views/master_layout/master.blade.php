@@ -41,7 +41,7 @@
             color: white;
         }
         body {
-  background-image: url('/images/bg.png');
+  /* background-image: url('/images/bg.png'); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

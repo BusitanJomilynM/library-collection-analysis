@@ -60,6 +60,7 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     // Keyword suggestion
     Route::resource('/keywords_suggestion', KeywordSuggestController::class);
     Route::get('/keywords_suggestion', [KeywordSuggestController::class, 'index'])->name('keywordsuggest.index');
+
     Route::get('/create', 'KeywordSuggestController@create')->name('keywordsuggest.create');
     Route::post('/store', 'App\Http\Controllers\KeywordSuggestController@store')->name('keywordsuggest.store');
     Route::post('/append/{keywordsuggest}/{book}', [KeywordSuggestController::class, 'appendkeyword'])->name('appendkeyword');
@@ -101,10 +102,12 @@ Route::group(['auth', ['user-access:technician librarian|staff librarian']], fun
     Route::post('/replace/{tag}/{book}',  [TagController::class, 'replace'])->name('replace');
     
     //booklist reports
+    Route::resource('/generate-booklist', BookController::class);
     Route::get('/generate-booklist', [BookController::class, 'booklistPdf'])->name('booklist_pdf');
     Route::get('/pdf_view', [BookController::class, 'booklistPdf'])->name('pdf_view');
 
     // collectionAnalysis reports
+    Route::resource('/generate-collectionanalysis', BookController::class);
     Route::get('/generate-collectionanalysis', [BookController::class, 'collectionAnalysis'])->name('booklis_pdf');
     Route::get('/pdf_collection', [BookController::class, 'collectionAnalysis'])->name('pdf_collection');
     

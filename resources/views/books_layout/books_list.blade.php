@@ -399,7 +399,7 @@
             {{ csrf_field() }}
             <div class="form-group">
         <label class="required">Book Title</label>
-        <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title"  minlength="1" maxlength="60" required>
+        <input class="form-control @error('book_title') is-invalid @enderror" type="text" name="book_title" id="book_title"  minlength="1" maxlength="60" value="{{ old('book_title') }}" required>
         @error('book_title')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -409,62 +409,62 @@
     <div class="row">
         <div class="col-md-6">
         <label class="required">Call Number</label>
-        <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" minlength="4" maxlength="25" required>
+        <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" minlength="4" maxlength="25"  value="{{ old('book_callnumber') }}" required >
         @error('book_callnumber')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
 
 
-    <div class="col-md-6">
+<div class="col-md-6">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
             <label class="required">Barcode</label>
-            <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" required>
+            <div class="input-group">
+                <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" value="{{ old('book_barcode') }}" required>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="generateBarcodeButton">Generate Barcode</button>
+                </div>
+            </div>
             @error('book_barcode')
                 <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
-        <div class="col-md-3">
-            <!-- Button to generate a barcode -->
-            <button class="btn btn-primary" id="generateBarcodeButton">Generate Barcode</button>
-        </div>
     </div>
 </div>
 
+
     <div class="form-group">
         <label class="required">Author</label>
-        <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="150" required>
+        <input class="form-control @error('book_author') is-invalid @enderror" type="text" name="book_author" id="book_author"  minlength="2" maxlength="150" value="{{ old('book_author') }}" required>
         @error('book_author')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="form-group">
         <label class="required">Purchase Date</label>
-        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen"  pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
+        <input class="form-control @error('book_purchasedwhen') is-invalid @enderror" type="date" name="book_purchasedwhen" id="book_purchasedwhen"  pattern="\d*" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ old('book_purchasedwhen') }}" required>
         @error('book_purchasedwhen')
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
 
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <label>Volume</label>
         <input class="form-control @error('book_volume') is-invalid @enderror" type="number" name="book_volume" id="book_volume"  pattern="\d*" minlength="1" maxlength="60">
         @error('book_volume')
             <span class="text-danger">{{$message}}</span>
         @enderror
-    </div>
-</div>
+    </div> -->
 
     <div class="form-group">
-        <label class="required">Sublocation</label>
-            <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" required>
+        <label class="required">Location</label>
+            <select class="form-control @error('type') is-invalid @enderror" name="book_sublocation" id="book_sublocation" value="{{ old('book_sublocation') }}" required>
             <option value="">--Select Sublocation--</option>
-            <option value="A Building">Main Library - A Building</option>
-            <option value="F Building">Centennial Library - F Building</option>
-            <option value="H Building">FGB Library - H Building</option>
+            <option value="A Building">RCB Library - A Building</option>
+            <option value="F Building">Centennial Library - H Building</option>
+            <option value="H Building">FGB Library - F Building</option>
             </select>
             @error('book_sublocation')
             <span class="text-danger">{{$message}}</span>
@@ -473,9 +473,9 @@
 
     <div class="form-group">
         <label class="required">Copyright Year</label>
-            <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" required>
+            <select class="form-control @error('type') is-invalid @enderror" type="number" name="book_copyrightyear" id="book_copyrightyear" value="{{ old('book_copyrightyear') }}"required>
                 <option value="">--Select Year--</option>
-                @for($x=1980 ; $x <= 2030 ; $x++)
+                @for($x=1920 ; $x <= 2030 ; $x++)
                 <option value="{{$x}}">{{$x}}</option>
                 @endfor
             </select>
@@ -483,7 +483,7 @@
 
 <div class="form-group">
         <label>Edition</label>
-        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition"  minlength="1" maxlength="10" >
+        <input class="form-control @error('book_edition') is-invalid @enderror" type="text" name="book_edition" id="book_edition"  minlength="1" maxlength="50" value="{{ old('book_edition') }}">
         @error('book_edition')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -494,15 +494,15 @@
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
       <option value="0">--NO SUBJECT--</option>
       @foreach($subjects as $subject)
-      <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
-      @endforeach
+      <option value="{{$subject->id}}" {{ (collect(old('book_subject'))->contains($subject->id)) ? 'selected':'' }}>{{$subject->subject_name}}</option>     
+       @endforeach
       </select>
     </div>
 
 
     <div class="form-group">
         <label class="required">Published By</label>
-        <input class="form-control @error('book_publisher') is-invalid @enderror" type="text" name="book_publisher" id="book_publisher"minlength="4" maxlength="50" required>
+        <input class="form-control @error('book_publisher') is-invalid @enderror" type="text" name="book_publisher" id="book_publisher"minlength="4" maxlength="50" value="{{ old('book_publisher') }}" required>
         @error('book_publisher')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -511,7 +511,7 @@
     <div class="row">
         <div class="col-md-6">
         <label>LCCN</label>
-        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13">
+        <input class="form-control @error('book_lccn') is-invalid @enderror" type="text" name="book_lccn" id="book_lccn"  minlength="5" maxlength="13" value="{{ old('book_lccn') }}">
         @error('book_lccn')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -519,7 +519,7 @@
 
     <div class="col-md-6">
         <label class="required">ISBN</label>
-        <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn"  minlength="10" maxlength="20" required>
+        <input class="form-control @error('book_isbn') is-invalid @enderror" type="text" name="book_isbn" id="book_isbn"  minlength="10" maxlength="20" value="{{ old('book_isbn') }}">
         @error('book_isbn')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -532,7 +532,7 @@
 <label class="required">Keyword</label>
       <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required>
       @foreach($keywords as $keyword)
-      <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+      <option value="{{$keyword->id}}" {{ (collect(old('book_keyword'))->contains($keyword->id)) ? 'selected':'' }}>{{$keyword->keyword}}</option>      
       @endforeach
       </select>
     </div>
@@ -610,4 +610,5 @@ input[type=text]
 { flex-grow: 1; 
 }
 </style>
+
 @endsection
