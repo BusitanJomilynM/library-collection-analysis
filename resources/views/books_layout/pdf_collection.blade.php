@@ -153,60 +153,62 @@
                                 $anotpreviousYear => ['books' => 0, 'volumes' => 0],
                                 $anothpreviousYear => ['books' => 0, 'volumes' => 0]
                             ];
-                            $totalBooks = 0;
+                            $encountered_callnumbers = [];
+$totalBooks = 0;
 $totalVolumes = 0;
-
-// Array to store encountered book call numbers
-$encountered_callnumbers = [];
 
 // Loop through the filtered books to count books and volumes for each year
 foreach ($filteredBooks as $book) {
+    if ($book->in_book_archive) {
+        continue; // Skip counting books in the archive
+    }
     $matched = false; // Flag to track if the year matches any specified year
 
     // Check if the book's copyright year matches any of the specified years
     foreach ($yearBooksCounts as $year => &$counts) {
-        if ($book->book_copyrightyear == $year) {
-            // Check if the current book call number has been encountered before
-            if (!isset($encountered_callnumbers[$book->book_callnumber])) {
-                $encountered_callnumbers[$book->book_callnumber] = true; // Mark the call number as encountered
-                // Increment book count for the current year
-                $counts['books']++;
-            }
+            if ($book->book_copyrightyear == $year) {
+                // Check if the current book call number has been encountered before
+                if (!isset($encountered_callnumbers[$year][$book->book_callnumber])) {
+                    $encountered_callnumbers[$year][$book->book_callnumber] = 1; // Mark the call number as encountered for the first time
+                    // Increment book count for the current year
+                    $counts['books']++;
+                } else {
+                    // If the call number has been encountered before, increment the count
+                    $encountered_callnumbers[$year][$book->book_callnumber]++;
+                }
 
-            // Increment volume count only if encountering the call number for the second time
-            if (isset($encountered_callnumbers[$book->book_callnumber]) && $encountered_callnumbers[$book->book_callnumber]) {
-                $counts['volumes']++;
-                $encountered_callnumbers[$book->book_callnumber] = false; // Mark as encountered more than once
-            }
+                // Increment volume count for each copy of the book
+                $counts['volumes'] += $encountered_callnumbers[$year][$book->book_callnumber];
 
-            $matched = true; // Set the flag to true since a match occurred
-            break; // No need to check other years if a match is found
+                $matched = true; // Set the flag to true since a match occurred
+                break; // No need to check other years if a match is found
+            }
         }
-    }
 
-    // If no match is found, increment count for $anothpreviousYear
+    // If no match is found for any specified year, increment count for $anothpreviousYear
     if (!$matched) {
-        if (!isset($encountered_callnumbers[$book->book_callnumber])) {
-            $encountered_callnumbers[$book->book_callnumber] = true; // Mark the call number as encountered
+        if (!isset($encountered_callnumbers[$anothpreviousYear][$book->book_callnumber])) {
+            $encountered_callnumbers[$anothpreviousYear][$book->book_callnumber] = 1; // Mark the call number as encountered for the first time
             $yearBooksCounts[$anothpreviousYear]['books']++;
         } else {
-            // Increment volume count only if encountering the call number for the second time
-            if ($encountered_callnumbers[$book->book_callnumber]) {
-                $yearBooksCounts[$anothpreviousYear]['volumes']++;
-                $encountered_callnumbers[$book->book_callnumber] = false; // Mark as encountered more than once
-            }
+            // If the call number has been encountered before, increment the count
+            $encountered_callnumbers[$anothpreviousYear][$book->book_callnumber]++;
         }
+        // Increment volume count for each copy of the book
+        $yearBooksCounts[$anothpreviousYear]['volumes'] ++;
     }
 }
 
-// Calculate the total number of books and volumes based on unique call numbers
-$totalBooks = count($encountered_callnumbers);
-foreach ($encountered_callnumbers as $callnumber => $encountered) {
-    if (!$encountered) {
-        $totalVolumes++;
+// Calculate the total number of books based on unique call numbers
+$totalBooks = count($encountered_callnumbers[$anothpreviousYear]);
+
+// Calculate the total volumes across all years
+foreach ($encountered_callnumbers as $year => $callnumbers) {
+    foreach ($callnumbers as $callnumber => $count) {
+        $totalVolumes += $count;
     }
 }
-                        @endphp
+                       @endphp
                         
                         @foreach ([$currentYear, $previousYear, $anpreviousYear, $anopreviousYear, $anotpreviousYear, $anothpreviousYear] as $year)
                             <th style="font-size: 12px; text-align: center;" colspan="1">{{ $yearBooksCounts[$year]['books'] }}</th>

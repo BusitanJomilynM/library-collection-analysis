@@ -78,8 +78,8 @@
 
 
     <div style="text-align: center;">
-        <h3>{{ $course_name ?? '' }} Booklist</h3>
-        <p class="another-another-another-paragraph">As of {{ \Carbon\Carbon::now()->format('F Y') }}</p>
+    <h3 style="margin-bottom: 0.5em;">{{ $course_name ?? '' }} Booklist</h3>
+<p class="another-another-another-paragraph" style="margin-top: 0.5em; margin-bottom: 0.5em;">As of {{ \Carbon\Carbon::now()->format('F Y') }}</p>
     </div>
 
 <!-- Check if filtered books exist -->
@@ -91,19 +91,20 @@
             <table border="1" cellspacing="0" cellpadding="5" align="center">
                 <!-- Table header -->
                 <thead>
-                <tr align="center">
-                    <th colspan="1">
+                <tr align="center" style="background-color: yellow;">
+                    <th style="font-style: italic;" colspan="1">
                         {{ isset($subjectCodesListSets[$setCount]) ? $subjectCodesListSets[$setCount][0] : '' }}
                     </th>
                     <th colspan="3">
                         {{ isset($subjectNamesListSets[$setCount]) ? $subjectNamesListSets[$setCount][0] : '' }}
                     </th>
                 </tr>
+
                 <tr align="center">
-                    <th style="font-size: 12px; text-align: center;" colspan="1">Call Number</th>
-                    <th style="font-size: 12px; text-align: center;" colspan="1">Title</th>
-                    <th style="font-size: 12px; text-align: center;" colspan="1">Author</th>
-                    <th style="font-size: 12px; text-align: center;" colspan="1">Copies</th>
+                    <th style="font-size: 14px; text-align: center; font-style: italic;" colspan="1">Call Number</th>
+                    <th style="font-size: 14px; text-align: center; font-style: italic;" colspan="1">Title</th>
+                    <th style="font-size: 14px; text-align: center; font-style: italic;" colspan="1">Author</th>
+                    <th style="font-size: 14px; text-align: center; font-style: italic;" colspan="1">Total Copies</th>
                 </tr>
                 </thead>
                 <!-- Table body -->
@@ -128,10 +129,11 @@
                         @endif
                     @endforeach     
                     <!-- Total row -->
-                    <tr align="center">
-                        <td colspan="3">Total</td>
-                        <td >{{$totalCopies}}</td>
+                    <tr align="center" style="font-weight: bold; color: red;">
+                    <td colspan="3" style="text-align: right;">TOTAL TITLES/VOLUMES :</td>
+                        <td>{{ $uniqueCallNumbersSets[$setCount] }} / {{ $totalCopies }}</td>
                     </tr>
+
                 </tbody>
             </table>
             <br>

@@ -10,7 +10,7 @@ class Keyword extends Model
     use HasFactory;
 
     protected $fillable = [
-      
+        'decimal_classification',
         'keyword'
       ];
 

@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('keyword', function (Blueprint $table) {
+        Schema::create('keywords', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('decimal_classification');
             $table->string('keyword');
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('keyword');
+        Schema::dropIfExists('keywords');
     }
 };

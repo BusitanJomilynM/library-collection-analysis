@@ -43,10 +43,12 @@ namespace App\Http\Controllers;
          *
          * @return \Illuminate\Http\Response
          */
+
         public function create()
-        {
-            return view('keywords_layout.keywords_list');
-        }
+{
+    return view('keywords_layout.create_keyword'); // Assuming you have a view for creating a new keyword
+}
+
 
         /**
          * Store a newly created resource in storage.
@@ -79,8 +81,9 @@ namespace App\Http\Controllers;
          */
         public function edit(Keyword $keyword)
         {
-            return view('keywords_layout.keywords_list', compact('keyword'));
+            return view('keywords_layout.edit_keyword', compact('keyword'));
         }
+        
 
         /**
          * Update the specified resource in storage.

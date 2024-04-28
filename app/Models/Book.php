@@ -11,6 +11,7 @@ class Book extends Model
 
     protected $fillable = [
         'book_callnumber',
+        'book_callnumberdescription',
         'book_barcode',
         'book_title',
         'book_author',

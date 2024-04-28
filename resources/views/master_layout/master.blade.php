@@ -122,13 +122,13 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
                                     </a>
                                 </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('keywords.index')}}">Keywords</a>
+                            <a class="nav-link" href="{{route('keywords.index')}}">Book Subject</a>
                         </li>
 
                         <li class="nav-item">
@@ -178,13 +178,13 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
                                     </a>
                                 </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('keywords.index')}}">Keywords</a>
+                            <a class="nav-link" href="{{route('keywords.index')}}">Book Subject</a>
                         </li>
                         
                         <li class="nav-item">
@@ -214,7 +214,7 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
                                     </a>
                                 </div>
                         </li> 
@@ -238,7 +238,7 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Keyword Suggestions</a>
+                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
                                     </a>
                                 </div>
                         </li>

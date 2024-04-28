@@ -62,7 +62,7 @@
         <td>
         <div class="form"><h5>Barcode: {{ $book->book_barcode}}</h5></div> 
         <br>
-        <div class="form"><h5>Call Number: {{ $book->book_callnumber}}</h5></div> 
+        <div class="form"><h5>Call Number: {{ $book->book_callnumber}} {{$book->book_callnumberdescription}}</h5></div> 
         <br>
         <div class="form"><h5>Publisher: {{ $book->book_publisher}}</h5></div> 
         <br>
@@ -329,18 +329,19 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label>Book Callnumber</label>
             <input class="form-control" type="text" name="book_callnumber" id="book_callnumber" value="{{ $book->book_callnumber }}" minlength="1" maxlength="60" readonly>
             <input type="hidden" name="book_callnumber" value="{{ $book->book_callnumber }}">
         </div>
+        <div class="col-md-2">
+            <label>Description</label>
+            <input class="form-control" type="text" name="book_callnumberdescription" id="book_callnumberdescription" minlength="1" maxlength="20" required placeholder="copy number">
+        </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
         <label>Barcode</label>
             <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode}}"  minlength="2" maxlength="7" required>
-            <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" id="generateBarcodeButton">Generate Barcode</button>
-                </div>
             @error('book_barcode')
             <span class="text-danger">{{$message}}</span>
         @enderror

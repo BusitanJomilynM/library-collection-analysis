@@ -226,31 +226,49 @@ class BookController extends Controller{
 
         
     public function archiveBook(UpdateArchiveRequest $request, Book $book){
+        if ($book->archive_reason != 0) {
+            // If the book is not archived due to being lost, erase the barcode
+            $book->update(['book_barcode' => null]);
+        }
         $book->update($request->all()); 
         return view('books_layout.view_bookdetails', ['book'=>$book]);
     }
+    
 
     public function archiveUpdate(UpdateArchiveRequest $request, Book $book)
     {
-
-        $book->status=1;
-        $book->update(['book_barcode'=>null]);
+        if ($book->archive_reason != 0) {
+            // If the book is not archived due to being lost, remove the barcode
+            $book->update(['book_barcode' => null]);
+        }
+    
         $book->update($request->all()); 
+        $book->status = 1;
         $book->save();
-        return redirect()->route('archive')->with('success','Book archived');
+        
+        return redirect()->route('archive')->with('success', 'Book archived');
     }
-
-    public function restoreBook(Request $request, Book $book){
-
-        $book->update(['archive_reason'=>null]);
-        $barcode = $this->generateUniqueBarcode();
-        $book->book_barcode = $barcode;
-        $book->status=0;
+    
+    public function restoreBook(Request $request, Book $book)
+    {
+        if ($book->archive_reason != 0) {
+            // If the book is not archived due to being lost, retain the existing barcode
+            $barcode = $book->book_barcode;
+        } else {
+            // If the book is archived due to being lost, generate a new barcode
+            $barcode = $this->generateUniqueBarcode();
+            $book->book_barcode = $barcode;
+        }
+        
+        $book->update(['archive_reason' => null]);
+        $book->status = 0;
         $book->update($request->all()); 
         $book->save();
         
-        return redirect()->route('archive')->with('success','Book restored');
+        return redirect()->route('archive')->with('success', 'Book restored. Barcode: ' . $barcode);
     }
+    
+    
 
     public function restoreUpdate(UpdateBookRequest $request, Book $book)
     {
@@ -416,25 +434,50 @@ class BookController extends Controller{
             $subjectNamesListSets[$setCount] = $subjectNamee;
             $subjectCodesListSets[$setCount] = $subjectCodesList;
         
-            // Calculate book stats for the current set
-            $bookStats = [];
-            foreach ($filteredBooks as $book) {
-                $callNumber = $book->book_callnumber;
-        
-                if (!isset($bookStats[$callNumber])) {
-                    $bookStats[$callNumber] = [
-                        'title' => $book->book_title,
-                        'call_number' => $book->book_callnumber,
-                        'author' => $book->book_author,
-                        'totalCopies' => 1,
-                        'copyright' => $book->book_copyrightyear,
-                    ];
-                } else {
-                    $bookStats[$callNumber]['totalCopies'] += 1;
+            $encounteredCallNumbers = [];
+
+            foreach ($filteredBooksSets as $setCount => $filteredBooks) {
+                // Store filtered books for the current set
+                $filteredBooksSets[$setCount] = $filteredBooks;
+            
+                // Store subject names and codes for the current set
+                $subjectNamesListSets[$setCount] = $subjectNamee;
+                $subjectCodesListSets[$setCount] = $subjectCodesList;
+            
+                // Calculate book stats for the current set
+                $bookStats = [];
+                $uniqueCallNumbers = [];
+            
+                foreach ($filteredBooks as $book) {
+                    $callNumber = $book->book_callnumber;
+            
+                    // Count unique call numbers
+                    if (!isset($encounteredCallNumbers[$callNumber])) {
+                        $encounteredCallNumbers[$callNumber] = true; // Mark the call number as encountered
+                        $uniqueCallNumbers[] = $callNumber; // Add the call number to the array of unique call numbers
+                    }
+            
+                    if (!isset($bookStats[$callNumber])) {
+                        $bookStats[$callNumber] = [
+                            'title' => $book->book_title,
+                            'call_number' => $callNumber,
+                            'author' => $book->book_author,
+                            'totalCopies' => 1,
+                            'copyright' => $book->book_copyrightyear,
+                        ];
+                    } else {
+                        $bookStats[$callNumber]['totalCopies'] += 1;
+                    }
                 }
+            
+                // Store the count of unique call numbers for the current set
+                $uniqueCallNumbersCount = count($uniqueCallNumbers);
+                $uniqueCallNumbersSets[$setCount] = $uniqueCallNumbersCount;
+            
+                // Store book stats for the current set
+                $bookStatsSets[$setCount] = $bookStats;
             }
-        
-            // Store book stats for the current set
+            
             $bookStatsSets[$setCount] = $bookStats;
             $setCount++;
         }
@@ -444,8 +487,7 @@ class BookController extends Controller{
         // You can use $filteredBooksSets, $bookStatsSets, $subjectNamesListSets, and $subjectCodesListSets to pass to the PDF view
         
         if (!empty($filteredBooksSets)) {
-            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets'))->setPaper('a4', 'portrait');
-            return $pdf->stream('booklist.pdf');
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets', 'uniqueCallNumbersSets'))->setPaper('a4', 'portrait');            return $pdf->stream('booklist.pdf');
         } else {
             return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
         }

@@ -2,7 +2,7 @@
 @section('Title', 'Keywords')
 @section('content')
 
-<h2 style="text-align: center;">Keywords</h2>
+<h2 style="text-align: center;">Book Subject</h2>
 
 <div class="panel panel-default">
 @if (session('success'))
@@ -22,14 +22,15 @@
 </form>
 </div>
 
-<a data-toggle="modal" class="btn btn-primary" data-target="#createKeywordModal"><span>&#43;</span></i>Add New Keyword</a>
+<a data-toggle="modal" class="btn btn-primary" data-target="#createKeywordModal"><span>&#43;</span></i>Add Book Subject</a>
 <br>
 <br>
 
 <table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark" >
   <tr align="center">
-  <th>Keyword Name</th>
+  <th>Book Subject Name</th>
+  <th>Decimal Classification</th>
   <th>Actions</th>
   </tr>
 </thead>
@@ -37,6 +38,7 @@
 <tbody>
     <tr align="center">
     <td>{{$keyword->keyword}}</td>
+    <td>{{$keyword->decimal_classification}}</td>
     <td>
         
     <div class="flex-parent jc-center">
@@ -58,14 +60,14 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteKeywordModalLabel">Are you sure you want to delete this keyword?</h5>
+            <h5 class="modal-title" id="deleteKeywordModalLabel">Are you sure you want to delete this book subject?</h5>
             
           </div>
           <form action="{{ route('keywords.destroy', $keyword->id) }}" method="GET">
             <div class="modal-body">
               @csrf
               @method('DELETE')
-              <h5 class="text-center">Delete keyword {{$keyword->keyword}}?
+              <h5 class="text-center">Delete Book Subject {{$keyword->keyword}}?
                
             </div>
             <div class="modal-footer">
@@ -83,16 +85,27 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editKeywordModalLabel">Edit Keyword</h5>
+        <h5 class="modal-title" id="editKeywordModalLabel">Edit Book Subject</h5>
       </div>
       <form action="{{ route('keywords.update', $keyword->id) }}" method="PUT">
           <div class="modal-body">
           {{ csrf_field() }}
 
+
+        <div class="row">
+    <div class="col-md-6">
         <div class="form-group">
-        <label>Keyword Name</label>
-        <input class="form-control" type="text" name="keyword" id="keyword" value="{{$keyword->keyword}}" required>
+            <label for="keyword">Book Subject Name</label>
+            <input class="form-control" type="text" name="keyword" id="keyword"  value="{{$keyword->keyword}}" required>
         </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="decimal_classification">Decimal Classification System</label>
+            <input class="form-control" type="text" name="decimal_classification" id="decimal_classification"  value="{{$keyword->decimal_classification}}"required>
+        </div>
+    </div>
+</div>
 
           </div>
           <div class="modal-footer">
@@ -108,30 +121,74 @@
 
 <!-- Create Keyword Modal -->
 <div class="modal fade" id="createKeywordModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createKeywordModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteUserModalLabel">Add New Keyword</h5>
-      </div>
-        <form action="{{ route('keywords.store') }}" method="POST">
-          <div class="modal-body">
-          {{ csrf_field() }}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Add Book Subject</h5>
+            </div>
+            <form id="addBookSubjectForm" action="{{ route('keywords.store') }}" method="POST">
+                <div class="modal-body">
+                    @csrf
 
-        <div class="form-group">
-        <label>Keyword Name</label>
-        <input class="form-control" type="text" name="keyword" id="keyword" required>
+                    <div id="bookSubjectContainer">
+                        <div class="row book-subject-row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="keyword">Book Subject Name</label>
+                                    <input class="form-control" type="text" name="keyword" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="decimal_classification">Decimal Classification System</label>
+                                    <input class="form-control" type="text" name="decimal_classification" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" id="addBookSubjectBtn" class="btn btn-primary">Add Another Book Subject</button>
+                        </div>
+                    </div> -->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </div>
+            </form>
         </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger">Submit</button>
-          </div>
-        </form>
     </div>
-  </div>
 </div>
 
+<!-- <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const addBookSubjectBtn = document.getElementById("addBookSubjectBtn");
+    const bookSubjectContainer = document.getElementById("bookSubjectContainer");
+
+    addBookSubjectBtn.addEventListener("click", function() {
+        const bookSubjectRow = document.createElement("div");
+        bookSubjectRow.classList.add("row", "book-subject-row");
+        bookSubjectRow.innerHTML = `
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="keyword">Book Subject Name</label>
+                    <input class="form-control" type="text" name="keyword[]" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="decimal_classification">Decimal Classification System</label>
+                    <input class="form-control" type="text" name="decimal_classification[]" required>
+                </div>
+            </div>
+        `;
+        bookSubjectContainer.appendChild(bookSubjectRow);
+    });
+});
+</script> -->
 
 
 
