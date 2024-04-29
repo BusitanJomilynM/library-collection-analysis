@@ -140,6 +140,8 @@ function addFields() {
                 Select Keywords
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton_${setCount}" style="max-height: 200px; overflow-y: auto;">
+                <input type="text" class="form-control keyword-search" placeholder="Search keywords">
+                <div class="dropdown-divider"></div>
                 @foreach($keywords as $keyword)
                 <div class="dropdown-item">
                     <input type="checkbox" name="keyword_${setCount}[]" value="{{$keyword->id}}" id="keyword{{$keyword->id}}">
@@ -166,6 +168,26 @@ function addFields() {
     setCount++;
 
     container.appendChild(newFieldSet);
+
+    // Add event listener for keyword search
+    keywordFieldContainer.querySelector('.keyword-search').addEventListener('input', function() {
+        const searchText = this.value.toLowerCase().trim(); // Convert to lowercase and remove leading/trailing spaces
+        const keywordItems = keywordFieldContainer.querySelectorAll('.dropdown-item');
+        keywordItems.forEach(function(item) {
+            const label = item.querySelector('label').textContent.toLowerCase();
+            if (label.includes(searchText)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Function to remove fields
+function removeFields(button) {
+    var container = button.closest('.row');
+    container.remove();
 }
 
 function removeFields(button) {
