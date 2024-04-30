@@ -403,6 +403,7 @@
     <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
         @foreach($subjects as $subject)
             <?php
+            
                 // Check if the subject is not in the current tags
                 $currentTags = json_decode($book->book_subject, true);
                 $isCurrentSubject = in_array($subject->id, $currentTags);

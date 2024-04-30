@@ -144,23 +144,9 @@
         </td>
       
         <td>
-            @if($kws->status == 0)
-            <div class="flex-parent jc-center">
-            <a data-toggle="modal" class="btn btn-primary" data-target="#editTagModal_{{$kws->id}}" data-action="{{ route('keywordsuggest.edit', $kws->id) }}"><span>&#9776;</span> </a>
-
-                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$kws->id}}"
+        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$kws->id}}"
                 data-action="{{ route('keywordsuggest.destroy', $kws->id) }}"><i class="fa fa-trash"></a></td>
-            </div>
 
-            @else
-            <div class="flex-parent jc-center">
-            <form action="{{ route('declinekeyword', $kws->id) }}" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('GET') }}
-                        <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
-                    </form>
-            </div>
-            @endif
         </td>
     </tr>
 
