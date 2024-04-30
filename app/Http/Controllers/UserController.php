@@ -214,37 +214,20 @@ class UserController extends Controller
             }
     }
 
-    public function updatePassword(Request $request, User $user)
+    public function updatePassword(Request $request)
     {
+        // Retrieve the authenticated user
         $user = Auth::user();
     
-        if ($user instanceof User) {
-            // Validate the request data
-            $request->validate([
-                'password' => 'required|min:8|confirmed',
-            ]);
-    
-            // Hash the new password
-            $hashedPassword = Hash::make($request->password);
-    
-            // Update the user's password
-            $user->password = $hashedPassword;
-            $user->save();
-    
-            // Logout the user after password change
-            Auth::logout();
-    
-            // Redirect to the login page
-            return redirect()->route('login')->with('success', 'Password updated successfully. Please login with your new password.');
+        if ($user->id == auth()->user()->id){
+            $user->update($request->all()); 
+
+    Auth::logout();
+
+    return redirect()->route('login');
         }
-    
-        // If user is not authenticated or not an instance of User model, redirect back
-        return redirect()->back()->with('error', 'Unable to update password.');
-    }
 
+    else{
+        return redirect()->back();    }
     
-
-   
-
-    
-}
+    }}
