@@ -251,19 +251,22 @@ class BookController extends Controller{
     
     public function restoreBook(Request $request, Book $book)
     {
-        if ($book->archive_reason != 0) {
-            // If the book is not archived due to being lost, retain the existing barcode
+        $archiveReason = $book->archive_reason;
+    
+        if ($archiveReason == 1) {
+            // If the book is archived due to being lost, retain the existing barcode
             $barcode = $book->book_barcode;
         } else {
-            // If the book is archived due to being lost, generate a new barcode
+            // If the book is archived due to being old or damaged, generate a new barcode
             $barcode = $this->generateUniqueBarcode();
             $book->book_barcode = $barcode;
         }
         
-        $book->update(['archive_reason' => null]);
-        $book->status = 0;
+        // Update archive reason to null and set status to indicate the book is restored
+        $book->update(['archive_reason' => null, 'status' => 0]);
+        
+        // Optionally, update other attributes based on the request
         $book->update($request->all()); 
-        $book->save();
         
         return redirect()->route('archive')->with('success', 'Book restored. Barcode: ' . $barcode);
     }
