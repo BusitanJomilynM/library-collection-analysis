@@ -130,28 +130,15 @@
                 <div class="modal-body">
                     @csrf
 
-                    <div id="bookSubjectContainer">
-                        <div class="row book-subject-row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="keyword">Book Subject Name</label>
-                                    <input class="form-control" type="text" name="keyword" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="decimal_classification">Decimal Classification System</label>
-                                    <input class="form-control" type="text" name="decimal_classification" required>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label for="keyword">Book Subject Name</label>
+                        <input class="form-control" type="text" name="keyword" required>
                     </div>
 
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                            <button type="button" id="addBookSubjectBtn" class="btn btn-primary">Add Another Book Subject</button>
-                        </div>
-                    </div> -->
+                    <div class="form-group">
+                        <label for="decimal_classification">Decimal Classification System</label>
+                        <input class="form-control" type="text" name="decimal_classification" required>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -162,6 +149,13 @@
         </div>
     </div>
 </div>
+
+
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" id="addBookSubjectBtn" class="btn btn-primary">Add Another Book Subject</button>
+                        </div>
+                    </div> -->
 
 <!-- <script>
 document.addEventListener("DOMContentLoaded", function() {

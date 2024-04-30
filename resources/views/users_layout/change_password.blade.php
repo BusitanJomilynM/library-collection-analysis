@@ -75,6 +75,10 @@
 @elseif($user->type  == 'staff librarian')
 <a class="btn btn-primary" href="{{ route('staff.home') }}">Cancel</a>
 
+@elseif($user->type  == 'teacher')
+<a class="btn btn-primary" href="{{ route('teacher.home') }}">Cancel</a>
+
+
 @else 
 <a class="btn btn-primary" href="{{ route('representative.home') }}">Cancel</a>
 

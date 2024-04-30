@@ -10,9 +10,8 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Password;
-
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-
 class UserController extends Controller
 {
 
@@ -27,36 +26,31 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $user = Auth::user();
         Paginator::useBootstrap();
-        if($user->type === 'technician librarian') {
+        if ($user->type === 'technician librarian') {
             if (request('search')) {
-            $users = User::where('first_name', 'like', '%' . request('search') . '%')
-            ->orWhere('middle_name', 'like', '%' . request('search') . '%')
-            ->orWhere('last_name', 'like', '%' . request('search') . '%')
-            ->orWhere('email', 'like', '%' . request('search') . '%')
-            ->orWhere('school_id', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+                $users = User::where('first_name', 'like', '%' . request('search') . '%')
+                    ->orWhere('middle_name', 'like', '%' . request('search') . '%')
+                    ->orWhere('last_name', 'like', '%' . request('search') . '%')
+                    ->orWhere('email', 'like', '%' . request('search') . '%')
+                    ->orWhere('school_id', 'like', '%' . request('search') . '%')->paginate(10)->withQueryString();
+            } else {
+                $users = User::paginate(10);
             }
-        
-            else{
-            $users = User::paginate(10);
-           
-            }
-        }
-
-        else{
+        } else {
             return redirect()->back();
         }
-
+    
         $techcount = User::where('type', 'like', '0')->count();
-
         $userId = Auth::user()->id;
-
-        return view('users_layout.users_list', ['users'=>$users, 'techcount'=>$techcount, 'userId'=>$userId]);
+    
+        return response()->view('users_layout.users_list', ['users' => $users, 'techcount' => $techcount, 'userId' => $userId]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -64,7 +58,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users_layout.users_list');
+        return response()->view('users_layout.users_list');
     }
 
     /**
@@ -73,34 +67,33 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
+        // Validate the incoming request data
         $request->validate([
-        'first_name'=>'required',
-        'last_name'=>'required',
-        'school_id'=>'required|integer|unique:users',
-        'email'=>'email|unique:users',
-        'contact_number'=>'required|unique:users',
-        'type'=>'required']);
-
-        $data = [
-            'first_name' => $request->input('first_name'),
-            'middle_name' => $request->input('middle_name'),
-            'last_name' => $request->input('last_name'),
-            'school_id' => $request->input('school_id'),
-            'email' => $request->input('email'),
-            'contact_number' => $request->input('contact_number'),
-            'password' => $request->input('school_id'),
-            'type' => $request->input('type'),
-        ];
-
-        User::create($data);
-
-        
-        return redirect()->route('users.index');
-    }
-
-    /**
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'school_id' => 'required|integer|unique:users',
+            'email' => 'email|unique:users',
+            'contact_number' => 'required|unique:users',
+            'type' => 'required',
+        ]);
+    
+        // Create a new User instance and save it to the database
+        $user = new User();
+        $user->first_name = $request->first_name;
+        $user->middle_name = $request->middle_name;
+        $user->last_name = $request->last_name;
+        $user->school_id = $request->school_id;
+        $user->email = $request->email;
+        $user->contact_number = $request->contact_number;
+        $user->password = bcrypt($request->school_id); // Hash the password
+        $user->type = $request->type;
+        $user->save();
+    
+        // Redirect back to the index page with a success message
+        return redirect()->route('users.index')->with('success', 'User created successfully!');
+    }    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -108,9 +101,7 @@ class UserController extends Controller
      */
     public function show(User $id)
     {
-        $users = User::find($id);
-
-        return view('users.users_show', compact('user'));
+        return response()->view('users.users_show', compact('id'));
     }
 
     /**
@@ -149,6 +140,12 @@ class UserController extends Controller
 
             return redirect()->route('representative.home')->with('success','User successfully updated!');
         }
+
+        else if($user->type === 'teacher') {
+            $user->update($request->all()); 
+
+            return redirect()->route('teacher.home')->with('success','User successfully updated!');
+        }
     }
 
     /**
@@ -183,16 +180,17 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('error', 'Incorrect password');
     }
 
-    public function restorePassword(){
-       $users = User::all();
-
-            foreach ($users as $user){
-                $user->update([
-                    'password' => $user->school_id,
-                ]);
-            }
-            return redirect()->route('users.index')->with('success', 'Password restored');
+    public function restorePassword(User $user)
+    {
+        // Update the password of the specific user
+        $user->update([
+            'password' => $user->school_id,
+        ]);
+    
+        // Redirect back to the index page with a success message
+        return redirect()->route('users.index')->with('success', 'Password restored for user ' . $user->id);
     }
+    
 
     public function editAccount(User $user){
         $user = Auth::user();
@@ -220,17 +218,29 @@ class UserController extends Controller
     public function updatePassword(Request $request, User $user)
     {
         $user = Auth::user();
-            if ($user->id == auth()->user()->id){
-                $user->update($request->all()); 
-
-        Auth::logout();
-
-        return redirect()->route('login');
-            }
-
-        else{
-            return redirect()->back();
+    
+        if ($user instanceof User) {
+            // Validate the request data
+            $request->validate([
+                'password' => 'required|min:8|confirmed',
+            ]);
+    
+            // Hash the new password
+            $hashedPassword = Hash::make($request->password);
+    
+            // Update the user's password
+            $user->password = $hashedPassword;
+            $user->save();
+    
+            // Logout the user after password change
+            Auth::logout();
+    
+            // Redirect to the login page
+            return redirect()->route('login')->with('success', 'Password updated successfully. Please login with your new password.');
         }
+    
+        // If user is not authenticated or not an instance of User model, redirect back
+        return redirect()->back()->with('error', 'Unable to update password.');
     }
 
     

@@ -260,7 +260,7 @@ class TagController extends Controller
         return view('tags_layout.change_tags', ['books'=>$books,'tags'=>$tags, 'users'=>$users]);
     }
 
-    public function append(Request $request,$tag, $book){
+    public function appendt(Request $request,$tag, $book){
       
         
         $book = Book::findorFail($book);
@@ -287,7 +287,7 @@ class TagController extends Controller
         return redirect()->back()->with('success', 'Tags appended');
     }
 
-    public function replace(Request $request, $tag, $book){
+    public function replacet(Request $request, $tag, $book){
       
         
         $book = Book::findorFail($book);

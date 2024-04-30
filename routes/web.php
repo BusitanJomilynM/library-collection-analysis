@@ -64,11 +64,13 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     Route::get('/create', 'KeywordSuggestController@create')->name('keywordsuggest.create');
     Route::post('/store', 'App\Http\Controllers\KeywordSuggestController@store')->name('keywordsuggest.store');
     Route::post('/append/{keywordsuggest}/{book}', [KeywordSuggestController::class, 'appendkeyword'])->name('appendkeyword');
-    Route::post('/replace/{keywordsuggest}/{book}',  [TagController::class, 'replacekeyword'])->name('replacekeyword');
+    Route::post('/replace/{keywordsuggest}/{book}',  [KeywordSuggestController::class, 'replacekeyword'])->name('replacekeyword');
     Route::get('/keywordsuggest/delete/{keywordsuggest}', [KeywordSuggestController::class, 'destroy'])->name('keywordsuggest.destroy');
     Route::get('/keywordsuggest/decline/{keywordsuggest}', [KeywordSuggestController::class, 'declinekeyword'])->name('declinekeyword');
     Route::get('/keywordsuggest/edit/{keywordsuggest}', [KeywordSuggestController::class, 'edit'])->name('keywordsuggest.edit');
     Route::get('/keywordsuggest/update/{keywordsuggest}', [KeywordSuggestController::class, 'update'])->name('keywordsuggest.update');
+    Route::post('/appendt/{tag}/{book}', [TagController::class, 'appendt'])->name('appendt');
+    Route::post('/replacet/{tag}/{book}',  [TagController::class, 'replacet'])->name('replacet');
 
 
 });

@@ -20,12 +20,12 @@
 
     <div class="col2">
         <label>Middle Name</label>
-            <input class="form-control" type="text" name="middle_name" id="middle_name" value="{{$user->middle_name}}" minlength="2" maxlength="30" readonly>
+            <input class="form-control" type="text" name="middle_name" id="middle_name" value="{{$user->middle_name}}" minlength="2" maxlength="30" required>
         </div>
 
     <div class="col3">
         <label class="required">Last Name</label>
-        <input class="form-control @error('last_name') is-invalid @enderror" type="text" name="last_name" id="last_name" value="{{$user->last_name}}" minlength="2" maxlength="30" readonly>
+        <input class="form-control @error('last_name') is-invalid @enderror" type="text" name="last_name" id="last_name" value="{{$user->last_name}}" minlength="2" maxlength="30" required>
         @error('last_name')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -63,6 +63,8 @@
                 <option value="0" {{ old('type') == "technician librarian" || $user->type == "technician librarian" ? 'selected' : '' }}>Technical Librarian</option>
                 <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
                 <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
+                <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Teacher</option>
+
             </select>
     </div>
 
@@ -72,6 +74,10 @@
 
 @elseif($user->type  == 'staff librarian')
 <a class="btn btn-primary" href="{{ route('staff.home') }}">Cancel</a>
+
+@elseif($user->type  == 'teacher')
+<a class="btn btn-primary" href="{{ route('teacher.home') }}">Cancel</a>
+
 
 @else 
 <a class="btn btn-primary" href="{{ route('representative.home') }}">Cancel</a>

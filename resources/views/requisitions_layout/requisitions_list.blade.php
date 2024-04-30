@@ -131,12 +131,13 @@
   
     <td>
    
-        
-    @if($requisition->status == 2 && $requisition->disapproval_reason)
+<!--@if($requisition->status == 2 && $requisition->disapproval_reason)
     <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
     @else 
     No File Found
-    @endif 
+    @endif  -->
+
+    <p>{{requisition->disapproval_reason}}</p>
   
   </td>
 
@@ -259,11 +260,13 @@
       @endif
 
       <td>
-      @if($requisition->status == 2 && $requisition->disapproval_reason)
+      <!-- @if($requisition->status == 2 && $requisition->disapproval_reason)
     <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
     @else 
     No File Found
-    @endif 
+    @endif  -->
+    <p>{{requisition->disapproval_reason}}</p>
+
 </td>
   </tr>
 
@@ -477,9 +480,11 @@
     </td>
 
     <td>
-  @if($requisition->status == 2 && $requisition->disapproval_reason)
+  <!-- @if($requisition->status == 2 && $requisition->disapproval_reason)
     <a class="btn btn-warning" href="{{ asset($requisition->disapproval_reason) }}" target="_blank" download>View Disapproval File</a>
-    @endif
+    @endif -->
+    <p>{{requisition->disapproval_reason}}</p>
+
 </td>
   </tr>
 

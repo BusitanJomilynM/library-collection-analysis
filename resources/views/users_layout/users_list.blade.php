@@ -34,27 +34,27 @@
     <th>Contact Number</th>
     <th>Role</th>
     <th>Actions</th>
-  </tr>
-</thead>
-@forelse($users as $user)
-<tbody>
-  <tr align="center">
-    <td>{{$user->school_id}}</td>
-    <td>{{$user->first_name}}</td>
-    <td>{{$user->middle_name}}</td>
-    <td>{{$user->last_name}}</td>
-    <td>{{$user->email}}</td>
-    <td>+{{$user->contact_number}}</td>
-    <td>
-    @if($user->type == 'technician librarian')  
-      Technical Librarian
-    @elseif($user->type == 'staff librarian')
-      Staff  Librarian
-    @elseif($user->type == 'department representative')
-      Department Representative
-      @elseif($user->type == 'teacher')
-      Teacher
-    @endif</td>
+    </tr>
+  </thead>
+  @forelse($users as $user)
+  <tbody>
+    <tr align="center">
+      <td>{{$user->school_id}}</td>
+      <td>{{$user->first_name}}</td>
+      <td>{{$user->middle_name}}</td>
+      <td>{{$user->last_name}}</td>
+      <td>{{$user->email}}</td>
+      <td>+{{$user->contact_number}}</td>
+      <td>
+      @if($user->type == 'technician librarian')  
+        Technical Librarian
+      @elseif($user->type == 'staff librarian')
+        Staff  Librarian
+      @elseif($user->type == 'department representative')
+        Department Representative
+        @elseif($user->type == 'teacher')
+        Teacher
+      @endif</td>
     <td>
     <div class="btn-group">
         <a data-toggle="modal" class="btn btn-primary" data-target="#editUserModal_{{$user->id}}" data-action="{{ route('users.edit', $user->id) }}"><span>&#9776;</span> </a>
@@ -99,13 +99,14 @@
 
 <!-- Create User Modal -->
 <div class="modal fade" id="createUserModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createUserModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteUserModalLabel">Create New User</h5>
-      </div>
-        <form action="{{ route('users.store') }}" method="POST">
-          <div class="modal-body">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Create New User</h5>
+            </div>
+            <form action="{{ route('users.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
             {{ csrf_field() }}
             <div class="three-col">
     <div class="col1">

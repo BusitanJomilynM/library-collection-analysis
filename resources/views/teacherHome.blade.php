@@ -100,6 +100,8 @@
                         <option value="0" {{ old('type') == "technicna librarian" || $user->type == "technicna librarian" ? 'selected' : '' }}>Technician Librarian</option>
                         <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
                         <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
+                        <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Teacher</option>
+
                     </select>
             </div>
           
@@ -171,6 +173,8 @@
                         <option value="0" {{ old('type') == "technician librarian" || $user->type == "technician librarian" ? 'selected' : '' }}>Technical Librarian</option>
                         <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
                         <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
+                        <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Teacher</option>
+
                     </select>
             </div>
 

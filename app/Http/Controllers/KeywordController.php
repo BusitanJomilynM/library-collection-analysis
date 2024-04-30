@@ -56,10 +56,22 @@ namespace App\Http\Controllers;
          * @param  \Illuminate\Http\Request  $request
          * @return \Illuminate\Http\Response
          */
-        public function store(StoreKeywordRequest $request)
+        public function store(Request $request)
         {
-            Keyword::create($request->all());
-            return redirect()->route('keywords.index');
+            // Validate the incoming request data
+            $request->validate([
+                'keyword' => 'required|string',
+                'decimal_classification' => 'required|string',
+            ]);
+        
+            // Create a new Keyword instance and save it to the database
+            Keyword::create([
+                'keyword' => $request->keyword,
+                'decimal_classification' => $request->decimal_classification,
+            ]);
+        
+            // Redirect back to the index page with a success message
+            return redirect()->route('keywords.index')->with('success', 'Keyword created successfully!');
         }
 
         /**

@@ -31,32 +31,20 @@
         <br>
         <!-- <div class="form"><h5>Volume: {{ $book->book_volume}}</h5></div>
         <br> -->
-        <div class="form"><h5>Subjects:
-                    <?php  
-                    $x = $book->book_subject;
-                    $charactersToRemove = ['"', "[", "]"];
-                    $s = str_replace($charactersToRemove, "", $x);
+        <div class="form">
+    <h5>Subjects:
+        <?php  
+        $bookSubjects = json_decode($book->book_subject);
 
-                    $words = explode(',', $s);
-
-                    $count = count($words);
-
-                    foreach ($subjects as $subject){
-                        foreach ($words as  $key => $word) {
-                            if( $word == $subject->id){
-                            echo $subject->subject_name;
-                            if ($key < $count - 1) {
-                                echo ", ";
-                              } 
-                            }
-                        }
-                    }   
-                   
-                        ?>
-                        
-                    </h5></div> 
-                       
-        </td>
+        foreach ($subjects as $subject) {
+            if (in_array($subject->id, $bookSubjects)) {
+                echo $subject->subject_name;
+                echo ", ";
+            }
+        }
+        ?>
+    </h5>
+</div> 
         
 
         <td>
@@ -74,30 +62,21 @@
         <br>
         <div class="form"><h5>ISBN: {{ $book->book_isbn}}</h5></div> 
         <br>
-        <div class="form"><h5>Keyword:
-                        <?php  
-                        $x = $book->book_keyword;
-                        $charactersToRemove = ['"', "[", "]"];
-                        $s = str_replace($charactersToRemove, "", $x);
+        <div class="form">
+    <h5>Keyword:
+        <?php  
+        $bookKeywords = json_decode($book->book_keyword);
 
-                        $words = explode(',', $s);
+        foreach ($keywords as $keyword) {
+            if (in_array($keyword->id, $bookKeywords)) {
+                echo $keyword->keyword;
+                echo ", ";
+            }
+        }
+        ?>
+    </h5>
+</div> 
 
-                        $count = count($words);
-
-                        foreach ($keywords as $keyword){
-                            foreach ($words as  $key => $word) {
-                                if( $word == $keyword->id){
-                                echo $keyword->keyword;
-                                if ($key < $count - 1) {
-                                    echo ", ";
-                                  } 
-                                }
-                            }
-                        }
-                   
-                        ?>
-                        </h5></div> 
-        </td>
 
         <tr> <td colspan="2" class="center"> <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
         <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>

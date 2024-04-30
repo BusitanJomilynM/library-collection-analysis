@@ -82,13 +82,13 @@
                 @if($pendingt->book_barcode == $book->book_barcode)
                 
                   @if($pendingt->action == 1)
-                    <form action="{{ route('append', ['tag' => $pendingt->id, 'book' => $book->id]) }}" method="POST">
-                      @csrf 
-                      @method('post')
-                      <button type="submit" class="btn btn-success">Append</button>   
-                      </form>
+                  <form action="{{ route('appendt', ['tag' => $pendingt->id, 'book' => $book->id]) }}" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-success">Append</button>   
+</form>
+
                   @else
-                    <form action="{{ route('replace', ['tag' => $pendingt->id, 'book' => $book->id]) }}" method="POST">
+                    <form action="{{ route('replacet', ['tag' => $pendingt->id, 'book' => $book->id]) }}" method="POST">
                       @csrf 
                       @method('post')
                       <button type="submit" class="btn btn-success">Replace</button>  
