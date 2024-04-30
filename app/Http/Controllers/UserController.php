@@ -167,18 +167,17 @@ class UserController extends Controller
             'password' => 'required',
             'id' => 'required|exists:users,id'
         ]);
-        
-        $user = auth()->user();
-
+    
+        $user = User::findOrFail($request->id);
+    
         if (Hash::check($request->password, $user->password)){
-            $user = User::findorFail($request->id);
             $user->delete();
-
             return redirect()->route('users.index')->with('success', 'User deleted!');
         }
-       
+    
         return redirect()->route('users.index')->with('error', 'Incorrect password');
     }
+    
 
     public function restorePassword(User $user)
     {
