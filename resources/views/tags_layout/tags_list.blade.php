@@ -399,14 +399,15 @@
 </div>
     
 <div class="form-group">
-    <label>Suggested Subject/s</label>
-    <select class="js-responsive2" name="suggest_book_subject[]" id="subject_{{$tag->book_barcode}}" multiple="multiple" style="width: 100%">
-             @foreach($subjects as $subject)
+    <label class="required">Suggested Subjects</label>
+    <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+        @foreach($subjects as $subject)
             <?php
-                // Check if the current keyword ID exists in the selected keywords array of the book
-                $selected = in_array($subject->id, json_decode($tag->suggest_book_subject, true));
+                // Check if the subject is not in the current tags
+                $currentTags = json_decode($book->book_subject, true);
+                $isCurrentSubject = in_array($subject->id, $currentTags);
             ?>
-            <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+            <option value="{{ $subject->id }}" {{ $isCurrentSubject ? 'disabled' : '' }}>
                 {{ $subject->subject_name }}
             </option>
         @endforeach

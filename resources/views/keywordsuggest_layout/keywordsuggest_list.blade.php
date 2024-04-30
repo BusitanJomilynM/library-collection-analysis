@@ -249,7 +249,7 @@
 
 
    
-<div class="form-group">
+<!-- <div class="form-group">
     <label>Suggested Keyword/s</label>
     <select class="js-responsive2" name="suggest_book_keyword[]" id="keyword_{{$kws->book_barcode}}" multiple="multiple" style="width: 100%">
         @foreach($keywords as $keyword)
@@ -258,6 +258,21 @@
                 $selected = in_array($keyword->id, json_decode($kws->suggest_book_keyword, true));
             ?>
             <option value="{{ $keyword->id }}" {{ $selected ? 'selected' : '' }}>
+                {{ $keyword->keyword }}
+            </option>
+        @endforeach
+    </select>
+</div> -->
+<div class="form-group">
+    <label class="required">Suggested Keywords</label>
+    <select class="js-responsive" name="suggest_book_keyword[]" id="suggest_book_keyword{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+        @foreach($keywords as $keyword)
+            <?php
+                // Check if the subject is not in the current tags
+                $currentKeywords = json_decode($book->book_keyword, true);
+                $isCurrentKeyword = in_array($keyword->id, $currentKeywords);
+            ?>
+            <option value="{{ $keyword->id }}" {{ $isCurrentKeyword ? 'disabled' : '' }}>
                 {{ $keyword->keyword }}
             </option>
         @endforeach
