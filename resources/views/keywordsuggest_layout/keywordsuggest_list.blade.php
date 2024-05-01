@@ -157,8 +157,10 @@
             <form action="{{ route('declinekeyword', $kws->id) }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('GET') }}
+                        <!-- <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button> -->
                         <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$kws->id}}"
                 data-action="{{ route('keywordsuggest.destroy', $kws->id) }}"><i class="fa fa-trash"></a></td>
+
                     </form>
             </div>
             @endif
