@@ -96,13 +96,13 @@
     <div class="col-md-6">
         <div class="form-group">
             <label for="keyword">Book Subject Name</label>
-            <input class="form-control" type="text" name="keyword" id="keyword"  value="{{$keyword->keyword}}" required>
+            <input class="form-control" type="text" name="keyword" id="keyword"  value="{{$keyword->keyword}}" >
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             <label for="decimal_classification">Decimal Classification System</label>
-            <input class="form-control" type="text" name="decimal_classification" id="decimal_classification"  value="{{$keyword->decimal_classification}}"required>
+            <input class="form-control" type="text" name="decimal_classification" id="decimal_classification"  value="{{$keyword->decimal_classification}}">
         </div>
     </div>
 </div>
@@ -129,16 +129,21 @@
             <form id="addBookSubjectForm" action="{{ route('keywords.store') }}" method="POST">
                 <div class="modal-body">
                     @csrf
-
+                    <div class="row">
+    <div class="col-md-6">
                     <div class="form-group">
                         <label for="keyword">Book Subject Name</label>
                         <input class="form-control" type="text" name="keyword" required>
-                    </div>
+                        </div>
+    </div>
+    <div class="col-md-6">
 
                     <div class="form-group">
                         <label for="decimal_classification">Decimal Classification System</label>
                         <input class="form-control" type="text" name="decimal_classification" required>
-                    </div>
+                        </div>
+    </div>
+</div>
 
                 </div>
                 <div class="modal-footer">

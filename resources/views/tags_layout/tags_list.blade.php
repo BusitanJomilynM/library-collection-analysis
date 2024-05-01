@@ -383,32 +383,31 @@
     <div class="form-group">
     <label>Current Subject/s</label>
     <select class="js-responsive" name="book_subject[]" id="book_subject_{{$tag->book_barcode}}" multiple="multiple" style="width: 100%" disabled>
-    @foreach($books as $book)
-        @if($book->book_barcode == $tag->book_barcode)  
-      @foreach($subjects as $subject)
-            <?php
-                $selected = in_array($subject->id, json_decode($book->book_subject, true));
-            ?>
-            <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
-                {{ $subject->subject_name }}
-            </option>
-            @endforeach
+        @foreach($books as $book)
+            @if($book->book_barcode == $tag->book_barcode)
+                @foreach($subjects as $subject)
+                    <?php
+                        $selected = in_array($subject->id, json_decode($book->book_subject, true));
+                    ?>
+                    <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                        {{ $subject->subject_name }}
+                    </option>
+                @endforeach
             @endif
         @endforeach
     </select>
 </div>
-    
+
 <div class="form-group">
-    <label class="required">Suggested Subjects</label>
-    <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+    <label>Suggested Subjects</label>
+    <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$tag->book_barcode}}" multiple="multiple" style="width: 100%" required>
         @foreach($subjects as $subject)
             <?php
-            
-                // Check if the subject is not in the current tags
-                $currentTags = json_decode($book->book_subject, true);
-                $isCurrentSubject = in_array($subject->id, $currentTags);
+                                $selected = in_array($subject->id, json_decode($tag->suggest_book_subject, true));
+                                $disabled = in_array($subject->id, json_decode($book->book_subject, true));
+                
             ?>
-            <option value="{{ $subject->id }}" {{ $isCurrentSubject ? 'disabled' : '' }}>
+            <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }} {{ $disabled ? 'disabled' : '' }}>
                 {{ $subject->subject_name }}
             </option>
         @endforeach

@@ -104,12 +104,14 @@ namespace App\Http\Controllers;
          * @param  int  $id
          * @return \Illuminate\Http\Response
          */
-        public function update(UpdateKeywordRequest $request, Keyword $keyword)
-        {
-            $keyword->update($request->all()); 
+            public function update(UpdateKeywordRequest $request, Keyword $keyword)
+            {
+                
+                $keyword->update($request->all()); 
+                
 
-                return redirect()->route('keywords.index')->with('success','Keyword successfully updated!');
-        }
+                    return redirect()->route('keywords.index')->with('success','Keyword successfully updated!');
+            }
 
         /**
          * Remove the specified resource from storage.

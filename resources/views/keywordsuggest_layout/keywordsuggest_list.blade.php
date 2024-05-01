@@ -143,10 +143,24 @@
             @endif
         </td>
       
-        <td>
-        <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$kws->id}}"
-                data-action="{{ route('keywordsuggest.destroy', $kws->id) }}"><i class="fa fa-trash"></a></td>
+       <td>
+            @if($kws->status == 0)
+            <div class="flex-parent jc-center">
+            <a data-toggle="modal" class="btn btn-primary" data-target="#editTagModal_{{$kws->id}}" data-action="{{ route('keywordsuggest.edit', $kws->id) }}"><span>&#9776;</span> </a>
 
+                <a data-toggle="modal" class="btn btn-danger" data-target="#deleteUserModal_{{$kws->id}}"
+                data-action="{{ route('keywordsuggest.destroy', $kws->id) }}"><i class="fa fa-trash"></a></td>
+            </div>
+
+            @else
+            <div class="flex-parent jc-center">
+            <form action="{{ route('declinekeyword', $kws->id) }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('GET') }}
+                        <button type="submit" class="btn btn-warning" role="button"><span>&#10005;</span></button>
+                    </form>
+            </div>
+            @endif
         </td>
     </tr>
 
@@ -234,22 +248,24 @@
 </div>
 
 
-   
-<!-- <div class="form-group">
+<div class="form-group">
     <label>Suggested Keyword/s</label>
     <select class="js-responsive2" name="suggest_book_keyword[]" id="keyword_{{$kws->book_barcode}}" multiple="multiple" style="width: 100%">
         @foreach($keywords as $keyword)
             <?php
                 // Check if the current keyword ID exists in the selected keywords array of the book
                 $selected = in_array($keyword->id, json_decode($kws->suggest_book_keyword, true));
+                // Check if the keyword is already in the current tags
+                $disabled = in_array($keyword->id, json_decode($book->book_keyword, true));
             ?>
-            <option value="{{ $keyword->id }}" {{ $selected ? 'selected' : '' }}>
+            <option value="{{ $keyword->id }}" {{ $selected ? 'selected' : '' }} {{ $disabled ? 'disabled' : '' }}>
                 {{ $keyword->keyword }}
             </option>
         @endforeach
     </select>
-</div> -->
-<div class="form-group">
+</div>
+
+<!-- <div class="form-group">
     <label class="required">Suggested Keywords</label>
     <select class="js-responsive" name="suggest_book_keyword[]" id="suggest_book_keyword{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
         @foreach($keywords as $keyword)
@@ -263,7 +279,7 @@
             </option>
         @endforeach
     </select>
-</div>
+</div> -->
             
             </div>
           <div class="modal-footer">
