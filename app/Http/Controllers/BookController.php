@@ -303,7 +303,7 @@ class BookController extends Controller{
     {
 
             $user = Auth::user();
-            if ($user->type === 'technician librarian' || $user->type === 'staff librarian') {
+            if ($user->type === 'technician librarian' || $user->type === 'staff librarian'  || $user->type === 'teacher'  || $user->type === 'department librarian') {
                 $keywords = Keyword::all();
                 $subjects = Subject::all();
                 $barcode = $book->book_barcode;

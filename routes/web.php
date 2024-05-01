@@ -41,10 +41,15 @@ Route::get('/', function () {
 });
 
 //Shared routes for Technical Librarian and Department Representative
-Route::group(['auth', ['user-access:technician librarian|department representative|teacher']], function () {
+Route::group(['auth', ['user-access:technician librarian|staff librarian|department representative|teacher']], function () {
     Route::resource('/requisitions', RequisitionController::class);
     Route::get('/requisitions/requisitionEdit/{id}', [RequisitionController::class, 'requisitionEdit'])->name('requisitionEdit');
 });
+
+Route::group(['auth', ['user-accessdepartment representative|teacher']], function () {
+    Route::get('/books/view_bookdetails/{book}', [BookController::class, 'view_bookdetails'])->name('books.view_bookdetails');
+});
+
 
 //Shared routes for all users
 Route::group(['auth', ['user-access:technician librarian|department representative|staff librarian|teacher']], function () {
@@ -71,8 +76,6 @@ Route::group(['auth', ['user-access:technician librarian|department representati
     Route::get('/keywordsuggest/update/{keywordsuggest}', [KeywordSuggestController::class, 'update'])->name('keywordsuggest.update');
     Route::post('/appendt/{tag}/{book}', [TagController::class, 'appendt'])->name('appendt');
     Route::post('/replacet/{tag}/{book}',  [TagController::class, 'replacet'])->name('replacet');
-
-
 });
 
 //Shared routes for Technical and Staff Librarian
