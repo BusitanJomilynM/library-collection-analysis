@@ -78,45 +78,116 @@
 </div> 
 
 
-@if ($user->type == 'teacher' && $user->type == 'department representative')
+@if ($canSuggest)
+    <!-- <a data-toggle="modal" class="btn btn-primary" data-target="#createTagModal_{{$book->book_barcode}}" data-action="{{ route('tags.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Subjects</a>
+
+    <a data-toggle="modal" class="btn btn-primary" data-target="#createKeywordSuggestModal_{{$book->book_barcode}}" data-action="{{ route('keywordsuggest.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Keywords</a> -->
+@else
     <tr>
         <td colspan="2" class="center">
             <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
-            <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
+            <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span> Add Copy</a>
             <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
         </td>
     </tr>
 @endif
-
-    </tr>
-
+<!-- Suggest Subject Modal -->
+<div class="modal fade" id="createTagModal_{{$book->book_barcode}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createTagModalLabel_{{$book->book_barcode}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteUserModalLabel">Suggest Subjects to book</h5>
+      </div>
+      <form action="{{ route('tags.store') }}" method="POST">
+          <div class="modal-body">
+          @csrf
    
-          
-                <!-- <tr align="center">
-                    <td>{{ $book->book_title }}</td>
-                    <td>{{ $book->book_author }}</td>
-                    <td>{{ $book->book_copyrightyear }}</td>
-                    <td>{{ $book->book_sublocation }}</td>
-                    <td>
-                        <?php
-                        $t = $book->book_subject;
-                        $a = explode(" ", $t);
-                        echo implode(", ", $a);
-                        ?>
-                    </td>
-                    <td>
-           
-
-                        <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
-                        <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
-                        
-                           <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
-                    </td>
-                </tr> -->
-            </tbody>
-           
        
-<div>
+            <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
+    
+            <div class="form-group">
+                <label>Barcode</label>
+                <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode }}" readonly> 
+            </div>
+            <div class="form-group">
+                <label class="required">Department</label>
+                    <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
+                    <option value="">--Select Department--</option>
+                    <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
+                    <option value="SOD">SOD - School of Dentistry</option>
+                    <option value="SIT">SIT - School of Information Technology</option>
+                    <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
+                    <option value="SEA">SEA - School of Engineering & Architecture</option>
+                    <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
+                    <option value="SOL">SOL - School of Law</option>
+                    <option value="SNS">SNS - School of Natural Sciences</option>
+                    <option value="SON">SON - School of Nursing</option>
+                    <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
+                    <option value="Graduate School">Graduate School</option>
+                    
+                    </select>
+                    @error('department')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+            </div>
+
+            <div class="form-group">
+                <label>Current Subjects</label>
+                <select class="js-responsive" name="book_subject[]" id="book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" disabled>
+                    @foreach($subjects as $subject)
+                    <?php
+                          $selected = in_array($subject->id, json_decode($book->book_subject, true));
+                      ?>
+                      <option value="{{ $subject->id }}" {{ $selected ? 'selected' : '' }}>
+                          {{ $subject->subject_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Suggested Subjects</label>
+              <select class="js-responsive" name="suggest_book_subject[]" id="suggest_book_subject_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
+              @foreach($subjects as $subject)
+              <?php $subjs = json_decode($book->book_subject, true);
+              if ($subjs !== null) {
+                foreach ($subjs as $subj) {
+                  if ($subj != $subject->id){
+                    echo '<option value="'.$subject->id.'">'.$subject->subject_name.'</option>'; 
+                }
+            }  } ?>
+
+              @endforeach
+              </select>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Action</label>
+                    <select class="form-control" name="action" id="action" required>
+                    <option value="">--Select Action--</option>
+                    <option value=1>Append</option>
+                    <option value=2>Replace</option>
+
+                    </select>
+                    @error('department')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+            </div>
+            
+            <div class="form-group">
+              <i>Textboxes marked with an asterisk are required.</i>
+            </div>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Submit</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 
 <!-- Edit Book Modal -->
 <div class="modal fade" id="editBookModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editBookModalLabel" aria-hidden="true">
@@ -601,7 +672,6 @@
       </div>
     </div>
     </table>
-
 <style>
     table {
       width: 100%;

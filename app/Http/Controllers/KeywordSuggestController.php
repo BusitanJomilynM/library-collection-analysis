@@ -156,48 +156,6 @@ class KeywordSuggestController extends Controller
         return redirect()->route('keywordsuggest.index')->with('success', 'Request deleted!');
     }
 
-    public function appendKeyword(Request $request,$keywordsuggest, $book){
-      
-        
-        $book = Book::findorFail($book);
-        $keywordsuggest = KeywordSuggest::findorFail($keywordsuggest);
-
-        $x = $book->book_subject;
-        $y = $keywordsuggest->suggest_book_keyword;
-
-        $array1 = json_decode($x, true);
-        $array2 = json_decode($y, true);
-     
-
-    
-        $resultArray = array_merge($array1, $array2);
-        $book->book_keyword = json_encode($resultArray);
-        
-
-        $keywordsuggest->status = 1;
-
-        $book->save();
-        $keywordsuggest->save();
-        
-
-        return redirect()->back()->with('success', 'Keywords appended');
-    }
-
-    public function replacekeyword(Request $request, $keywordsuggest, $book){
-      
-        $book = Book::findorFail($book);
-        $keywordsuggest = KeywordSuggest::findorFail($keywordsuggest);
-
-        $book->book_keyword = $keywordsuggest->suggest_book_keyword;
-
-        $book->save();
-
-        $keywordsuggest->status = 1;
-        $keywordsuggest->save();
-
-        return redirect()->back()->with('success', 'Keywords replaced');
-    }
-
     public function declinekeyword(Request $request, KeywordSuggest $keywordsuggest)
     {
         $keywordsuggest->status = 2;
@@ -205,4 +163,53 @@ class KeywordSuggestController extends Controller
 
         return redirect()->route('keywordsuggest.index')->with('success', 'Request declined');
     }
+
+    public function appendKeyword(Request $request, $keywordsuggest, $book){
+  
+        $book = Book::findOrFail($book);
+        $keywordsuggest = KeywordSuggest::findOrFail($keywordsuggest);
+    
+        $booksWithSameCallNumber = Book::where('book_callnumber', $book->book_callnumber)->get();
+    
+        foreach ($booksWithSameCallNumber as $matchingBook) {
+            $x = json_decode($matchingBook->book_keyword, true) ?? [];
+            $y = json_decode($keywordsuggest->suggest_book_keyword, true) ?? [];
+    
+            // Merge two arrays
+            $resultArray = array_merge($x, $y);
+    
+            // Remove duplicate values
+            $resultArray = array_unique($resultArray);
+    
+            // Convert the array back to JSON
+            $matchingBook->book_keyword = json_encode($resultArray);
+            $matchingBook->save();
+        }
+    
+        $keywordsuggest->status = 1;
+        $keywordsuggest->save();
+    
+        return redirect()->back()->with('success', 'Keywords appended to all matching books');
+    }
+    
+    
+
+public function replacekeyword(Request $request, $keywordsuggest, $book){
+  
+    $book = Book::findOrFail($book);
+    $keywordsuggest = KeywordSuggest::findOrFail($keywordsuggest);
+
+    $booksWithSameCallNumber = Book::where('book_callnumber', $book->book_callnumber)->get();
+
+    foreach ($booksWithSameCallNumber as $matchingBook) {
+        $matchingBook->book_keyword = $keywordsuggest->suggest_book_keyword;
+        $matchingBook->save();
+    }
+
+    $keywordsuggest->status = 1;
+    $keywordsuggest->save();
+
+    return redirect()->back()->with('success', 'Keywords replaced for all matching books');
+}
+
 }

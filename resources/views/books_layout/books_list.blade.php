@@ -110,7 +110,6 @@
   <tr align="center">
     <td>{{$book->book_title}}</td>
     <td>{{$book->book_author}}</td>
-
     </td>
     <td>
 
@@ -219,6 +218,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 <!-- Suggest Keyword -->

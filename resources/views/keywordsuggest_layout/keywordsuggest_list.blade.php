@@ -388,7 +388,7 @@
                     @foreach($books as $book)
                         @if($kws->book_barcode == $book->book_barcode)
                             @if($kws->action == 1)
-                                <form action="{{ route('appendkeyword', ['keywordsuggest' => $kws->id, 'book' => $book->id]) }}" method="POST">
+                                <form action="{{ route('appendkeyword', ['keywordsuggest' => $kws->id, 'book' => $book->id, ]) }}" method="POST">
                                 @csrf 
                                 @method('post')
                                 <button type="submit" class="btn btn-success">Append</button>   

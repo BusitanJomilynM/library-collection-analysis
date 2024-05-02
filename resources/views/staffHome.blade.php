@@ -3,30 +3,47 @@
 @section('content')
 
 <div class="container">
-
     <div class="row justify-content-center">
-
         <div class="col-md-8">
-
             <div class="card">
-
-            <div class="card-header text-white" style="background-color: black">{{ __('Dashboard') }}</div>
-
-  
-
+                <div class="card-header text-white" style="background-color: black">{{ __('Dashboard') }}</div>
                 <div class="card-body">
-
-                Welcome, Staff Librarian {{$user->first_name}} {{$user->last_name}}. 
-
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    Welcome, Staff Librarian {{$user->first_name}} {{$user->last_name}}. 
+            
+              
+                <div class="float-container">
+                    <div class="float-child">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{$pending}}</h5>
+                                <p class="card-text">Pending requisitions</p>
+                                <a class="btn btn-danger my-2 my-sm-0" href="{{ route('pendingRequisitions') }}">Go to pending requisitions</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="float-child">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{$pendingsubject}}</h5>
+                                <p class="card-text">Pending subject requests</p>
+                                <a class="btn btn-danger my-2 my-sm-0" href="{{ route('pendingTags') }}">Go to pending subject requests</a>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
+
 
 <!-- Edit Account Modal -->
 <div class="modal fade" id="editAccountModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editAccountModalLabel" aria-hidden="true">
@@ -182,5 +199,17 @@
     </div>
   </div>
 </div>
+<style>
+.float-container {
+    border: 3px solid #fff;
+    padding: 20px;
+}
 
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+   
+}
+</style>
 @endsection
