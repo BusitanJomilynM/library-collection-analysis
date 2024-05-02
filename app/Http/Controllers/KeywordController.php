@@ -58,19 +58,7 @@ namespace App\Http\Controllers;
          */
         public function store(Request $request)
         {
-            // Validate the incoming request data
-            $request->validate([
-                'keyword' => 'required|string',
-                'decimal_classification' => 'required|string',
-            ]);
-        
-            // Create a new Keyword instance and save it to the database
-            Keyword::create([
-                'keyword' => $request->keyword,
-                'decimal_classification' => $request->decimal_classification,
-            ]);
-        
-            // Redirect back to the index page with a success message
+            Keyword::create($request->all());
             return redirect()->route('keywords.index')->with('success', 'Keyword created successfully!');
         }
 
