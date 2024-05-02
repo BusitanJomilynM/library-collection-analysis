@@ -68,7 +68,33 @@
     </td>    
     <td>{{$pendingt->department}}</td>
     <td>{{$pendingt->book_barcode}}</td>
-    <td>{{$pendingt->suggest_book_subject}} </td>
+    <!-- <td>{{$pendingt->suggest_book_subject}} </td> -->
+      <td> <?php  
+                        $x = $pendingt->suggest_book_subject;
+                        $charactersToRemove = ['"', "[", "]"];
+                        $s = str_replace($charactersToRemove, "", $x);
+
+                        $words = explode(',', $s);
+
+                        $count = count($words);
+
+                        foreach ($subjects as $subject){
+                            foreach ($words as  $key => $word) {
+                                if( $word == $subject->id){
+                                echo $subject->subject_code;
+                                echo '<br>';
+                                }
+                                // if ($key < $count - 1) {
+                                //     echo " ,";
+                                //   } 
+                                // }
+                            }
+                        }
+                   
+                        ?></td>
+
+    
+    
     <td>
     @if($pendingt->status == 0)
      Pending
