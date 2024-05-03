@@ -48,8 +48,11 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('courses_layout.courses_list');
-    }
+        $user = Auth::user();
+        $courses = Course::all();
+    
+        return view('courses_layout.courses_list', ['user'=>$user, 'courses'=>$courses]); // Assuming you have a view for creating a new keyword
+        }
 
     /**
      * Store a newly created resource in storage.
@@ -59,9 +62,27 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
+        // Retrieve course code and course name from the request
+        $courseCode = $request->input('course_code');
+        $courseName = $request->input('course_name');
+    
+        // Check if a record with the same course code and course name exists
+        $existingCourse = Course::where('course_code', $courseCode)
+                                 ->where('course_name', $courseName)
+                                 ->first();
+    
+        if ($existingCourse) {
+            // If a matching record exists, redirect back with an error message
+            return redirect()->route('courses.index')->with('error', 'Course already exists with the same course code and name.');
+        }
+    
+        // If no matching record exists, create a new record
         Course::create($request->all());
-        return redirect()->route('courses.index');
+    
+        // Redirect with success message
+        return redirect()->route('courses.index')->with('success', 'Course created successfully!');
     }
+    
 
     /**
      * Display the specified resource.
