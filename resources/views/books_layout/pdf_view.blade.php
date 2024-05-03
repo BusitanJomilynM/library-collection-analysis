@@ -91,7 +91,7 @@
             <table border="1" cellspacing="0" cellpadding="5" align="center">
                 <!-- Table header -->
                 <thead>
-                <tr align="center" style="background-color: yellow;">
+                <tr align="center">
                     <th style="font-style: italic;" colspan="1">
                         {{ isset($subjectCodesListSets[$setCount]) ? $subjectCodesListSets[$setCount][0] : '' }}
                     </th>
@@ -109,30 +109,33 @@
                 </thead>
                 <!-- Table body -->
                 <tbody>
-                    @php
-                        $totalCopies = 0;
-                        $printedCallNumbers = [];
-                    @endphp
-                    @foreach ($filteredBooks as $book)
-                        @if (!in_array($book->book_callnumber, $printedCallNumbers))
-                            <tr align="center">
-                                <td>{{ $book->book_callnumber }}</td>
-                                <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['title'] }}</td>
-                                <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['author'] }}</td>
-                                <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['totalCopies'] }}</td>
-                            </tr>
-                            <!-- Update total copies for this set -->
-                            @php
-                                $totalCopies += $bookStatsSets[$setCount][$book->book_callnumber]['totalCopies'];
-                                $printedCallNumbers[] = $book->book_callnumber;
-                            @endphp
-                        @endif
-                    @endforeach     
-                    <!-- Total row -->
-                    <tr align="center" style="font-weight: bold; color: red;">
-                    <td colspan="3" style="text-align: right;">TOTAL TITLES/VOLUMES :</td>
-                        <td>{{ $uniqueCallNumbersSets[$setCount] }} / {{ $totalCopies }}</td>
+            @php
+                $totalCopies = 0;
+                $printedCallNumbers = [];
+                $printedTitles = 0; // Counter for printed titles
+            @endphp
+            @foreach ($filteredBooks as $book)
+                @if (!in_array($book->book_callnumber, $printedCallNumbers))
+                    <tr align="center">
+                        <td>{{ $book->book_callnumber }}</td>
+                        <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['title'] }}</td>
+                        <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['author'] }}</td>
+                        <td>{{ $bookStatsSets[$setCount][$book->book_callnumber]['totalCopies'] }}</td>
                     </tr>
+                    <!-- Update total copies for this set -->
+                    @php
+                        $totalCopies += $bookStatsSets[$setCount][$book->book_callnumber]['totalCopies'];
+                        $printedCallNumbers[] = $book->book_callnumber;
+                        $printedTitles++; // Increment the counter for printed titles
+                    @endphp
+                @endif
+            @endforeach
+
+            <!-- Total row -->
+            <tr align="center" style="font-weight: bold; color: red;">
+                <td colspan="3" style="text-align: right;">TOTAL TITLES/VOLUMES :</td>
+                <td>{{ $printedTitles }} / {{ $totalCopies }}</td>
+            </tr>
 
                 </tbody>
             </table>
