@@ -37,13 +37,15 @@ class StoreBookRequest extends FormRequest
             'book_publisher'=>'required',
             // 'book_lccn'=>'required',
             'book_isbn'=>'required',
-          
+            
+            'book_callnumberdescription'=>'required',
         ];
     }
 
     public function messages()
     {
         return[
+            'book_callnumberdescription.required' => 'Fill out the call number description',
             'book_callnumber.required' => 'Fill out book call number',
             'book_barcode.required' => 'Fill out book barcode',
             'book_title.required' => 'Fill out book title',

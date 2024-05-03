@@ -407,22 +407,25 @@
             <span class="text-danger">{{$message}}</span>
         @enderror
     </div>
-
-
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
         <label class="required">Call Number</label>
         <input class="form-control @error('book_callnumber') is-invalid @enderror" type="text" name="book_callnumber" id="book_callnumber" minlength="4" maxlength="25"  value="{{ old('book_callnumber') }}" required >
         @error('book_callnumber')
             <span class="text-danger">{{$message}}</span>
-        @enderror
+        @enderror      
     </div>
 
+        <div class="col-md-2">
+            <label>Description</label>
+            <input class="form-control @error('book_callnumberdescription') is-invalid @enderror" type="text" name="book_callnumberdescription" id="book_callnumberdescription" value="{{ old('book_callnumberdescription') }}"  placeholder="copy number">
+        @error('book_callnumberdescription')
+            <span class="text-danger">{{$message}}</span>
+        @enderror 
+        </div>
 
-<div class="col-md-6">
-    <div class="row">
-        <div class="col-md-8">
-            <label class="required">Barcode</label>
+        <div class="col-md-4">
+        <label class="required">Barcode</label>
             <div class="input-group">
                 <input class="form-control @error('book_barcode') is-invalid @enderror" type="text" name="book_barcode" id="book_barcode" minlength="2" maxlength="7" value="{{ old('book_barcode') }}" required>
                 <div class="input-group-append">
@@ -434,7 +437,6 @@
             @enderror
         </div>
     </div>
-</div>
 
 
     <div class="form-group">
