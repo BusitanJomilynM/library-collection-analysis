@@ -16,7 +16,9 @@ class KeywordSuggest extends Model
         'suggest_book_keyword',
         'user_id',
         'action',
-        'status'
+        'status',
+        'disapproval_reason',
+
       ];
 
       protected $table = 'keywordsuggest';

@@ -14,7 +14,8 @@ class Tag extends Model
         'suggest_book_subject',
         'user_id',
         'action',
-        'status'
+        'status',
+        'disapproval_reason',
     ];
     
     protected $attributes = [
