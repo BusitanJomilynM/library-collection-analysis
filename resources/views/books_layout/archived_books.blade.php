@@ -18,11 +18,10 @@
 <table class="table table-hover table-bordered" style="width:100%">
 <thead class="thead-dark">
   <tr align="center">
-    <th>Book Title</th>
+    <th>Title</th>
     <th>Author</th>
     <th>Copyright Year</th>
-    <th>Sublocation</th>
-    <th>Subject</th>
+    <th>Location</th>
     <th>Reason for archive</th>
     <th>Actions</th>
   </tr>
@@ -35,35 +34,35 @@
     <td>{{$archive->book_author}}</td>
     <td>{{$archive->book_copyrightyear}}</td>
     <td>{{$archive->book_sublocation}}</td>
-    <td><?php 
+    <!-- <!-- <td><?php 
             
            
-                    $x = $archive->book_subject;
-                    $charactersToRemove = ['"', "[", "]"];
-                    $s = str_replace($charactersToRemove, "", $x);
+                    // $x = $archive->book_subject;
+                    // $charactersToRemove = ['"', "[", "]"];
+                    // $s = str_replace($charactersToRemove, "", $x);
 
-                    $words = explode(',', $s);
+                    // $words = explode(',', $s);
 
-                    $count = count($words);
+                    // $count = count($words);
 
-                    foreach ($subjects as $subject){
-                        foreach ($words as  $key => $word) {
-                            if( $word == $subject->id){
-                            echo $subject->subject_name;
-                            if ($key < $count - 1) {
-                                echo " ,";
-                              } 
-                            }
-                        }
-                    }   ?>
+                    // foreach ($subjects as $subject){
+                    //     foreach ($words as  $key => $word) {
+                    //         if( $word == $subject->id){
+                    //         echo $subject->subject_name;
+                    //         if ($key < $count - 1) {
+                    //             echo " ,";
+                    //           } 
+                    //         }
+                    //     }
+                    // }   ?>
                    
                       
-    </td>
+    </td> -->
     <td>
     @if($archive->archive_reason == 1)  
-      Lost
+      Missing
     @elseif($archive->archive_reason == 2)
-      Old
+      Discarded
     @elseif($archive->archive_reason == 3)
       Damaged
 

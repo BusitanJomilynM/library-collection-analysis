@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('book_subject')->nullable();
             $table->string('book_keyword');
             $table->string('book_publisher');
-            $table->date('book_purchasedwhen');
-            $table->string('book_lccn')->nullable();
+            // $table->date('book_purchasedwhen');
+            // $table->string('book_lccn')->nullable();
             $table->string('book_isbn')->nullable();
             $table->string('book_edition')->nullable();
             $table->integer('status');
