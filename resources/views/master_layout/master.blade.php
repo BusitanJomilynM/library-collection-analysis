@@ -122,14 +122,14 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
+                                    <!-- <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a> -->
                                     </a>
                                 </div>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="{{route('keywords.index')}}">Book Subject</a>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('booklist_pdf')}}">Reports</a>
@@ -178,17 +178,17 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
+                                    <!-- <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a> -->
                                     </a>
                                 </div>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" href="{{route('keywords.index')}}">Book Subject</a>
-                        </li>
+                        </li> -->
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('tags.index')}}">Reports</a>
+                        <a class="nav-link" href="{{route('booklist_pdf')}}">Reports</a>
                         </li>
 
                         <!-- department rep -->
@@ -214,7 +214,7 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
+                                    <!-- <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a> -->
                                     </a>
                                 </div>
                         </li> 
@@ -238,7 +238,7 @@
                                     <a class="dropdown-item" href="{{route('tags.index')}}">Subject Suggestions</a>
                                     </a>
 
-                                    <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a>
+                                    <!-- <a class="dropdown-item" href="{{route('keywordsuggest.index')}}">Book Subject Suggestions</a> -->
                                     </a>
                                 </div>
                         </li>

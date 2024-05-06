@@ -124,10 +124,12 @@
   </tr>
   </tbody>
 
+
+
 <!-- Suggest Subject Modal -->
 <div class="modal fade" id="createTagModal_{{$book->book_barcode}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="dcreateTagModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+  <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteUserModalLabel">Suggest Subjects to book</h5>
       </div>
@@ -220,119 +222,11 @@
     </div>
   </div>
 </div>
-
-
-
-
-<!-- Suggest Keyword
-<div class="modal fade" id="createKeywordSuggestModal_{{$book->book_barcode}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createKeywordSuggestModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteUserModalLabel">Suggest Keywords to book</h5>
-      </div>
-      <form action="{{ route('keywordsuggest.store') }}" method="POST">
-          <div class="modal-body">
-          @csrf
-   
-            <input class="form-control" type="number" name="user_id" id="user_id" value="{{$user->id}}" hidden> 
-    
-            <div class="form-group">
-                <label>Barcode</label>
-                <input class="form-control" type="text" name="book_barcode" id="book_barcode" value="{{$book->book_barcode }}" readonly> 
-            </div>
-            <div class="form-group">
-                <label class="required">Department</label>
-                    <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
-                    <option value="">--Select Department--</option>
-                    <option value="SBAA">SBAA - School of Business Administration & Accountancy</option>
-                    <option value="SOD">SOD - School of Dentistry</option>
-                    <option value="SIT">SIT - School of Information Technology</option>
-                    <option value="SIHTM">SIHTM - School of International Tourism and Hospitality</option>
-                    <option value="SEA">SEA - School of Engineering & Architecture</option>
-                    <option value="SCJPS">SCJPS - School of Criminal Justice & Public Safety</option>
-                    <option value="SOL">SOL - School of Law</option>
-                    <option value="SNS">SNS - School of Natural Sciences</option>
-                    <option value="SON">SON - School of Nursing</option>
-                    <option value="STELA">STELA - School of Teacher Education & Liberal Arts</option>
-                    <option value="Graduate School">Graduate School</option>
-                    
-                    </select>
-                    @error('department')
-                    <span class="text-danger">{{$message}}</span>
-                    @enderror
-            </div>
-
-            <div class="form-group">
-                <label>Current Keyword/s</label>
-                <select class="js-responsive" name="book_keyword[]" id="book_keyword_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" disabled>
-                    @foreach($keywords as $keyword)
-                    <?php
-                          // $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
-                      ?>
-                      <option value="{{ $keyword->id }}" {{ $selected ? 'selected' : '' }}>
-                          {{ $keyword->keyword }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group">
-    <label class="required">Suggested Keywords</label>
-    <select class="js-responsive2" name="suggest_book_keyword[]" id="suggest_book_keyword_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
-        @foreach($keywords as $keyword)
-            <?php 
-                // $keywordsdecode = json_decode($book->book_keyword, true);
-                // if ($keywordsdecode !== null) {
-                //     $alreadyAssociated = false;
-                //     foreach ($keywordsdecode as $subjkey) {
-                //         if ($subjkey == $keyword->id){
-                //             $alreadyAssociated = true;
-                //             break;
-                //         }
-                //     }
-                //     if (!$alreadyAssociated) {
-                //         echo '<option value="'.$keyword->id.'">'.$keyword->keyword.'</option>'; 
-                //     }
-                // } else {
-                //     echo '<option value="'.$keyword->id.'">'.$keyword->keyword.'</option>'; 
-                // }
-            ?>
-        @endforeach
-    </select>
-</div>
-
-            <div class="form-group">
-                <label class="required">Action</label>
-                    <select class="form-control" name="action" id="action" required>
-                    <option value="">--Select Action--</option>
-                    <option value=1>Append</option>
-                    <option value=2>Replace</option>
-
-                    </select>
-                    @error('department')
-                    <span class="text-danger">{{$message}}</span>
-                    @enderror
-            </div>
-            
-            <div class="form-group">
-              <i>Textboxes marked with an asterisk are required.</i>
-            </div>
-          </div>
-          
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-danger">Submit</button>
-          </div>
-        </form>
-    </div>
-  </div>
-</div>
-@endif 
-
+@endif
 @empty
 <tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
-@endforelse-->
+@endforelse
+</table>
 
 <!-- staff librarian -->
 @elseif($user->type == 'staff librarian')
@@ -519,7 +413,7 @@
     </div>
 
 <div class="form-group">
-    <label>Course Subject the Book is Associated to:</label>
+    <label>Course Subject the Book is Associated to</label>
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
       <option value="0">--NO SUBJECT--</option>
       @foreach($subjects as $subject)
