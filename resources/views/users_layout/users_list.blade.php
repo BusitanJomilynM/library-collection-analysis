@@ -51,9 +51,9 @@
       @elseif($user->type == 'staff librarian')
         Section  Librarian
       @elseif($user->type == 'department representative')
-        Department Representative
+        Program Chairman
         @elseif($user->type == 'teacher')
-        Teacher
+        Faculty Staff
       @endif</td>
     <td>
     <div class="btn-group">
@@ -150,7 +150,7 @@
 
     <div class="col2">
         <label class="required">Contact Number</label>
-        <input class="form-control @error('email') is-invalid @enderror" type="text" name="contact_number" id="contact_number"  pattern="\d*" minlength="12" maxlength="12" placeholder="639XX-XXX-XXXX" required>
+        <input class="form-control @error('email') is-invalid @enderror" type="text" name="contact_number" id="contact_number"  pattern="\d*" minlength="11" maxlength="11" placeholder="09XX-XXX-XXXX" required>
         @error('contact_number')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -169,8 +169,8 @@
             <option value="">--Select Role--</option>
             <option value="0">Technical Librarian</option>
             <option value="1">Section Librarian</option>
-            <option value="2">Department Representative</option>
-            <option value="3">Teacher</option>
+            <option value="2">Program Chairman</option>
+            <option value="3">Faculty Staff</option>
             </select>
             @error('type')
             <span class="text-danger">{{$message}}</span>
@@ -256,8 +256,8 @@
             <select class="form-control" name="type" id="type" value="{{$user->type}}" required>
                 <option value="0" {{ old('type') == "technician librarian" || $user->type == "technician librarian" ? 'selected' : '' }}>Technical Librarian</option>
                 <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Section Librarian</option>
-                <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
-                <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Teacher</option>
+                <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Program Chairman</option>
+                <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Faculty Staff</option>
             </select>
     </div>
 
