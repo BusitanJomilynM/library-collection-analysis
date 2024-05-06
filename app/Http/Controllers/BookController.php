@@ -382,7 +382,7 @@ class BookController extends Controller{
     {
         $courses = Course::all();    
         $subjects = Subject::all();  
-        $keywords = Keyword::all(); 
+        // $keywords = Keyword::all(); 
         $books = Book::all();    
         $user = Auth::user();
     
@@ -419,57 +419,71 @@ class BookController extends Controller{
                 $subjectNamee[] = $subject->subject_name;
                 $subjectCodesList[] = $subject->subject_code; // Store subject code
                 $keywordsList[] = $request->input("keyword_$setCount");
-                $keywordIds = $request->input("keyword_$setCount");
-                $keywordsListt = Keyword::whereIn('id', $keywordIds)->pluck('keyword')->toArray();
+
+                // $keywordIds = $request->input("keyword_$setCount");
+                // $keywordsListt = Keyword::whereIn('id', $keywordIds)->pluck('keyword')->toArray();
 
             }
         
 
-                foreach ($books as $book) {
-                    $jsonSubject = $book->book_subject;
-                    $subjectArray = json_decode($jsonSubject, true);
-                    $jsonKeyword = $book->book_keyword;
-                    $keywordArray = json_decode($jsonKeyword, true);
-                    $titleWords = explode(' ', strtolower($book->book_title));
-
-                    if ($book->archive_reason) {
-                        continue; // Skip the book if it is archived
+            foreach ($books as $book) {
+                $jsonSubject = $book->book_subject;
+                $subjectArray = json_decode($jsonSubject, true);
+                $jsonKeyword = $book->book_keyword;
+                $keywordArray = json_decode($jsonKeyword, true);
+                $titleWords = explode(' ', strtolower($book->book_title));
+            
+                if ($book->archive_reason) {
+                    continue; // Skip the book if it is archived
+                }
+            
+                if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
+                    continue; // Skip the book if the prefix doesn't match
+                }
+            
+                $matched = false; // Flag to indicate if any match is found
+            
+                // Check if any subject name provided by the user matches any subject in the book
+                foreach ($subjectIDList as $subjectid) {
+                    if (in_array($subjectid, $subjectArray)) {
+                        $filteredBooks->push($book);
+                        $matched = true;
+                        break; // Once a match is found, break the loop for this book
                     }
-
-                    if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
-                        continue; // Skip the book if the prefix doesn't match
-                    }
-
-                    // Check if any subject name provided by the user matches any subject in the book
-                    foreach ($subjectIDList as $subjectid) {
-                        if (in_array($subjectid, $subjectArray)) {
-                            $filteredBooks->push($book);
-                            break; // Once a match is found, break the loop for this book
-                        }
-                    }
-
-                    // Check if any keyword provided by the user matches any keyword in the book
-                    foreach ($keywordsList as $keywordsString) {
-                        foreach ($keywordsString as $keyword) {
-                            // Now you can process each individual keyword
+                }
+            
+                // Check if keywordArray is not null and if any match is already found
+                if (!is_null($keywordArray) && !$matched) {
+                    // Check if any keyword provided by the user matches any keyword in the book_subject
+                    foreach ($keywordsList as $keywords) {
+                        $keywords = preg_split('/,/', $keywords);
+                        foreach ($keywords as $keyword) {
                             if (in_array($keyword, $keywordArray)) {
                                 $filteredBooks->push($book);
+                                $matched = true;
                                 break 2; // Break both inner and outer loop once a match is found
                             }
                         }
                     }
-
-                    // Check if any word in the title matches any keyword
-                    foreach ($titleWords as $titleWord) {
-                        foreach ($keywordsListt as $keyword) {
-                            if (strtolower($keyword) === strtolower($titleWord)) {
-                                $filteredBooks->push($book);
-                                continue 3; // Continue with the next book once a match is found
+                }
+            
+                // Check if any word in the title matches any keyword
+                if (!$matched) {
+                    foreach ($keywordsList as $keywords) {
+                        $keywords = preg_split('/,/', $keywords);
+                        foreach ($keywords as $keyword) {
+                            foreach ($titleWords as $titleWord) {
+                                if (strpos(strtolower($titleWord), strtolower($keyword)) !== false) {
+                                    $filteredBooks->push($book);
+                                    $matched = true;
+                                    break 3; // Break both inner and outer loops once a match is found
+                                }
                             }
                         }
                     }
                 }
-            // Remove duplicate books based on ID
+            }
+                                                // Remove duplicate books based on ID
             $filteredBooks = $filteredBooks->unique('id');
         
             // Store filtered books for the current set
@@ -534,7 +548,7 @@ class BookController extends Controller{
         if (!empty($filteredBooksSets)) {
             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_view', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets', 'uniqueCallNumbersSets'))->setPaper('a4', 'portrait');            return $pdf->stream('booklist.pdf');
         } else {
-            return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
+            return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects]);
         }
             }            
     
@@ -542,7 +556,6 @@ class BookController extends Controller{
             {
                 $courses = Course::all();    
                 $subjects = Subject::all();  
-                $keywords = Keyword::all(); 
                 $books = Book::all();    
                 $user = Auth::user();
             
@@ -576,57 +589,69 @@ class BookController extends Controller{
                         $subjectNamee[] = $subject->subject_name;
                         $subjectCodesList[] = $subject->subject_code; // Store subject code
                         $keywordsList[] = $request->input("keyword_$setCount");
-                        $keywordIds = $request->input("keyword_$setCount");
-                        $keywordsListt = Keyword::whereIn('id', $keywordIds)->pluck('keyword')->toArray();
+                        // $keywordIds = $request->input("keyword_$setCount");
+                        // $keywordsListt = Keyword::whereIn('id', $keywordIds)->pluck('keyword')->toArray();
         
                     }
                 
-                    // Filter books for the current set
                     foreach ($books as $book) {
                         $jsonSubject = $book->book_subject;
                         $subjectArray = json_decode($jsonSubject, true);
                         $jsonKeyword = $book->book_keyword;
                         $keywordArray = json_decode($jsonKeyword, true);
                         $titleWords = explode(' ', strtolower($book->book_title));
-
-                
+                    
                         if ($book->archive_reason) {
                             continue; // Skip the book if it is archived
                         }
-                
+                    
                         if ($prefix && strpos($book->book_callnumber, $prefix) !== 0) {
                             continue; // Skip the book if the prefix doesn't match
                         }
-                
+                    
+                        $matched = false; // Flag to indicate if any match is found
+                    
                         // Check if any subject name provided by the user matches any subject in the book
                         foreach ($subjectIDList as $subjectid) {
                             if (in_array($subjectid, $subjectArray)) {
                                 $filteredBooks->push($book);
+                                $matched = true;
                                 break; // Once a match is found, break the loop for this book
                             }
                         }
-                
-                        // Check if any keyword provided by the user matches any keyword in the book
-                        foreach ($keywordsList as $keywordsString) {
-                            foreach ($keywordsString as $keyword) {
-                                // Now you can process each individual keyword
-                                if (in_array($keyword, $keywordArray)) {
-                                    $filteredBooks->push($book);
-                                    break 2; // Break both inner and outer loop once a match is found
+                    
+                        // Check if keywordArray is not null and if any match is already found
+                        if (!is_null($keywordArray) && !$matched) {
+                            // Check if any keyword provided by the user matches any keyword in the book_subject
+                            foreach ($keywordsList as $keywords) {
+                                $keywords = preg_split('/,/', $keywords);
+                                foreach ($keywords as $keyword) {
+                                    if (in_array($keyword, $keywordArray)) {
+                                        $filteredBooks->push($book);
+                                        $matched = true;
+                                        break 2; // Break both inner and outer loop once a match is found
+                                    }
                                 }
                             }
                         }
-
-                        foreach ($titleWords as $titleWord) {
-                            foreach ($keywordsListt as $keyword) {
-                                if (strtolower($keyword) === strtolower($titleWord)) {
-                                    $filteredBooks->push($book);
-                                    continue 3; // Continue with the next book once a match is found
+                    
+                        // Check if any word in the title matches any keyword
+                        if (!$matched) {
+                            foreach ($keywordsList as $keywords) {
+                                $keywords = preg_split('/,/', $keywords);
+                                foreach ($keywords as $keyword) {
+                                    foreach ($titleWords as $titleWord) {
+                                        if (strpos(strtolower($titleWord), strtolower($keyword)) !== false) {
+                                            $filteredBooks->push($book);
+                                            $matched = true;
+                                            break 3; // Break both inner and outer loops once a match is found
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                
+                                            
                     // Remove duplicates from filtered books
                     $filteredBooks = $filteredBooks->unique('id');
                 
@@ -663,7 +688,7 @@ class BookController extends Controller{
                     $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('books_layout.pdf_collection', compact('user', 'course_name', 'course_code', 'bookStatsSets', 'filteredBooksSets', 'subjectNamesListSets', 'subjectCodesListSets'))->setPaper('a4', 'landscape');
                     return $pdf->stream('collectionanalysis.pdf');
                 } else {
-                    return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects, 'keywords' => $keywords]);
+                    return view('books_layout.booklist_pdf', ['books' => $book, 'courses' => $courses, 'subjects' => $subjects]);
                 }
                     }
                     
