@@ -80,12 +80,9 @@
 
 <<<<<<< HEAD
 @if ($canSuggest)
-<tr><td colspan="2" class="center">
-<a data-toggle="modal" class="btn btn-primary" data-target="#createTagModal_{{$book->book_barcode}}" data-action="{{ route('tags.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Subjects</a>
+    <!-- <a data-toggle="modal" class="btn btn-primary" data-target="#createTagModal_{{$book->book_barcode}}" data-action="{{ route('tags.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Subjects</a>
 
-<a data-toggle="modal" class="btn btn-primary" data-target="#createKeywordSuggestModal_{{$book->book_barcode}}" data-action="{{ route('keywordsuggest.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Keywords</a>
-
-</td></tr>
+    <a data-toggle="modal" class="btn btn-primary" data-target="#createKeywordSuggestModal_{{$book->book_barcode}}" data-action="{{ route('keywordsuggest.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Keywords</a> -->
 @else
 =======
 @if ($user->type == 'teacher' && $user->type == 'department representative')
@@ -118,6 +115,7 @@
                     <td>
            
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -239,6 +237,9 @@
   </div>
 </div>
 >>>>>>> parent of 6d07c62 (deletion:keywords)
+=======
+
+>>>>>>> parent of 7190691 (viewbookdetails/deptrep and teacher)
 <!-- Edit Book Modal -->
 <div class="modal fade" id="editBookModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editBookModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

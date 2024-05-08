@@ -22,8 +22,6 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('action');
             $table->integer('status');
-            $table->string('disapproval_reason')->nullable();
-
 
         });
     }
