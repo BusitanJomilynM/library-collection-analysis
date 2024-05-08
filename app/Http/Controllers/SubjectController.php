@@ -53,10 +53,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-        $subjects = Subject::all();
-    
-        return view('subjects_layout.subjects_list', ['user'=>$user, 'subjects'=>$subjects]); // Assuming you have a view for creating a new keyword
+        return view('subjects_layout.subjects_list');
     }
 
     /**
@@ -67,29 +64,14 @@ class SubjectController extends Controller
      */
     public function store(StoreSubjectRequest $request)
     {
-        // Retrieve subject name and subject course from the request
-        $subjectName = $request->input('subject_name');
-        $subjectCourse = json_encode($request->input('subject_course'));
-    
-        // Check if a record with the same subject name and subject course exists
-        $existingSubject = Subject::where('subject_name', $subjectName)
-                                   ->where('subject_course', $subjectCourse)
-                                   ->first();
-    
-        if ($existingSubject) {
-            // If a matching record exists, redirect back with an error message
-            return redirect()->route('subjects.index')->with('error', 'Subject already exists with the same name and course.');
-        }
-    
-        // If no matching record exists, proceed to create the new subject
         $data = $request->all();
-        $data['subject_course'] = $subjectCourse;
+
+        $data['subject_course'] = json_encode($request->subject_course);
+    
         Subject::create($data);
-    
-        // Redirect with success message
-        return redirect()->route('subjects.index')->with('success', 'Subject created successfully!');
+
+        return redirect()->route('subjects.index');
     }
-    
 
     /**
      * Display the specified resource.

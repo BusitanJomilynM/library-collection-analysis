@@ -46,10 +46,7 @@ namespace App\Http\Controllers;
 
         public function create()
 {
-    $user = Auth::user();
-    $keywords = Keyword::all();
-
-    return view('keywords_layout.create_keyword', ['user'=>$user, 'keywords'=>$keywords]); // Assuming you have a view for creating a new keyword
+    return view('keywords_layout.create_keyword'); // Assuming you have a view for creating a new keyword
 }
 
 
@@ -61,27 +58,10 @@ namespace App\Http\Controllers;
          */
         public function store(Request $request)
         {
-            // Retrieve keyword and decimal_classification from the request
-            $keyword = $request->input('keyword');
-            $decimalClassification = $request->input('decimal_classification');
-        
-            // Check if a record with the same keyword and decimal classification exists
-            $existingKeyword = Keyword::where('keyword', $keyword)
-                                        ->where('decimal_classification', $decimalClassification)
-                                        ->first();
-        
-            if ($existingKeyword) {
-                // If a matching record exists, redirect back with an error message
-                return redirect()->route('keywords.index')->with('error', 'Keyword already exists with the same decimal classification.');
-            }
-        
-            // If no matching record exists, create a new record
             Keyword::create($request->all());
-        
-            // Redirect with success message
             return redirect()->route('keywords.index')->with('success', 'Keyword created successfully!');
         }
-        
+
         /**
          * Display the specified resource.
          *
