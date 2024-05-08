@@ -345,9 +345,14 @@
         @enderror
     </div>
 
+<<<<<<< HEAD
 
     <div class="form-group">
         <label class="required">Subjects</label>
+=======
+<div class="form-group">
+        <label class="required">Course Subject the Book is Associated to:</label>
+>>>>>>> parent of a0e42c6 (continuation deletion)
         <select class="js-responsive" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
             @foreach($subjects as $subject)
                 <?php

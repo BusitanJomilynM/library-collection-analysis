@@ -222,6 +222,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
@@ -229,10 +230,13 @@
 =======
 =======
 >>>>>>> parent of a0e42c6 (continuation deletion)
+=======
+>>>>>>> parent of a0e42c6 (continuation deletion)
 
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <!-- Suggest Keyword
 <<<<<<< HEAD
@@ -242,6 +246,9 @@
 =======
 <!-- Suggest Keyword -->
 >>>>>>> parent of 6d07c62 (deletion:keywords)
+=======
+<!-- Suggest Keyword
+>>>>>>> parent of a0e42c6 (continuation deletion)
 <div class="modal fade" id="createKeywordSuggestModal_{{$book->book_barcode}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createKeywordSuggestModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -288,6 +295,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                           $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
 =======
                           // $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
@@ -298,6 +306,9 @@
 =======
                           $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
 >>>>>>> parent of 6d07c62 (deletion:keywords)
+=======
+                          // $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
+>>>>>>> parent of a0e42c6 (continuation deletion)
                       ?>
                       <option value="{{ $keyword->id }}" {{ $selected ? 'selected' : '' }}>
                           {{ $keyword->keyword }}
@@ -311,6 +322,7 @@
     <select class="js-responsive2" name="suggest_book_keyword[]" id="suggest_book_keyword_{{$book->book_barcode}}" multiple="multiple" style="width: 100%" required>
         @foreach($keywords as $keyword)
             <?php 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -335,6 +347,8 @@
 =======
 =======
 >>>>>>> parent of a0e42c6 (continuation deletion)
+=======
+>>>>>>> parent of a0e42c6 (continuation deletion)
                 // $keywordsdecode = json_decode($book->book_keyword, true);
                 // if ($keywordsdecode !== null) {
                 //     $alreadyAssociated = false;
@@ -351,11 +365,14 @@
                 //     echo '<option value="'.$keyword->id.'">'.$keyword->keyword.'</option>'; 
                 // }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of a0e42c6 (continuation deletion)
 =======
 >>>>>>> parent of a0e42c6 (continuation deletion)
 =======
 >>>>>>> parent of 6d07c62 (deletion:keywords)
+=======
+>>>>>>> parent of a0e42c6 (continuation deletion)
             ?>
         @endforeach
     </select>
@@ -390,6 +407,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 @endif
 =======
@@ -406,6 +424,13 @@
 @empty
 <tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
 @endforelse
+=======
+@endif 
+
+@empty
+<tr align="center"> <td colspan="13"><h3>No Entry Found</h3></td></tr> 
+@endforelse-->
+>>>>>>> parent of a0e42c6 (continuation deletion)
 
 <!-- staff librarian -->
 @elseif($user->type == 'staff librarian')
@@ -569,8 +594,13 @@
         @enderror
     </div>
 
+<<<<<<< HEAD
     <div class="form-group">
     <label>Subject</label>
+=======
+<div class="form-group">
+    <label>Course Subject the Book is Associated to:</label>
+>>>>>>> parent of a0e42c6 (continuation deletion)
       <select class="mySelect for" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
       <option value="0">--NO SUBJECT--</option>
       @foreach($subjects as $subject)
