@@ -118,6 +118,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                         <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
                         <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
@@ -237,6 +238,9 @@
   </div>
 </div>
 >>>>>>> parent of 6d07c62 (deletion:keywords)
+=======
+
+>>>>>>> parent of 7190691 (viewbookdetails/deptrep and teacher)
 =======
 
 >>>>>>> parent of 7190691 (viewbookdetails/deptrep and teacher)
