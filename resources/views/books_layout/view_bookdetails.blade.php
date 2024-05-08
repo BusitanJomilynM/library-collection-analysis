@@ -289,7 +289,7 @@
     </div>
 
 <div class="form-group">
-        <label class="required">Course Subject the Book is Associated to</label>
+        <label class="required">Course Subject the Book is Associated to:</label>
         <select class="js-responsive" name="book_subject[]" id="book_subject" multiple="multiple" style="width: 100%" required>
             @foreach($subjects as $subject)
                 <?php
