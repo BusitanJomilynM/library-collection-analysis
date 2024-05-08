@@ -231,8 +231,6 @@ class TagController extends Controller
     {
         $users = User::all();
         $books = Book::all();
-        $subjects = Subject::all();
-
 
         if(request('search')) { 
             $pending2= Tag::where('book_barcode', 'like', '%' . request('book_barcode') . '%')
@@ -250,7 +248,7 @@ class TagController extends Controller
             $pending2 = Tag::where('status', 'like', '0')->paginate(10);
         }
 
-        return view('tags_layout.pending_tags', ['pending2'=>$pending2, 'users'=>$users, 'books'=>$books, 'subjects'=>$subjects]);
+        return view('tags_layout.pending_tags', ['pending2'=>$pending2, 'users'=>$users, 'books'=>$books]);
     }
 
     public function updateTags(Request $request, Book $book){
