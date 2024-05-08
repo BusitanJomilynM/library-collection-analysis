@@ -52,7 +52,7 @@
 <br>
     <div class="form-group">
         <label class="required">Contact Number</label>
-        <input class="form-control @error('contact_number') is-invalid @enderror" type="text" name="contact_number" id="contact_number" value="{{$user->contact_number}}" pattern="\d*" minlength="11" maxlength="11" placeholder="09XX-XXX-XXXX">
+        <input class="form-control @error('contact_number') is-invalid @enderror" type="text" name="contact_number" id="contact_number" value="{{$user->contact_number}}" pattern="\d*" minlength="12" maxlength="12" placeholder="639XX-XXX-XXXX">
         @error('contact_number')
             <span class="text-danger">{{$message}}</span>
         @enderror
@@ -62,8 +62,8 @@
             <select class="form-control" name="type" id="type" value="{{$user->type}}" hidden>
                 <option value="0" {{ old('type') == "technician librarian" || $user->type == "technician librarian" ? 'selected' : '' }}>Technical Librarian</option>
                 <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Section Librarian</option>
-                <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Program Chairman</option>
-                <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Faculty Staff</option>
+                <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
+                <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Teacher</option>
 
             </select>
     </div>
