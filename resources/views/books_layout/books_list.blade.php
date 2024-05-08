@@ -223,16 +223,22 @@
 </div>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 <!-- Suggest Keyword -->
 =======
+=======
+>>>>>>> parent of a0e42c6 (continuation deletion)
 
 
 
 
 <!-- Suggest Keyword
+<<<<<<< HEAD
+>>>>>>> parent of a0e42c6 (continuation deletion)
+=======
 >>>>>>> parent of a0e42c6 (continuation deletion)
 <div class="modal fade" id="createKeywordSuggestModal_{{$book->book_barcode}}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="createKeywordSuggestModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -278,7 +284,11 @@
                     @foreach($keywords as $keyword)
                     <?php
 <<<<<<< HEAD
+<<<<<<< HEAD
                           $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
+=======
+                          // $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
+>>>>>>> parent of a0e42c6 (continuation deletion)
 =======
                           // $selected = in_array($keyword->id, json_decode($book->book_keyword, true));
 >>>>>>> parent of a0e42c6 (continuation deletion)
@@ -296,6 +306,7 @@
         @foreach($keywords as $keyword)
             <?php 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $keywordsdecode = json_decode($book->book_keyword, true);
                 if ($keywordsdecode !== null) {
                     $alreadyAssociated = false;
@@ -312,6 +323,8 @@
                     echo '<option value="'.$keyword->id.'">'.$keyword->keyword.'</option>'; 
                 }
 =======
+=======
+>>>>>>> parent of a0e42c6 (continuation deletion)
                 // $keywordsdecode = json_decode($book->book_keyword, true);
                 // if ($keywordsdecode !== null) {
                 //     $alreadyAssociated = false;
@@ -327,6 +340,9 @@
                 // } else {
                 //     echo '<option value="'.$keyword->id.'">'.$keyword->keyword.'</option>'; 
                 // }
+<<<<<<< HEAD
+>>>>>>> parent of a0e42c6 (continuation deletion)
+=======
 >>>>>>> parent of a0e42c6 (continuation deletion)
             ?>
         @endforeach
@@ -360,8 +376,13 @@
   </div>
 </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 @endif
+=======
+@endif 
+
+>>>>>>> parent of a0e42c6 (continuation deletion)
 =======
 @endif 
 
