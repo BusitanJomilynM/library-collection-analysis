@@ -111,6 +111,7 @@
     <td>{{$book->book_title}}</td>
     <td>{{$book->book_author}}</td>
 
+
     </td>
     <td>
 
@@ -219,46 +220,10 @@
     </div>
   </div>
 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
-=======
->>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
-=======
->>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
-=======
->>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
-=======
->>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
-
-
-<!-- Suggest Keyword -->
-=======
-=======
->>>>>>> parent of a0e42c6 (continuation deletion)
-=======
->>>>>>> parent of a0e42c6 (continuation deletion)
 
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!-- Suggest Keyword
-<<<<<<< HEAD
->>>>>>> parent of a0e42c6 (continuation deletion)
-=======
->>>>>>> parent of a0e42c6 (continuation deletion)
-=======
 <!-- Suggest Keyword -->
 >>>>>>> parent of 6d07c62 (deletion:keywords)
 =======
