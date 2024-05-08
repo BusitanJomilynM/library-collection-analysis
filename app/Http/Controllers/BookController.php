@@ -77,13 +77,10 @@ class BookController extends Controller{
     public function create(Request $request): View
     {
         $user = Auth::user();
-        $books = Book::paginate(10);
-        $keywords = Keyword::all();
-        $subjects = Subject::all();        
         if ($user->type === 'technician librarian') {
             // Assuming you have some logic to generate the barcode
             
-            return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'keywords'=>$keywords, 'subjects'=>$subjects]);
+            return view('books_layout.books_list', compact('barcode'));
         } else {
             return redirect()->back();
         }
@@ -118,19 +115,25 @@ class BookController extends Controller{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBookRequest $request): \Illuminate\Http\RedirectResponse
-    {
+    public function store(StoreBookRequest $request): \Illuminate\Http\RedirectResponse    {
+        // Book::create($request->all());
+        // return redirect()->route('books.index');
+        // $barcode = $this->generateUniqueBarcode();
+
+
         $bookBarcode = $request->input('book_barcode');
         $existingBook = Book::where('book_barcode', $bookBarcode)->first();
-    
+
+        
         $data = $request->all();
-    
+
         // Split authors by comma and trim any extra whitespaces
         $authors = explode(',', $data['book_author']);
         $authors = array_map('trim', $authors);
-    
+
         $subjects = $data['book_subject'];
         $subjects = implode(',', array_map('trim', $subjects));
+
     
         // Remove empty elements from the array
         $authors = array_filter($authors);
@@ -142,45 +145,24 @@ class BookController extends Controller{
         if (is_array($data['book_keyword'])) {
             $data['book_keyword'] = implode(', ', array_map('trim', $data['book_keyword']));
         }
-    
+
+
         $data['book_subject'] = json_encode($request->book_subject);
         $data['book_keyword'] = json_encode($request->book_keyword);
+
     
-        // Check if the book call number matches any existing book
-        $existingBookWithSameCallNumber = Book::where('book_callnumber', $data['book_callnumber'])->first();
-    
-        if ($existingBookWithSameCallNumber) {
-            // If book title matches, create the book
-            if ($existingBookWithSameCallNumber->book_title === $data['book_title']) {
-                // Store the input data in the session
-                $request->session()->put('book_data', $data);
-    
-                Book::create($data);
-    
-                if ($existingBook) {
-                    return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that barcode is already registered.');
-                } else {
-                    return redirect()->route('books.index');
-                }
-            } else {
-                // If book title does not match, redirect back with error
-                return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that call number already exists, but with a different title.');
-            }
-        } else {
-            // If no book with the same call number exists, create the book
             // Store the input data in the session
             $request->session()->put('book_data', $data);
-    
+
             Book::create($data);
-    
+
             if ($existingBook) {
                 return redirect()->route('books.create')->withInput($data)->with('error', 'A book with that barcode is already registered.');
             } else {
                 return redirect()->route('books.index');
-            }
-        }
-    }
-        /**
+            }            }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

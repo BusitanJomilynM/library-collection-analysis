@@ -37,6 +37,7 @@ class StoreBookRequest extends FormRequest
             'book_publisher'=>'required',
             // 'book_lccn'=>'required',
             'book_isbn'=>'required',
+            
             'book_callnumberdescription'=>'required',
         ];
     }

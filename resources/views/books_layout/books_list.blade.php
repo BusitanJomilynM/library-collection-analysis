@@ -1,4 +1,3 @@
-
 @extends('master_layout.master')
 @section('Title', 'Books')
 @section('content')
@@ -56,6 +55,7 @@
      
     <a class="btn btn-primary" href="{{ route('books.view_bookdetails', $book->id) }}" role="button"><span>&#9783;</span></a>
 
+       
     </td>
   </tr>
   </tbody>
