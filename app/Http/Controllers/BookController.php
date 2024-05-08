@@ -68,7 +68,7 @@ class BookController extends Controller{
                 ->paginate(10);
         }
     
-        return view('books_layout.books_list', ['books'=>$books,'user'=>$user,'subjects'=>$subjects]);
+        return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'keywords'=>$keywords, 'subjects'=>$subjects]);
     }    /**
      * Show the form for creating a new resource.
      *
@@ -78,12 +78,12 @@ class BookController extends Controller{
     {
         $user = Auth::user();
         $books = Book::paginate(10);
-        // $keywords = Keyword::all();
+        $keywords = Keyword::all();
         $subjects = Subject::all();        
         if ($user->type === 'technician librarian') {
             // Assuming you have some logic to generate the barcode
             
-            return view('books_layout.books_list', ['books'=>$books,'user'=>$user,'subjects'=>$subjects]);
+            return view('books_layout.books_list', ['books'=>$books,'user'=>$user, 'keywords'=>$keywords, 'subjects'=>$subjects]);
         } else {
             return redirect()->back();
         }
@@ -139,12 +139,12 @@ class BookController extends Controller{
         if (is_array($data['book_subject'])) {
             $data['book_subject'] = implode(', ', array_map('trim', $data['book_subject']));
         }
-        // if (is_array($data['book_keyword'])) {
-        //     $data['book_keyword'] = implode(', ', array_map('trim', $data['book_keyword']));
-        // }
+        if (is_array($data['book_keyword'])) {
+            $data['book_keyword'] = implode(', ', array_map('trim', $data['book_keyword']));
+        }
     
         $data['book_subject'] = json_encode($request->book_subject);
-        // $data['book_keyword'] = json_encode($request->book_keyword);
+        $data['book_keyword'] = json_encode($request->book_keyword);
     
         // Check if the book call number matches any existing book
         $existingBookWithSameCallNumber = Book::where('book_callnumber', $data['book_callnumber'])->first();
@@ -326,11 +326,12 @@ class BookController extends Controller{
         $canSuggest = $user->type === 'teacher' || $user->type === 'department representative';
     
         // Load keywords and subjects
-        // $keywords = Keyword::all();
+        $keywords = Keyword::all();
         $subjects = Subject::all();
         $barcode = $book->book_barcode;
     
         // Return the view with necessary data
+<<<<<<< HEAD
         return view('books_layout.view_bookdetails', compact('book', 'user', 'barcode', 'subjects', 'canSuggest'));
 =======
 
@@ -345,6 +346,9 @@ class BookController extends Controller{
                 return redirect()->back();
             }
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
+=======
+        return view('books_layout.view_bookdetails', compact('book', 'user', 'barcode', 'keywords', 'subjects', 'canSuggest'));
+>>>>>>> parent of 6d07c62 (deletion:keywords)
     }
 
     
