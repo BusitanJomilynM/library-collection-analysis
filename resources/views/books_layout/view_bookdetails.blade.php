@@ -82,11 +82,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 @if ($canSuggest)
     <!-- <a data-toggle="modal" class="btn btn-primary" data-target="#createTagModal_{{$book->book_barcode}}" data-action="{{ route('tags.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Subjects</a>
 
     <a data-toggle="modal" class="btn btn-primary" data-target="#createKeywordSuggestModal_{{$book->book_barcode}}" data-action="{{ route('keywordsuggest.create', ['book_barcode' => $book->book_barcode]) }}"><span>&#43;</span> Suggest Keywords</a> -->
 @else
+=======
+@if ($user->type == 'teacher' && $user->type == 'department representative')
+>>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 =======
 @if ($user->type == 'teacher' && $user->type == 'department representative')
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
@@ -110,6 +114,7 @@
 
     </tr>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -308,6 +313,35 @@
                     </td>
                     <td>
            
+=======
+   
+          
+                <!-- <tr align="center">
+                    <td>{{ $book->book_title }}</td>
+                    <td>{{ $book->book_author }}</td>
+                    <td>{{ $book->book_copyrightyear }}</td>
+                    <td>{{ $book->book_sublocation }}</td>
+                    <td>
+                        <?php
+                        $t = $book->book_subject;
+                        $a = explode(" ", $t);
+                        echo implode(", ", $a);
+                        ?>
+                    </td>
+                    <td>
+           
+
+                        <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
+                        <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>
+                        
+                           <a data-toggle="modal" class="btn btn-warning" data-target="#archiveBookModal" data-action="{{ route('archiveBook', $book->id) }}">Archive</a>
+                    </td>
+                </tr> -->
+            </tbody>
+           
+       
+<div>
+>>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 
                         <a data-toggle="modal" class="btn btn-primary" data-target="#editBookModal" data-action="{{ route('books.edit', $book->id) }}"><span>&#9776;</span> Edit</a>
                         <a data-toggle="modal" class="btn btn-success" data-target="#createCopyModal" data-action="{{ route('books.book_createcopy', $book->id) }}"><span>&#43;</span>Add Copy</a>

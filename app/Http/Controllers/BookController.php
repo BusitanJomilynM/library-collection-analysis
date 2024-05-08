@@ -305,6 +305,7 @@ class BookController extends Controller{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $user = Auth::user();
         
         // Check if the user is authorized to suggest subjects and keywords
@@ -325,6 +326,8 @@ class BookController extends Controller{
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 =======
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
+=======
+>>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 
             $user = Auth::user();
             if ($user->type === 'technician librarian' || $user->type === 'staff librarian'  || $user->type === 'teacher'  || $user->type === 'department librarian') {
@@ -339,10 +342,13 @@ class BookController extends Controller{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 =======
         return view('books_layout.view_bookdetails', compact('book', 'user', 'barcode', 'keywords', 'subjects', 'canSuggest'));
 >>>>>>> parent of 6d07c62 (deletion:keywords)
+=======
+>>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 =======
 >>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
 =======
