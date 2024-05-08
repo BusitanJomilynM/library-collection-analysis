@@ -64,12 +64,9 @@ class HomeController extends Controller
      */
     public function staffHome()
     {
-        $user = Auth::user();
-        $requisitions = Requisition::all();
-        $pending = Requisition::where('status', 'like', '0')->count();
-        $pendingsubject = Tag::where('status', 'like', '0')->count();
 
-        return view('staffHome',  ['user'=>$user, 'requisitions'=>$requisitions, 'pending'=>$pending, 'pendingsubject' => $pendingsubject]);
+        $user = Auth::user();
+        return view('staffHome',  ['user'=>$user]);
     }
 
     /**

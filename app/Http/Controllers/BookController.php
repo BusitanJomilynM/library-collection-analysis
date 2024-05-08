@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\View\View;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\RedirectResponse;
+
 
 
 class BookController extends Controller{
@@ -217,35 +217,12 @@ class BookController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      * 
-     */
-    public function update(UpdateBookRequest $request, Book $book): RedirectResponse
-    {
-        $user = Auth::user();
-        if ($user->type !== 'technician librarian') {
-            return redirect()->back()->with('error', 'You do not have permission to perform this action.');
-        }
-    
-        // Extract book_barcode from the request
-        $bookBarcode = $request->input('book_barcode');
-    
-        // Remove the book_barcode from the request
-        $requestData = $request->except('book_barcode');
-    
-        // Update the main book
-        $book->update($requestData); 
-    
-        // Find all books with the same book_callnumber but different book_barcode
-        $matchingBooks = Book::where('book_callnumber', $book->book_callnumber)
-                            ->where('book_barcode', '<>', $bookBarcode)
-                            ->get();
-    
-        // Update each matching book
-        foreach ($matchingBooks as $matchingBook) {
-            $matchingBook->update($requestData);
-        }
-    
-        return redirect()->route('books.index')->with('success', 'Book successfully updated!');
-    }
+     */public function update(UpdateBookRequest $request, Book $book): \Illuminate\Http\RedirectResponse
+{
+    $book->update($request->all()); 
+
+    return redirect()->route('books.index')->with('success','Book successfully updated!');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -342,6 +319,7 @@ class BookController extends Controller{
     }
     public function view_bookdetails(Book $book)
     {
+<<<<<<< HEAD
         $user = Auth::user();
         
         // Check if the user is authorized to suggest subjects and keywords
@@ -354,8 +332,21 @@ class BookController extends Controller{
     
         // Return the view with necessary data
         return view('books_layout.view_bookdetails', compact('book', 'user', 'barcode', 'subjects', 'canSuggest'));
+=======
+
+            $user = Auth::user();
+            if ($user->type === 'technician librarian' || $user->type === 'staff librarian'  || $user->type === 'teacher'  || $user->type === 'department librarian') {
+                $keywords = Keyword::all();
+                $subjects = Subject::all();
+                $barcode = $book->book_barcode;
+                
+                return view('books_layout.view_bookdetails', compact('book','user','barcode', 'keywords', 'subjects'));
+                } else {
+                return redirect()->back();
+            }
+>>>>>>> parent of fe7c657 (allduplicateswillbeupdated)
     }
-    
+
     
     public function book_createcopy(Request $request, Book $book)
     {

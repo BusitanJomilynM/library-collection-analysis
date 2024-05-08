@@ -262,50 +262,47 @@ class TagController extends Controller
         return view('tags_layout.change_tags', ['books'=>$books,'tags'=>$tags, 'users'=>$users]);
     }
 
-    public function appendt(Request $request, $tag, $book){
+    public function appendt(Request $request,$tag, $book){
       
-        $book = Book::findOrFail($book);
-        $tag = Tag::findOrFail($tag);
+        
+        $book = Book::findorFail($book);
+        $tag = Tag::findorFail($tag);
+
+        $x = $book->book_subject;
+        $y = $tag->suggest_book_subject;
+
+        $array1 = json_decode($x, true);
+        $array2 = json_decode($y, true);
+     
+
     
-        // Find all books with the same book_callnumber
-        $matchingBooks = Book::where('book_callnumber', $book->book_callnumber)->get();
-    
-        foreach ($matchingBooks as $matchingBook) {
-            $x = $matchingBook->book_subject;
-            $y = $tag->suggest_book_subject;
-    
-            $array1 = json_decode($x, true);
-            $array2 = json_decode($y, true);
-    
-            $resultArray = array_merge($array1, $array2);
-            $matchingBook->book_subject = json_encode($resultArray);
-    
-            $tag->status = 1;
-    
-            $matchingBook->save();
-            $tag->save();
-        }
-    
+        $resultArray = array_merge($array1, $array2);
+        $book->book_subject = json_encode($resultArray);
+        
+
+        $tag->status = 1;
+
+        $book->save();
+        $tag->save();
+        
+
         return redirect()->back()->with('success', 'Tags appended');
     }
-    
+
     public function replacet(Request $request, $tag, $book){
       
-        $book = Book::findOrFail($book);
-        $tag = Tag::findOrFail($tag);
-    
-        // Find all books with the same book_callnumber
-        $matchingBooks = Book::where('book_callnumber', $book->book_callnumber)->get();
-    
-        foreach ($matchingBooks as $matchingBook) {
-            $matchingBook->book_subject = $tag->suggest_book_subject;
-            $matchingBook->save();
-        }
-    
+        
+        $book = Book::findorFail($book);
+        $tag = Tag::findorFail($tag);
+
+        $book->book_subject = $tag->suggest_book_subject;
+
+        $book->save();
+
         $tag->status = 1;
         $tag->save();
-    
+
         return redirect()->back()->with('success', 'Tags replaced');
     }
-    
+
 }
