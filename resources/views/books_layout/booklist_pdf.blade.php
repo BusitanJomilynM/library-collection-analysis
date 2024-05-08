@@ -71,9 +71,20 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Book Subject</label>
+                              <!-- <select class="mySelect for" name="book_keyword[]" id="book_keyword" multiple="multiple" style="width: 100%" required> -->
 
-                        <input list="keywordsList" name="keyword_1" id="keyword" class="form-control"  multiple>
-
+                        <!-- <input list="keywordList" name="keyword_1" class="form-control" multiple>
+                        <datalist id="keywordList">
+                            <option value="" selected disabled>Select Keyword</option>
+                            @foreach($keywords as $keyword)
+                            <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+                            @endforeach
+                        </datalist> -->
+                        <select class="mySelect" name="keyword_1[]" multiple="multiple" style="width: 100%" required>
+                            @foreach($keywords as $keyword)
+                            <option value="{{$keyword->id}}">{{$keyword->keyword}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -117,16 +128,29 @@ function addFields() {
 
     // Keyword Field Container
     var keywordFieldContainer = document.createElement('div');
-        keywordFieldContainer.className = 'col-md-5 d-flex align-items-center';
+    keywordFieldContainer.className = 'col-md-5 d-flex align-items-center';
 
-        // Keyword Field
-        var keywordField = document.createElement('div');
-        keywordField.className = 'form-group flex-grow-1';
-        keywordField.innerHTML = `
-            <label for="keyword_${setCount}">Keyword</label>
-            <input list="keywordsList" type="text" class="form-control" name="keyword_${setCount}" id="keyword_${setCount}" placeholder="Enter Keywords">`;
-        keywordFieldContainer.appendChild(keywordField);
-
+    // Keyword Field
+    var keywordField = document.createElement('div');
+    keywordField.className = 'form-group flex-grow-1';
+    keywordField.innerHTML = `
+        <label>Keyword</label>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_${setCount}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select Keywords
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton_${setCount}" style="max-height: 200px; overflow-y: auto;">
+                <input type="text" class="form-control keyword-search" placeholder="Search keywords">
+                <div class="dropdown-divider"></div>
+                @foreach($keywords as $keyword)
+                <div class="dropdown-item">
+                    <input type="checkbox" name="keyword_${setCount}[]" value="{{$keyword->id}}" id="keyword{{$keyword->id}}">
+                    <label for="keyword{{$keyword->id}}">{{$keyword->keyword}}</label>
+                </div>
+                @endforeach
+            </div>
+        </div>`;
+    keywordFieldContainer.appendChild(keywordField);
 
     // Delete button
     var deleteButton = document.createElement('button');
