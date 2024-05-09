@@ -168,7 +168,11 @@
             <select class="form-control @error('type') is-invalid @enderror" name="type" id="type" required>
             <option value="">--Select Role--</option>
             <option value="0">Technical Librarian</option>
+<<<<<<< HEAD
             <option value="1">Staff Librarian</option>
+=======
+            <option value="1">Section Librarian</option>
+>>>>>>> parent of 6643318 (names and contactnum)
             <option value="2">Department Representative</option>
             <option value="3">Teacher</option>
             </select>
@@ -255,7 +259,11 @@
         <label class="required">Role</label>
             <select class="form-control" name="type" id="type" value="{{$user->type}}" required>
                 <option value="0" {{ old('type') == "technician librarian" || $user->type == "technician librarian" ? 'selected' : '' }}>Technical Librarian</option>
+<<<<<<< HEAD
                 <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Staff Librarian</option>
+=======
+                <option value="1" {{ old('type') == "staff librarian" || $user->type == "staff librarian" ? 'selected' : '' }}>Section Librarian</option>
+>>>>>>> parent of 6643318 (names and contactnum)
                 <option value="2" {{ old('type') == "department representative" || $user->type == "department representative" ? 'selected' : '' }}>Department Representative</option>
                 <option value="3" {{ old('type') == "teacher" || $user->type == "teacher" ? 'selected' : '' }}>Teacher</option>
             </select>
